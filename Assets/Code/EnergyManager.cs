@@ -15,7 +15,7 @@ public class EnergyManager : MonoBehaviour
     private void Start()
     {
         Instance = this;
-        energy = startEnergy;
+        energy = Mathf.Clamp(startEnergy, MIN_ENERGY, MAX_ENERGY);
     }
 
     public void addEnergy(float amount)

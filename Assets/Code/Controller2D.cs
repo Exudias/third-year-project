@@ -48,6 +48,21 @@ public class Controller2D : MonoBehaviour
         transform.Translate(velocity);
     }
 
+    public bool CanWallJump(float leniency, int direction)
+    {
+        float rayLength = leniency + SKIN_WIDTH;
+
+        for (int i = 0; i < horizontalRayCount; i++)
+        {
+            Vector2 rayOrigin = (direction == -1) ? raycastOrigins.bottomLeft : raycastOrigins.bottomRight;
+            rayOrigin += Vector2.up * (horizontalRaySpacing * i);
+            RaycastHit2D hit = Physics2D.Raycast(rayOrigin, Vector2.right * direction, rayLength, collisionMask);
+
+            if (hit) return true;
+        }
+        return false;
+    }
+
     private void HorizontalCollisions(ref Vector2 velocity)
     {
         float directionX = Mathf.Sign(velocity.x);

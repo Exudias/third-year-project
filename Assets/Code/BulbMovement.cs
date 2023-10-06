@@ -15,6 +15,10 @@ public class BulbMovement : MonoBehaviour
     [SerializeField] private float timeToJumpApex = 0.3f;
     [SerializeField] private float jumpBufferLeniency = 0.1f;
     [SerializeField] private float coyoteJumpLeniency = 0.1f;
+    [Header("Wall Jump")]
+    [SerializeField] private float wallJumpLeniency = 0.125f;
+    [SerializeField] private float wallJumpStrength = 12f;
+    [SerializeField] private float wallJumpHeightMultiplier = 0.8f;
 
     private float gravity;
     private float maxJumpVelocity;
@@ -42,6 +46,8 @@ public class BulbMovement : MonoBehaviour
         coyoteTime += Time.deltaTime;
         timeSinceJumpPressed += Time.deltaTime;
 
+        float topSpeed = Mathf.Lerp(minTopSpeed, maxTopSpeed, energyManager.getEnergyPercent());
+
         if (controller.collisions.top || controller.collisions.bottom)
         {
             velocity.y = 0;
@@ -65,12 +71,27 @@ public class BulbMovement : MonoBehaviour
             EndJump();
         }
 
+        // regular jump
         if (coyoteTime <= coyoteJumpLeniency && timeSinceJumpPressed <= jumpBufferLeniency)
         {
             Jump();
         }
 
-        float topSpeed = Mathf.Lerp(minTopSpeed, maxTopSpeed, energyManager.getEnergyPercent());
+        const int DIR_LEFT = -1;
+        const int DIR_RIGHT = 1;
+
+        //wall jump
+        if (timeSinceJumpPressed <= jumpBufferLeniency)
+        {
+            if (controller.CanWallJump(wallJumpLeniency, DIR_LEFT))
+            {
+                WallJump(DIR_RIGHT);
+            }
+            else if (controller.CanWallJump(wallJumpLeniency, DIR_RIGHT))
+            {
+                WallJump(DIR_LEFT);
+            }
+        }
 
         float targetVelocityX = horizontalInput * topSpeed;
         float accelToUse = ((targetVelocityX * horizontalInput <= 0) ? deceleration : acceleration) * (1 + energyManager.getEnergyPercent());
@@ -88,6 +109,14 @@ public class BulbMovement : MonoBehaviour
         timeSinceJumpPressed = Mathf.Infinity;
         coyoteTime = Mathf.Infinity;
         jumping = true;
+    }
+
+    private void WallJump(int direction)
+    {
+        velocity.x = wallJumpStrength * (1 + energyManager.getEnergyPercent()) * direction;
+        velocity.y = maxJumpVelocity * wallJumpHeightMultiplier;
+        timeSinceJumpPressed = Mathf.Infinity;
+        coyoteTime = Mathf.Infinity;
     }
 
     private void EndJump()
