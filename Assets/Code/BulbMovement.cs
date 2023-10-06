@@ -6,7 +6,8 @@ using UnityEngine;
 public class BulbMovement : MonoBehaviour
 {
     [Header("Horizontal Movement")]
-    [SerializeField] private float topSpeed = 8f;
+    [SerializeField] private float minTopSpeed = 6f;
+    [SerializeField] private float maxTopSpeed = 12f;
     [SerializeField] private float acceleration = 100;
     [SerializeField] private float deceleration = 160;
     [SerializeField] private float airControlMult = 0.7f;
@@ -26,10 +27,12 @@ public class BulbMovement : MonoBehaviour
     private bool jumping;
 
     private Controller2D controller;
+    private EnergyManager energyManager;
 
     private void Start()
     {
         controller = GetComponent<Controller2D>();
+        energyManager = EnergyManager.Instance;
 
         CalculateGravityAndJumpVelocity();
         timeSinceJumpPressed = Mathf.Infinity;
@@ -69,8 +72,10 @@ public class BulbMovement : MonoBehaviour
             Jump();
         }
 
+        float topSpeed = Mathf.Lerp(minTopSpeed, maxTopSpeed, energyManager.getEnergyPercent());
+
         float targetVelocityX = horizontalInput * topSpeed;
-        float accelToUse = (targetVelocityX * horizontalInput <= 0) ? deceleration : acceleration;
+        float accelToUse = ((targetVelocityX * horizontalInput <= 0) ? deceleration : acceleration) * (1 + energyManager.getEnergyPercent());
         accelToUse *= controller.collisions.bottom ? 1 : airControlMult;
 
         velocity.x = Mathf.MoveTowards(velocity.x, targetVelocityX, accelToUse * Time.deltaTime);

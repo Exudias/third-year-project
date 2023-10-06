@@ -20,7 +20,10 @@ public class EnergyManager : MonoBehaviour
 
     private void Update()
     {
-        Debug.Log("Energy: " + energy.ToString());
+        if (Input.GetKeyDown(KeyCode.LeftShift))
+        {
+            addEnergy(10);
+        }
     }
 
     public void addEnergy(float amount)
@@ -36,5 +39,10 @@ public class EnergyManager : MonoBehaviour
     public void resetEnergy()
     {
         energy = startEnergy;
+    }
+
+    public float getEnergyPercent()
+    {
+        return (energy - MIN_ENERGY) / (MAX_ENERGY - MIN_ENERGY);
     }
 }
