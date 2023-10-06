@@ -18,14 +18,6 @@ public class EnergyManager : MonoBehaviour
         energy = startEnergy;
     }
 
-    private void Update()
-    {
-        if (Input.GetKeyDown(KeyCode.LeftShift))
-        {
-            addEnergy(10);
-        }
-    }
-
     public void addEnergy(float amount)
     {
         energy = Mathf.Clamp(energy + amount, MIN_ENERGY, MAX_ENERGY);
