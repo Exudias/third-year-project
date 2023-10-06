@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 [RequireComponent(typeof(Controller2D))]
-public class Player : MonoBehaviour
+public class BulbMovement : MonoBehaviour
 {
     [Header("Horizontal Movement")]
     [SerializeField] private float topSpeed = 8f;
