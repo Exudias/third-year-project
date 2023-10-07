@@ -7,6 +7,9 @@ using UnityEngine;
 [RequireComponent(typeof(BoxCollider2D))]
 public class Controller2D : MonoBehaviour
 {
+    public delegate void CollisionEvent(Vector2 direction);
+    public static event CollisionEvent OnCollision;
+
     const float SKIN_WIDTH = 0.015f;
     const int MIN_RAYS = 2;
     const int MAX_RAYS = 10;
@@ -84,8 +87,18 @@ public class Controller2D : MonoBehaviour
                 velocity.x = (hit.distance - SKIN_WIDTH) * directionX;
                 rayLength = hit.distance;
 
-                collisions.left = directionX == -1;
-                collisions.right = directionX == 1;
+                if (directionX == -1)
+                {
+                    OnCollision(Vector2.left);
+                    collisions.left = true;
+                    collisions.right = false;
+                }
+                else if (directionX == 1)
+                {
+                    OnCollision(Vector2.right);
+                    collisions.left = false;
+                    collisions.right = true;
+                }
             }
         }
     }
@@ -111,8 +124,18 @@ public class Controller2D : MonoBehaviour
                 velocity.y = (hit.distance - SKIN_WIDTH) * directionY;
                 rayLength = hit.distance;
 
-                collisions.bottom = directionY == -1;
-                collisions.top = directionY == 1;
+                if (directionY == -1)
+                {
+                    OnCollision(Vector2.down);
+                    collisions.bottom = true;
+                    collisions.top = false;
+                }
+                else if (directionY == 1)
+                {
+                    OnCollision(Vector2.up);
+                    collisions.bottom = false;
+                    collisions.top = true;
+                }
             }
         }
     }
