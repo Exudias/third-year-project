@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.UI;
 
 public class EnergyManager : MonoBehaviour
 {
@@ -7,6 +8,8 @@ public class EnergyManager : MonoBehaviour
 
     [SerializeField]
     private float startEnergy = 0;
+    [SerializeField]
+    private Image energyMeterFG;
 
     public static EnergyManager Instance;
 
@@ -18,22 +21,27 @@ public class EnergyManager : MonoBehaviour
         energy = Mathf.Clamp(startEnergy, MIN_ENERGY, MAX_ENERGY);
     }
 
-    public void addEnergy(float amount)
+    private void Update()
+    {
+        energyMeterFG.fillAmount = GetEnergyPercent();
+    }
+
+    public void AddEnergy(float amount)
     {
         energy = Mathf.Clamp(energy + amount, MIN_ENERGY, MAX_ENERGY);
     }
 
-    public float getEnergy()
+    public float GetEnergy()
     {
         return energy;
     }
 
-    public void resetEnergy()
+    public void ResetEnergy()
     {
         energy = startEnergy;
     }
 
-    public float getEnergyPercent()
+    public float GetEnergyPercent()
     {
         return (energy - MIN_ENERGY) / (MAX_ENERGY - MIN_ENERGY);
     }
