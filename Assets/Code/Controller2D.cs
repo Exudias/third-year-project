@@ -89,13 +89,13 @@ public class Controller2D : MonoBehaviour
 
                 if (directionX == -1)
                 {
-                    OnCollision(Vector2.left);
+                    OnCollision?.Invoke(Vector2.left);
                     collisions.left = true;
                     collisions.right = false;
                 }
                 else if (directionX == 1)
                 {
-                    OnCollision(Vector2.right);
+                    OnCollision?.Invoke(Vector2.right);
                     collisions.left = false;
                     collisions.right = true;
                 }
@@ -126,13 +126,13 @@ public class Controller2D : MonoBehaviour
 
                 if (directionY == -1)
                 {
-                    OnCollision(Vector2.down);
+                    OnCollision?.Invoke(Vector2.down);
                     collisions.bottom = true;
                     collisions.top = false;
                 }
                 else if (directionY == 1)
                 {
-                    OnCollision(Vector2.up);
+                    OnCollision?.Invoke(Vector2.up);
                     collisions.bottom = false;
                     collisions.top = true;
                 }

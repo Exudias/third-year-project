@@ -632,7 +632,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c15442f8fb676c8459a50d86d485af15, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  followTransform: {fileID: 1752503176}
+  followTransform: {fileID: 1559895189}
   offset: {x: 0, y: 2, z: 0}
   ignoreZ: 1
 --- !u!1 &551013837
@@ -2271,6 +2271,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d439b8f2c80473542bbcd8267f2bb2e7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  maxTopSpeed: 24
+  minTopSpeed: 0
+  turnDegsPerSec: 180
+  energyDissipationPerSec: 10
 --- !u!1 &1695712085
 GameObject:
   m_ObjectHideFlags: 0
