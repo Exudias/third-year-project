@@ -33,6 +33,10 @@ public class SpiritMovement : MonoBehaviour
     {
         float topSpeed = Mathf.Lerp(minTopSpeed, maxTopSpeed, energyManager.GetEnergyPercent());
         energyManager.AddEnergy(-energyDissipationPerSec * Time.deltaTime);
+        if (energyManager.GetEnergy() == 0)
+        {
+            GameManager.ResetScene();
+        }
 
         float horizontalInput = Input.GetAxisRaw("Horizontal");
         float verticalInput = Input.GetAxisRaw("Vertical");
