@@ -24,6 +24,7 @@ public class PlayerFormSwitcher : MonoBehaviour
 
     private void Update()
     {
+        // TODO: go spirit from bulb, but to return you must collide with a bulb
         if (Input.GetKeyDown(KeyCode.LeftShift))
         {
             ToggleForm();
