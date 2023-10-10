@@ -3937,6 +3937,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Player
       objectReference: {fileID: 0}
+    - target: {fileID: 4158628153760104930, guid: 75c100dbc04a6cb4c9cff285d1859583, type: 3}
+      propertyPath: maxTopSpeed
+      value: 32
+      objectReference: {fileID: 0}
     - target: {fileID: 7328808871941551571, guid: 75c100dbc04a6cb4c9cff285d1859583, type: 3}
       propertyPath: energyMeterFG
       value: 
