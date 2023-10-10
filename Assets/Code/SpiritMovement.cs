@@ -1,8 +1,7 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 [RequireComponent(typeof(Controller2D))]
+[RequireComponent(typeof(EnergyManager))]
 public class SpiritMovement : MonoBehaviour
 {
     [SerializeField] private float maxTopSpeed = 24f;
@@ -19,7 +18,7 @@ public class SpiritMovement : MonoBehaviour
     private void Start()
     {
         controller = GetComponent<Controller2D>();
-        energyManager = EnergyManager.Instance;
+        energyManager = GetComponent<EnergyManager>();
 
         if (directionOfMovement == Vector2.zero)
         {

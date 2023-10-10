@@ -1,6 +1,7 @@
 using UnityEngine;
 
 [RequireComponent(typeof(Controller2D))]
+[RequireComponent(typeof(EnergyManager))]
 public class BulbMovement : MonoBehaviour
 {
     [Header("Horizontal Movement")]
@@ -36,7 +37,7 @@ public class BulbMovement : MonoBehaviour
     private void Start()
     {
         controller = GetComponent<Controller2D>();
-        energyManager = EnergyManager.Instance;
+        energyManager = GetComponent<EnergyManager>();
 
         CalculateGravityAndJumpVelocity();
         timeSinceJumpPressed = Mathf.Infinity;

@@ -11,13 +11,10 @@ public class EnergyManager : MonoBehaviour
     [SerializeField]
     private Image energyMeterFG;
 
-    public static EnergyManager Instance;
-
     private static float energy;
 
     private void Start()
     {
-        Instance = this;
         energy = Mathf.Clamp(startEnergy, MIN_ENERGY, MAX_ENERGY);
     }
 
