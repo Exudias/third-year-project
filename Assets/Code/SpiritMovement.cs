@@ -6,7 +6,7 @@ using UnityEngine;
 public class SpiritMovement : MonoBehaviour
 {
     [SerializeField] private float maxTopSpeed = 24f;
-    [SerializeField] private float minTopSpeed = 12f;
+    [SerializeField] private float minTopSpeed = 0f;
     [SerializeField] private float turnDegsPerSec = 180f;
     [SerializeField] private float energyDissipationPerSec = 10;
 
@@ -27,6 +27,17 @@ public class SpiritMovement : MonoBehaviour
         }
 
         lastDirection = Vector2.right;
+    }
+
+    private void OnEnable()
+    {
+        float horizontalInput = Input.GetAxisRaw("Horizontal");
+        float verticalInput = Input.GetAxisRaw("Vertical");
+
+        Vector2 desiredDirection = new Vector2(horizontalInput, verticalInput).normalized;
+
+        directionOfMovement = desiredDirection;
+        lastDirection = directionOfMovement;
     }
 
     private void Update()
