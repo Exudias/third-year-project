@@ -24,8 +24,8 @@ public class PlayerFormSwitcher : MonoBehaviour
 
     private void Update()
     {
-        // TODO: go spirit from bulb, but to return you must collide with a bulb
-        if (Input.GetKeyDown(KeyCode.LeftShift))
+        // go spirit from bulb, but to return you must collide with a bulb, so no on-demand
+        if (Input.GetKeyDown(KeyCode.LeftShift) && currentForm == PlayerForm.Bulb)
         {
             ToggleForm();
         }
@@ -45,6 +45,12 @@ public class PlayerFormSwitcher : MonoBehaviour
         {
             throw new System.Exception("Invalid player form to switch from!");
         }
+    }
+
+    public void TurnIntoBulbAt(Vector2 bulbPosition)
+    {
+        transform.position = bulbPosition;
+        InitBulb();
     }
 
     public PlayerForm GetCurrentForm()

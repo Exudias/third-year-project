@@ -38,6 +38,18 @@ TagManager:
   - 
   - 
   m_SortingLayers:
+  - name: BGTiles
+    uniqueID: 2436784299
+    locked: 0
+  - name: BGObjects
+    uniqueID: 556312267
+    locked: 0
   - name: Default
     uniqueID: 0
+    locked: 0
+  - name: FGObjects
+    uniqueID: 714017931
+    locked: 0
+  - name: FGTiles
+    uniqueID: 839730033
     locked: 0

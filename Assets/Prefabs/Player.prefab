@@ -140,7 +140,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   maxTopSpeed: 48
   minTopSpeed: 12
-  turnDegsPerSec: 180
+  minTurnDegsPerSec: 180
+  maxTurnDegsPerSec: 1440
   energyDissipationPerSec: 10
 --- !u!114 &1105467402819965738
 MonoBehaviour:
@@ -241,9 +242,9 @@ SpriteRenderer:
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: 0
-  m_SortingLayer: 0
-  m_SortingOrder: 0
+  m_SortingLayerID: 714017931
+  m_SortingLayer: 1
+  m_SortingOrder: 999
   m_Sprite: {fileID: 7482667652216324306, guid: 961aaa04966be364e99d86712f548653, type: 3}
   m_Color: {r: 1, g: 0, b: 0, a: 1}
   m_FlipX: 0

@@ -6,7 +6,8 @@ public class SpiritMovement : MonoBehaviour
 {
     [SerializeField] private float maxTopSpeed = 24f;
     [SerializeField] private float minTopSpeed = 0f;
-    [SerializeField] private float turnDegsPerSec = 180f;
+    [SerializeField] private float minTurnDegsPerSec = 90f;
+    [SerializeField] private float maxTurnDegsPerSec = 720f;
     [SerializeField] private float energyDissipationPerSec = 10;
 
     private Vector2 directionOfMovement;
@@ -42,6 +43,8 @@ public class SpiritMovement : MonoBehaviour
     private void Update()
     {
         float topSpeed = Mathf.Lerp(minTopSpeed, maxTopSpeed, energyManager.GetEnergyPercent());
+        float turnDegsPerSec = Mathf.Lerp(minTurnDegsPerSec, maxTurnDegsPerSec, energyManager.GetEnergyPercent());
+
         energyManager.AddEnergy(-energyDissipationPerSec * Time.deltaTime);
         if (energyManager.GetEnergy() == 0)
         {
