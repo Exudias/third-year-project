@@ -45,9 +45,21 @@ public class BulbMovement : MonoBehaviour
         timeSinceWallJump = Mathf.Infinity;
     }
 
+    // Used when switching from spirit to reset to initial state
+    private void ResetForFreshBulb()
+    {
+        timeSinceJumpPressed = Mathf.Infinity;
+        coyoteTime = Mathf.Infinity;
+        timeSinceWallJump = Mathf.Infinity;
+
+        velocity = Vector2.zero;
+    }
+
     private void OnEnable()
     {
         Controller2D.OnCollision += OnControllerCollision;
+
+        ResetForFreshBulb();
     }
 
     private void OnDisable()

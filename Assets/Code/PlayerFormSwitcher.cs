@@ -11,6 +11,7 @@ public class PlayerFormSwitcher : MonoBehaviour
     }
 
     [SerializeField] private PlayerForm currentForm = PlayerForm.Bulb;
+    [SerializeField] private PlayerVisualsManager visualsManager;
 
     private BulbMovement bulbMovement;
     private SpiritMovement spiritMovement;
@@ -45,12 +46,17 @@ public class PlayerFormSwitcher : MonoBehaviour
         }
     }
 
+    public PlayerForm GetCurrentForm()
+    {
+        return currentForm;
+    }
+
     private void InitBulb()
     {
         currentForm = PlayerForm.Bulb;
         bulbMovement.enabled = true;
         spiritMovement.enabled = false;
-        GetComponent<SpriteRenderer>().color = new Color(0.6f, 0.15f, 0.15f);
+        visualsManager.InitBulb();
     }
 
     private void InitSpirit()
@@ -58,6 +64,6 @@ public class PlayerFormSwitcher : MonoBehaviour
         currentForm = PlayerForm.Spirit;
         spiritMovement.enabled = true;
         bulbMovement.enabled = false;
-        GetComponent<SpriteRenderer>().color = new Color(0.7f, 0.7f, 0);
+        visualsManager.InitSpirit();
     }
 }

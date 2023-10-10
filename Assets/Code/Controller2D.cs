@@ -28,16 +28,33 @@ public class Controller2D : MonoBehaviour
     private RaycastOrigins raycastOrigins;
     public CollisionInfo collisions;
 
+    private Vector2 lastDesiredVelocity;
+    private Vector2 lastActualVelocity;
+
     private void Start()
     {
         coll = GetComponent<BoxCollider2D>();
         CalculateRaySpacing(); // only need to call if # rays is changed
+        lastDesiredVelocity = Vector2.zero;
+        lastActualVelocity = Vector2.zero;
+    }
+
+    public Vector2 GetLastDesiredVelocity()
+    {
+        return lastDesiredVelocity;
+    }
+
+    public Vector2 GetLastActualVelocity()
+    {
+        return lastActualVelocity;
     }
 
     public void Move(Vector2 velocity, GameObject pusher = null)
     {
         UpdateRaycastOrigins();
         collisions.Reset();
+
+        lastDesiredVelocity = velocity;
 
         if (velocity.x != 0)
         {
@@ -47,6 +64,8 @@ public class Controller2D : MonoBehaviour
         {
             VerticalCollisions(ref velocity);
         }
+
+        lastActualVelocity = velocity;
 
         transform.Translate(velocity);
     }
