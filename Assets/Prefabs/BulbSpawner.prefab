@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 3621101024911729358}
   - component: {fileID: 6329622986695804649}
   - component: {fileID: 2535536982613062409}
-  - component: {fileID: 5047060932178154699}
+  - component: {fileID: -7897230858035112484}
   m_Layer: 0
   m_Name: BulbSpawner
   m_TagString: Untagged
@@ -107,7 +107,7 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 1
   m_Constraints: 7
---- !u!114 &5047060932178154699
+--- !u!114 &-7897230858035112484
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}

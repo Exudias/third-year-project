@@ -1,6 +1,7 @@
 using UnityEngine;
 
 [RequireComponent(typeof(SpriteRenderer))]
+[RequireComponent(typeof(Animator))]
 public class PlayerVisualsManager : MonoBehaviour
 {
     [SerializeField] private PlayerFormSwitcher formSwitcher;
@@ -9,11 +10,16 @@ public class PlayerVisualsManager : MonoBehaviour
     [SerializeField] private Sprite triangle;
     [SerializeField] private Sprite square;
 
+    [SerializeField] private AnimationClip bulbIdleForward;
+    [SerializeField] private AnimationClip spiritMove;
+
     private SpriteRenderer spriteRenderer;
+    private Animator animator;
 
     private void Start()
     {
         spriteRenderer = GetComponent<SpriteRenderer>();
+        animator = GetComponent<Animator>();
     }
 
     private void Update()
@@ -28,14 +34,13 @@ public class PlayerVisualsManager : MonoBehaviour
 
     public void InitBulb()
     {
-        spriteRenderer.color = new Color(0.6f, 0.15f, 0.15f);
-        spriteRenderer.sprite = square;
         transform.rotation = Quaternion.identity;
+        animator.Play(bulbIdleForward.name);
     }
 
     public void InitSpirit()
     {
-        spriteRenderer.color = new Color(0.7f, 0.7f, 0);
         spriteRenderer.sprite = triangle;
+        animator.Play(spiritMove.name);
     }
 }
