@@ -39,6 +39,20 @@ public class Controller2D : MonoBehaviour
         lastActualVelocity = Vector2.zero;
     }
 
+    public void UpdateCollider()
+    {
+        BoxCollider2D[] colliders = GetComponents<BoxCollider2D>();
+        foreach (BoxCollider2D collider in colliders)
+        {
+            if (collider.enabled)
+            {
+                coll = collider;
+                break;
+            }
+        }
+        CalculateRaySpacing();
+    }
+
     public Vector2 GetLastDesiredVelocity()
     {
         return lastDesiredVelocity;

@@ -2,6 +2,7 @@ using UnityEngine;
 
 [RequireComponent(typeof(SpiritMovement))]
 [RequireComponent(typeof(BulbMovement))]
+[RequireComponent(typeof(Controller2D))]
 public class PlayerFormSwitcher : MonoBehaviour
 {
     public enum PlayerForm
@@ -13,13 +14,18 @@ public class PlayerFormSwitcher : MonoBehaviour
     [SerializeField] private PlayerForm currentForm = PlayerForm.Bulb;
     [SerializeField] private PlayerVisualsManager visualsManager;
 
+    [SerializeField] private BoxCollider2D bulbCollider;
+    [SerializeField] private BoxCollider2D spiritCollider;
+     
     private BulbMovement bulbMovement;
     private SpiritMovement spiritMovement;
+    private Controller2D controller;
 
     private void Start()
     {
         bulbMovement = GetComponent<BulbMovement>();
         spiritMovement = GetComponent<SpiritMovement>();
+        controller = GetComponent<Controller2D>();
     }
 
     private void Update()
@@ -63,7 +69,10 @@ public class PlayerFormSwitcher : MonoBehaviour
         currentForm = PlayerForm.Bulb;
         bulbMovement.enabled = true;
         spiritMovement.enabled = false;
+        bulbCollider.enabled = true;
+        spiritCollider.enabled = false;
         visualsManager.InitBulb();
+        controller.UpdateCollider();
     }
 
     private void InitSpirit()
@@ -71,6 +80,9 @@ public class PlayerFormSwitcher : MonoBehaviour
         currentForm = PlayerForm.Spirit;
         spiritMovement.enabled = true;
         bulbMovement.enabled = false;
+        spiritCollider.enabled = true;
+        bulbCollider.enabled = false;
         visualsManager.InitSpirit();
+        controller.UpdateCollider();
     }
 }

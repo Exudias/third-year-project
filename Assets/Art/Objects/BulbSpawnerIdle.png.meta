@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: 2362047798f081146af975bf7f948e0c
+guid: bc30c39a1608f25429b234f60e1c0afd
 TextureImporter:
   internalIDToNameTable: []
   externalObjects: {}
@@ -110,7 +110,7 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: SpiritMove_0
+      name: BulbSpawnerIdle_0
       rect:
         serializedVersion: 2
         x: 0
@@ -124,8 +124,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 27f72f0ac19786f4fb2e48a549b19873
-      internalID: 44290809
+      spriteID: 5f27921b0ddd87949b678b14ed38cb4c
+      internalID: 1381948762
       vertices: []
       indices: 
       edges: []
@@ -141,7 +141,7 @@ TextureImporter:
     weights: []
     secondaryTextures: []
     nameFileIdTable:
-      SpiritMove_0: 44290809
+      BulbSpawnerIdle_0: 1381948762
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 
