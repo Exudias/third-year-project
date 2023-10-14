@@ -33,8 +33,7 @@ public class Controller2D : MonoBehaviour
 
     private void Start()
     {
-        coll = GetComponent<BoxCollider2D>();
-        CalculateRaySpacing(); // only need to call if # rays is changed
+        UpdateCollider();
         lastDesiredVelocity = Vector2.zero;
         lastActualVelocity = Vector2.zero;
     }

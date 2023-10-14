@@ -163,9 +163,9 @@ MonoBehaviour:
   acceleration: 100
   deceleration: 160
   airControlMult: 0.7
-  maxJumpHeight: 3
+  maxJumpHeight: 3.25
   minJumpHeight: 0.5
-  timeToJumpApex: 0.3
+  timeToJumpApex: 0.375
   jumpBufferLeniency: 0.1
   coyoteJumpLeniency: 0.1
   wallJumpLeniency: 0.125
