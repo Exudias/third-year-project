@@ -7,10 +7,8 @@ public class PlayerVisualsManager : MonoBehaviour
     [SerializeField] private PlayerFormSwitcher formSwitcher;
     [SerializeField] private Controller2D controller;
 
-    [SerializeField] private Sprite triangle;
-    [SerializeField] private Sprite square;
-
     [SerializeField] private AnimationClip bulbIdleForward;
+    [SerializeField] private AnimationClip bulbWalk;
     [SerializeField] private AnimationClip spiritMove;
 
     private SpriteRenderer spriteRenderer;
@@ -26,9 +24,37 @@ public class PlayerVisualsManager : MonoBehaviour
     {
         PlayerFormSwitcher.PlayerForm form = formSwitcher.GetCurrentForm();
 
+        Vector2 lastDesiredVelocity = controller.GetLastDesiredVelocity();
+
         if (form == PlayerFormSwitcher.PlayerForm.Spirit)
         {
             transform.right = controller.GetLastDesiredVelocity().normalized;
+        }
+        else if (form == PlayerFormSwitcher.PlayerForm.Bulb)
+        {
+            if (spriteRenderer.flipX)
+            {
+                if (lastDesiredVelocity.x > 0)
+                {
+                    spriteRenderer.flipX = false;
+                }
+            }
+            else
+            {
+                if (lastDesiredVelocity.x < 0)
+                {
+                    spriteRenderer.flipX = true;
+                }
+            }
+
+            if (lastDesiredVelocity.x != 0)
+            {
+                animator.Play(bulbWalk.name);
+            }
+            else
+            {
+                animator.Play(bulbIdleForward.name);
+            }
         }
     }
 
@@ -40,7 +66,7 @@ public class PlayerVisualsManager : MonoBehaviour
 
     public void InitSpirit()
     {
-        spriteRenderer.sprite = triangle;
+        spriteRenderer.flipX = false;
         animator.Play(spiritMove.name);
     }
 }
