@@ -45,7 +45,7 @@ public class SpiritMovement : MonoBehaviour
         float topSpeed = Mathf.Lerp(minTopSpeed, maxTopSpeed, energyManager.GetEnergyPercent());
         float turnDegsPerSec = Mathf.Lerp(minTurnDegsPerSec, maxTurnDegsPerSec, energyManager.GetEnergyPercent());
 
-        energyManager.AddEnergy(-energyDissipationPerSec * Time.deltaTime);
+        energyManager.AddEnergy(-energyDissipationPerSec * Time.unscaledDeltaTime);
         if (energyManager.GetEnergy() == 0)
         {
             GameManager.ResetScene();
@@ -62,7 +62,7 @@ public class SpiritMovement : MonoBehaviour
 
         float desiredAngle = Mathf.Atan2(desiredDirection.y, desiredDirection.x) * Mathf.Rad2Deg;
         float currentAngle = Mathf.Atan2(directionOfMovement.y, directionOfMovement.x) * Mathf.Rad2Deg;
-        currentAngle = Mathf.MoveTowardsAngle(currentAngle, desiredAngle, turnDegsPerSec * Time.deltaTime);
+        currentAngle = Mathf.MoveTowardsAngle(currentAngle, desiredAngle, turnDegsPerSec * Time.unscaledDeltaTime);
 
         directionOfMovement = new Vector2(Mathf.Cos(currentAngle * Mathf.Deg2Rad), Mathf.Sin(currentAngle * Mathf.Deg2Rad));
 
@@ -77,7 +77,7 @@ public class SpiritMovement : MonoBehaviour
 
         Vector2 velocity = directionOfMovement * topSpeed;
 
-        controller.Move(velocity * Time.deltaTime);
+        controller.Move(velocity * Time.unscaledDeltaTime);
 
         lastDirection = directionOfMovement;
     }
