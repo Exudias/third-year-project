@@ -8,10 +8,14 @@ public class SpiritMovement : MonoBehaviour
     [SerializeField] private float minTopSpeed = 0f;
     [SerializeField] private float minTurnDegsPerSec = 90f;
     [SerializeField] private float maxTurnDegsPerSec = 720f;
+    [SerializeField] private float wallHitTurnPenaltyTime = 0.2f;
+    [SerializeField] private float wallHitTurnPenaltyMultiplier = 0.2f;
     [SerializeField] private float energyDissipationPerSec = 10;
 
     private Vector2 directionOfMovement;
     private Vector2 lastDirection;
+
+    private float timeSinceHitWall;
 
     private Controller2D controller;
     private EnergyManager energyManager;
@@ -27,6 +31,7 @@ public class SpiritMovement : MonoBehaviour
         }
 
         lastDirection = Vector2.right;
+        timeSinceHitWall = Mathf.Infinity;
     }
 
     private void OnEnable()
@@ -42,6 +47,8 @@ public class SpiritMovement : MonoBehaviour
 
     private void Update()
     {
+        timeSinceHitWall += Time.unscaledDeltaTime;
+
         float topSpeed = Mathf.Lerp(minTopSpeed, maxTopSpeed, energyManager.GetEnergyPercent());
         float turnDegsPerSec = Mathf.Lerp(minTurnDegsPerSec, maxTurnDegsPerSec, energyManager.GetEnergyPercent());
 
@@ -62,17 +69,22 @@ public class SpiritMovement : MonoBehaviour
 
         float desiredAngle = Mathf.Atan2(desiredDirection.y, desiredDirection.x) * Mathf.Rad2Deg;
         float currentAngle = Mathf.Atan2(directionOfMovement.y, directionOfMovement.x) * Mathf.Rad2Deg;
-        currentAngle = Mathf.MoveTowardsAngle(currentAngle, desiredAngle, turnDegsPerSec * Time.unscaledDeltaTime);
+
+        float hitWallMult = timeSinceHitWall < wallHitTurnPenaltyTime ? wallHitTurnPenaltyMultiplier : 1f; 
+
+        currentAngle = Mathf.MoveTowardsAngle(currentAngle, desiredAngle, turnDegsPerSec * hitWallMult * Time.unscaledDeltaTime);
 
         directionOfMovement = new Vector2(Mathf.Cos(currentAngle * Mathf.Deg2Rad), Mathf.Sin(currentAngle * Mathf.Deg2Rad));
 
         if (controller.collisions.bottom || controller.collisions.top)
         {
             directionOfMovement.y *= -1;
+            timeSinceHitWall = 0;
         }
         if (controller.collisions.left || controller.collisions.right)
         {
             directionOfMovement.x *= -1;
+            timeSinceHitWall = 0;
         }
 
         Vector2 velocity = directionOfMovement * topSpeed;
