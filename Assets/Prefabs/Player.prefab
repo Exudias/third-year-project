@@ -168,10 +168,12 @@ MonoBehaviour:
   timeToJumpApex: 0.36
   jumpBufferLeniency: 0.1
   coyoteJumpLeniency: 0.1
+  terminalVelocity: 20
   wallJumpLeniency: 0.125
   wallJumpStrength: 12
   wallJumpHeightMultiplier: 0.8
   wallJumpNoControlTime: 0.1
+  huggingWallGravityMultiplier: 0.4
 --- !u!114 &4158628153760104930
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -188,6 +190,8 @@ MonoBehaviour:
   minTopSpeed: 12
   minTurnDegsPerSec: 180
   maxTurnDegsPerSec: 1440
+  wallHitTurnPenaltyTime: 0.2
+  wallHitTurnPenaltyMultiplier: 0.2
   energyDissipationPerSec: 10
 --- !u!114 &1105467402819965738
 MonoBehaviour:
