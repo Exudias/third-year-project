@@ -67,22 +67,32 @@ public class PlayerFormSwitcher : MonoBehaviour
     private void InitBulb()
     {
         currentForm = PlayerForm.Bulb;
+
         bulbMovement.enabled = true;
         spiritMovement.enabled = false;
         bulbCollider.enabled = true;
         spiritCollider.enabled = false;
+
         visualsManager.InitBulb();
+
         controller.UpdateCollider();
+
+        Camera.main.GetComponent<CameraManager>().ActivateBulbCamera();
     }
 
     private void InitSpirit()
     {
         currentForm = PlayerForm.Spirit;
+
         spiritMovement.enabled = true;
         bulbMovement.enabled = false;
         spiritCollider.enabled = true;
         bulbCollider.enabled = false;
+
         visualsManager.InitSpirit();
+
         controller.UpdateCollider();
+
+        Camera.main.GetComponent<CameraManager>().ActivateSpiritCamera();
     }
 }

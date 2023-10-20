@@ -186,8 +186,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d439b8f2c80473542bbcd8267f2bb2e7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maxTopSpeed: 32
-  minTopSpeed: 12
+  maxTopSpeed: 24
+  minTopSpeed: 8
   minTurnDegsPerSec: 180
   maxTurnDegsPerSec: 1440
   wallHitTurnPenaltyTime: 0.2
