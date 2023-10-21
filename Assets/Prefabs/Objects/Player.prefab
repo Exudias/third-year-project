@@ -16,6 +16,7 @@ GameObject:
   - component: {fileID: 4158628153760104930}
   - component: {fileID: 1105467402819965738}
   - component: {fileID: 7328808871941551571}
+  - component: {fileID: 4354015638752285145}
   m_Layer: 0
   m_Name: Player
   m_TagString: Player
@@ -225,6 +226,18 @@ MonoBehaviour:
   energyMeterFG: {fileID: 0}
   timescaleAtMaxEnergy: 0.1
   timescaleAtMinEnergy: 1
+--- !u!114 &4354015638752285145
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 566729647856909231}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ba06d0bd6d6d3e4498b978484b95fbd2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &7667418138490284168
 GameObject:
   m_ObjectHideFlags: 0

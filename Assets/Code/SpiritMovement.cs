@@ -2,6 +2,7 @@ using UnityEngine;
 
 [RequireComponent(typeof(Controller2D))]
 [RequireComponent(typeof(EnergyManager))]
+[RequireComponent(typeof(PlayerLogic))]
 public class SpiritMovement : MonoBehaviour
 {
     [SerializeField] private float maxTopSpeed = 24f;
@@ -19,11 +20,13 @@ public class SpiritMovement : MonoBehaviour
 
     private Controller2D controller;
     private EnergyManager energyManager;
+    private PlayerLogic playerLogic;
 
     private void Start()
     {
         controller = GetComponent<Controller2D>();
         energyManager = GetComponent<EnergyManager>();
+        playerLogic = GetComponent<PlayerLogic>();
 
         if (directionOfMovement == Vector2.zero)
         {
@@ -55,7 +58,7 @@ public class SpiritMovement : MonoBehaviour
         energyManager.AddEnergy(-energyDissipationPerSec * Time.unscaledDeltaTime);
         if (energyManager.GetEnergy() == 0)
         {
-            GameManager.ResetScene();
+            playerLogic.Die();
         }
 
         float horizontalInput = Input.GetAxisRaw("Horizontal");
