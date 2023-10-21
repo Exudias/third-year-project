@@ -8,7 +8,9 @@ using UnityEngine;
 public class Controller2D : MonoBehaviour
 {
     public delegate void CollisionEvent(Vector2 direction);
+    public delegate void DeathCollisionEvent(Vector2 direction, bool isDirectionalDeath, GameObject killer);
     public static event CollisionEvent OnCollision;
+    public static event DeathCollisionEvent OnDeathCollision;
 
     const float SKIN_WIDTH = 0.015f;
     const int MIN_RAYS = 2;
@@ -20,6 +22,7 @@ public class Controller2D : MonoBehaviour
     [SerializeField, Range(MIN_RAYS, MAX_RAYS)] private int horizontalRayCount = 4;
     [SerializeField, Range(MIN_RAYS, MAX_RAYS)] private int verticalRayCount = 4;
     [SerializeField] private LayerMask collisionMask;
+    [SerializeField] private LayerMask deathMask;
 
     private float horizontalRaySpacing;
     private float verticalRaySpacing;
@@ -109,6 +112,17 @@ public class Controller2D : MonoBehaviour
             rayOrigin += Vector2.up * (horizontalRaySpacing * i);
             RaycastHit2D hit = Physics2D.Raycast(rayOrigin, Vector2.right * directionX, rayLength, collisionMask);
 
+            // check for death at last raycast
+            if (i == horizontalRayCount - 1)
+            {
+                RaycastHit2D deathHit = Physics2D.Raycast(rayOrigin, Vector2.right * directionX, rayLength, deathMask);
+                if (deathHit)
+                {
+                    bool isDirectionalDeath = deathHit.collider.gameObject.GetComponent<DirectionalKiller>() != null;
+                    OnDeathCollision?.Invoke(lastDesiredVelocity.normalized, isDirectionalDeath, deathHit.collider.gameObject);
+                }
+            }
+
             if (DEBUG)
             {
                 Debug.DrawRay(rayOrigin, Vector2.right * directionX * rayLength, Color.red);
@@ -145,6 +159,17 @@ public class Controller2D : MonoBehaviour
             Vector2 rayOrigin = (directionY == -1) ? raycastOrigins.bottomLeft : raycastOrigins.topLeft;
             rayOrigin += Vector2.right * (verticalRaySpacing * i + velocity.x);
             RaycastHit2D hit = Physics2D.Raycast(rayOrigin, Vector2.up * directionY, rayLength, collisionMask);
+
+            // check for death at last raycast
+            if (i == verticalRayCount - 1)
+            {
+                RaycastHit2D deathHit = Physics2D.Raycast(rayOrigin, Vector2.up * directionY, rayLength, deathMask);
+                if (deathHit)
+                {
+                    bool isDirectionalDeath = deathHit.collider.gameObject.GetComponent<DirectionalKiller>() != null;
+                    OnDeathCollision?.Invoke(lastDesiredVelocity.normalized, isDirectionalDeath, deathHit.collider.gameObject);
+                }
+            }
 
             if (DEBUG)
             {

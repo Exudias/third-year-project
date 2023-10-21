@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 2107376198821148899}
   - component: {fileID: 650899676636427513}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: SpikeVisuals
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -95,8 +95,8 @@ GameObject:
   - component: {fileID: 2363580773093587640}
   - component: {fileID: 6131532179811831842}
   - component: {fileID: 5407412356851922240}
-  - component: {fileID: 7307379679090541845}
-  m_Layer: 0
+  - component: {fileID: 2604838502328640323}
+  m_Layer: 7
   m_Name: Spikes
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -191,7 +191,7 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 1, y: 0.375}
   m_EdgeRadius: 0
---- !u!114 &7307379679090541845
+--- !u!114 &2604838502328640323
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -200,6 +200,6 @@ MonoBehaviour:
   m_GameObject: {fileID: 6226004501527365961}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4cd7d686a36d59048a2d432fd5bfef87, type: 3}
+  m_Script: {fileID: 11500000, guid: 4b53136784fda854a9a803a524ad1caf, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 

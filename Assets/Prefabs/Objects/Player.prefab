@@ -147,6 +147,9 @@ MonoBehaviour:
   collisionMask:
     serializedVersion: 2
     m_Bits: 64
+  deathMask:
+    serializedVersion: 2
+    m_Bits: 128
 --- !u!114 &4462635132298974952
 MonoBehaviour:
   m_ObjectHideFlags: 0
