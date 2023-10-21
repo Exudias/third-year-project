@@ -151,6 +151,27 @@ TextureImporter:
       indices: 
       edges: []
       weights: []
+    - serializedVersion: 2
+      name: BulbWalk_2
+      rect:
+        serializedVersion: 2
+        x: 32
+        y: 0
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 11e98320e8ceb8b4f88eb6cf35c94b82
+      internalID: -1759383541
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     outline: []
     physicsShape: []
     bones: []
@@ -164,6 +185,7 @@ TextureImporter:
     nameFileIdTable:
       BulbWalk_0: -1544601458
       BulbWalk_1: 2116311470
+      BulbWalk_2: -1759383541
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 
