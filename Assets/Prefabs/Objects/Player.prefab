@@ -178,6 +178,9 @@ MonoBehaviour:
   wallJumpHeightMultiplier: 0.8
   wallJumpNoControlTime: 0.1
   huggingWallGravityMultiplier: 0.4
+  spiritVelocityMultiplier: {x: 2, y: 4}
+  superJumpMaxTime: 0.2
+  horizontalSuperJumpBoost: 40
 --- !u!114 &4158628153760104930
 MonoBehaviour:
   m_ObjectHideFlags: 0

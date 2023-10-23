@@ -23,6 +23,10 @@ public class BulbMovement : MonoBehaviour
     [SerializeField] private float wallJumpHeightMultiplier = 0.8f;
     [SerializeField] private float wallJumpNoControlTime = 0.2f;
     [SerializeField] private float huggingWallGravityMultiplier = 0.4f;
+    [Header("Transform Movement")]
+    [SerializeField] private Vector2 spiritVelocityMultiplier = new Vector2(2, 4);
+    [SerializeField] private float superJumpMaxTime = 0.1f;
+    [SerializeField] private float horizontalSuperJumpBoost = 20f;
 
     private float gravity;
     private float maxJumpVelocity;
@@ -32,6 +36,7 @@ public class BulbMovement : MonoBehaviour
     private float timeSinceJumpPressed;
     private bool jumping;
     private float timeSinceWallJump;
+    private float timeSinceSuperJumpTransformation;
 
     private Controller2D controller;
     private EnergyManager energyManager;
@@ -45,6 +50,7 @@ public class BulbMovement : MonoBehaviour
         timeSinceJumpPressed = Mathf.Infinity;
         coyoteTime = Mathf.Infinity;
         timeSinceWallJump = Mathf.Infinity;
+        timeSinceSuperJumpTransformation = Mathf.Infinity;
     }
 
     // Used when switching from spirit to reset to initial state
@@ -53,8 +59,22 @@ public class BulbMovement : MonoBehaviour
         timeSinceJumpPressed = Mathf.Infinity;
         coyoteTime = Mathf.Infinity;
         timeSinceWallJump = Mathf.Infinity;
+        timeSinceSuperJumpTransformation = Mathf.Infinity;
 
-        velocity = Vector2.zero;
+        if (controller != null)
+        {
+            Vector2 lastVelocity = controller.GetLastActualVelocity();
+            velocity = lastVelocity * spiritVelocityMultiplier / Time.deltaTime;
+            
+            if (lastVelocity.x != 0)
+            {
+                timeSinceSuperJumpTransformation = 0;
+            }
+        }
+        else
+        {
+            velocity = Vector2.zero;
+        }
     }
 
     private void OnEnable()
@@ -83,6 +103,7 @@ public class BulbMovement : MonoBehaviour
         coyoteTime += Time.deltaTime;
         timeSinceJumpPressed += Time.deltaTime;
         timeSinceWallJump += Time.deltaTime;
+        timeSinceSuperJumpTransformation += Time.deltaTime;
 
         float topSpeed = Mathf.Lerp(minTopSpeed, maxTopSpeed, energyManager.GetEnergyPercent());
 
@@ -159,6 +180,11 @@ public class BulbMovement : MonoBehaviour
         timeSinceJumpPressed = Mathf.Infinity;
         coyoteTime = Mathf.Infinity;
         jumping = true;
+
+        if (timeSinceSuperJumpTransformation <= superJumpMaxTime)
+        {
+            velocity.x = Mathf.Sign(velocity.x) * horizontalSuperJumpBoost;
+        }
     }
 
     private void WallJump(int direction)
