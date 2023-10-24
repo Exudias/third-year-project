@@ -16,7 +16,7 @@ public class Controller2D : MonoBehaviour
     const int MIN_RAYS = 2;
     const int MAX_RAYS = 10;
 
-    private bool DEBUG = false;
+    private bool DEBUG = true;
 
     [Header("Collision Parameters")]
     [SerializeField, Range(MIN_RAYS, MAX_RAYS)] private int horizontalRayCount = 4;
@@ -106,22 +106,17 @@ public class Controller2D : MonoBehaviour
         float directionX = Mathf.Sign(velocity.x);
         float rayLength = Mathf.Abs(velocity.x) + SKIN_WIDTH;
 
+        Collider2D deathCollider = null;
+        float closestHit = Mathf.Infinity;
+        float closestDeathHit = Mathf.Infinity;
+
         for (int i = 0; i < horizontalRayCount; i++)
         {
             Vector2 rayOrigin = (directionX == -1) ? raycastOrigins.bottomLeft : raycastOrigins.bottomRight;
             rayOrigin += Vector2.up * (horizontalRaySpacing * i);
-            RaycastHit2D hit = Physics2D.Raycast(rayOrigin, Vector2.right * directionX, rayLength, collisionMask);
 
-            // check for death at last raycast
-            if (i == horizontalRayCount - 1)
-            {
-                RaycastHit2D deathHit = Physics2D.Raycast(rayOrigin, Vector2.right * directionX, rayLength, deathMask);
-                if (deathHit)
-                {
-                    bool isDirectionalDeath = deathHit.collider.gameObject.GetComponent<DirectionalKiller>() != null;
-                    OnDeathCollision?.Invoke(lastDesiredVelocity.normalized, isDirectionalDeath, deathHit.collider.gameObject);
-                }
-            }
+            RaycastHit2D hit = Physics2D.Raycast(rayOrigin, Vector2.right * directionX, rayLength, collisionMask);
+            RaycastHit2D deathHit = Physics2D.Raycast(rayOrigin, Vector2.right * directionX, rayLength, deathMask);
 
             if (DEBUG)
             {
@@ -130,6 +125,11 @@ public class Controller2D : MonoBehaviour
 
             if (hit)
             {
+                if (closestHit > hit.distance)
+                {
+                    closestHit = hit.distance;
+                }
+
                 velocity.x = (hit.distance - SKIN_WIDTH) * directionX;
                 rayLength = hit.distance;
 
@@ -146,6 +146,23 @@ public class Controller2D : MonoBehaviour
                     collisions.right = true;
                 }
             }
+
+            if (deathHit)
+            {
+                if (closestDeathHit > deathHit.distance)
+                {
+                    closestDeathHit = deathHit.distance;
+                    deathCollider = deathHit.collider;
+                }
+            }
+        }
+
+        bool hitDeath = closestDeathHit < closestHit;
+
+        if (hitDeath)
+        {
+            bool isDirectionalDeath = deathCollider.gameObject.GetComponent<DirectionalKiller>() != null;
+            OnDeathCollision?.Invoke(lastDesiredVelocity.normalized, isDirectionalDeath, deathCollider.gameObject);
         }
     }
 
@@ -154,22 +171,17 @@ public class Controller2D : MonoBehaviour
         float directionY = Mathf.Sign(velocity.y);
         float rayLength = Mathf.Abs(velocity.y) + SKIN_WIDTH;
 
+        Collider2D deathCollider = null;
+        float closestHit = Mathf.Infinity;
+        float closestDeathHit = Mathf.Infinity;
+
         for (int i = 0; i < verticalRayCount; i++)
         {
             Vector2 rayOrigin = (directionY == -1) ? raycastOrigins.bottomLeft : raycastOrigins.topLeft;
             rayOrigin += Vector2.right * (verticalRaySpacing * i + velocity.x);
-            RaycastHit2D hit = Physics2D.Raycast(rayOrigin, Vector2.up * directionY, rayLength, collisionMask);
 
-            // check for death at last raycast
-            if (i == verticalRayCount - 1)
-            {
-                RaycastHit2D deathHit = Physics2D.Raycast(rayOrigin, Vector2.up * directionY, rayLength, deathMask);
-                if (deathHit)
-                {
-                    bool isDirectionalDeath = deathHit.collider.gameObject.GetComponent<DirectionalKiller>() != null;
-                    OnDeathCollision?.Invoke(lastDesiredVelocity.normalized, isDirectionalDeath, deathHit.collider.gameObject);
-                }
-            }
+            RaycastHit2D hit = Physics2D.Raycast(rayOrigin, Vector2.up * directionY, rayLength, collisionMask);
+            RaycastHit2D deathHit = Physics2D.Raycast(rayOrigin, Vector2.up * directionY, rayLength, deathMask);
 
             if (DEBUG)
             {
@@ -178,6 +190,11 @@ public class Controller2D : MonoBehaviour
 
             if (hit)
             {
+                if (closestHit > hit.distance)
+                {
+                    closestHit = hit.distance;
+                }
+
                 velocity.y = (hit.distance - SKIN_WIDTH) * directionY;
                 rayLength = hit.distance;
 
@@ -194,6 +211,23 @@ public class Controller2D : MonoBehaviour
                     collisions.top = true;
                 }
             }
+
+            if (deathHit)
+            {
+                if (closestDeathHit > deathHit.distance)
+                {
+                    closestDeathHit = deathHit.distance;
+                    deathCollider = deathHit.collider;
+                }
+            }
+        }
+
+        bool hitDeath = closestDeathHit < closestHit;
+
+        if (hitDeath)
+        {
+            bool isDirectionalDeath = deathCollider.gameObject.GetComponent<DirectionalKiller>() != null;
+            OnDeathCollision?.Invoke(lastDesiredVelocity.normalized, isDirectionalDeath, deathCollider.gameObject);
         }
     }
 
