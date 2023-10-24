@@ -24,7 +24,6 @@ public class BulbMovement : MonoBehaviour
     [SerializeField] private float wallJumpNoControlTime = 0.2f;
     [SerializeField] private float huggingWallGravityMultiplier = 0.4f;
     [Header("Transform Movement")]
-    [SerializeField] private Vector2 spiritVelocityMultiplier = new Vector2(2, 4);
     [SerializeField] private float superJumpMaxTime = 0.1f;
     [SerializeField] private float horizontalSuperJumpBoost = 20f;
 
@@ -61,19 +60,15 @@ public class BulbMovement : MonoBehaviour
         timeSinceWallJump = Mathf.Infinity;
         timeSinceSuperJumpTransformation = Mathf.Infinity;
 
+        velocity = Vector2.zero;
+
         if (controller != null)
         {
             Vector2 lastVelocity = controller.GetLastActualVelocity();
-            velocity = lastVelocity * spiritVelocityMultiplier / Time.deltaTime;
-            
             if (lastVelocity.x != 0)
             {
                 timeSinceSuperJumpTransformation = 0;
             }
-        }
-        else
-        {
-            velocity = Vector2.zero;
         }
     }
 
@@ -181,7 +176,9 @@ public class BulbMovement : MonoBehaviour
         coyoteTime = Mathf.Infinity;
         jumping = true;
 
-        if (timeSinceSuperJumpTransformation <= superJumpMaxTime)
+        bool jumpShouldBeSuper = timeSinceSuperJumpTransformation <= superJumpMaxTime;
+
+        if (jumpShouldBeSuper)
         {
             velocity.x = Mathf.Sign(velocity.x) * horizontalSuperJumpBoost;
         }
