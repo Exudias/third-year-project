@@ -137,7 +137,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2363580773093587640, guid: fe486a5bac37b38429a5aa2803011093, type: 3}
       propertyPath: m_LocalPosition.y
-      value: -3
+      value: -2
       objectReference: {fileID: 0}
     - target: {fileID: 2363580773093587640, guid: fe486a5bac37b38429a5aa2803011093, type: 3}
       propertyPath: m_LocalPosition.z
@@ -10004,6 +10004,14 @@ PrefabInstance:
       propertyPath: m_Name
       value: Player
       objectReference: {fileID: 0}
+    - target: {fileID: 4158628153760104930, guid: 75c100dbc04a6cb4c9cff285d1859583, type: 3}
+      propertyPath: maxTopSpeed
+      value: 16
+      objectReference: {fileID: 0}
+    - target: {fileID: 4158628153760104930, guid: 75c100dbc04a6cb4c9cff285d1859583, type: 3}
+      propertyPath: minTopSpeed
+      value: 16
+      objectReference: {fileID: 0}
     - target: {fileID: 4462635132298974952, guid: 75c100dbc04a6cb4c9cff285d1859583, type: 3}
       propertyPath: horizontalSuperJumpBoost
       value: 50
@@ -10187,17 +10195,25 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 746587202}
     m_Modifications:
+    - target: {fileID: 3853569638752737465, guid: 014771bdc28835843a07f38b7a7b2cfe, type: 3}
+      propertyPath: shardCount
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 3853569638752737465, guid: 014771bdc28835843a07f38b7a7b2cfe, type: 3}
+      propertyPath: shardTimeThrough
+      value: 0.4
+      objectReference: {fileID: 0}
     - target: {fileID: 5674904041531436368, guid: 014771bdc28835843a07f38b7a7b2cfe, type: 3}
       propertyPath: m_Name
       value: GlassSchutes
       objectReference: {fileID: 0}
     - target: {fileID: 6002082829436327980, guid: 014771bdc28835843a07f38b7a7b2cfe, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 8.5
+      value: 17.5
       objectReference: {fileID: 0}
     - target: {fileID: 6002082829436327980, guid: 014771bdc28835843a07f38b7a7b2cfe, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 8.5
+      value: 17.5
       objectReference: {fileID: 0}
     - target: {fileID: 6002082829436327980, guid: 014771bdc28835843a07f38b7a7b2cfe, type: 3}
       propertyPath: m_LocalPosition.z
@@ -10230,6 +10246,14 @@ PrefabInstance:
     - target: {fileID: 6002082829436327980, guid: 014771bdc28835843a07f38b7a7b2cfe, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8341052916519405499, guid: 014771bdc28835843a07f38b7a7b2cfe, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: -9
+      objectReference: {fileID: 0}
+    - target: {fileID: 8341052916519405499, guid: 014771bdc28835843a07f38b7a7b2cfe, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: -17
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

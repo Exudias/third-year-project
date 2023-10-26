@@ -12,6 +12,10 @@ public class SpiritMovement : MonoBehaviour
     [SerializeField] private float wallHitTurnPenaltyTime = 0.2f;
     [SerializeField] private float wallHitTurnPenaltyMultiplier = 0.2f;
     [SerializeField] private float energyDissipationPerSec = 10;
+    [SerializeField] private float speedNormalizationTime = 0.3f;
+
+    private float speedNormalizationStep;
+    private float speedMultiplier;
 
     private Vector2 directionOfMovement;
     private Vector2 lastDirection;
@@ -35,6 +39,8 @@ public class SpiritMovement : MonoBehaviour
 
         lastDirection = Vector2.right;
         timeSinceHitWall = Mathf.Infinity;
+
+        speedNormalizationStep = 1 / speedNormalizationTime;
     }
 
     private void OnEnable()
@@ -46,11 +52,14 @@ public class SpiritMovement : MonoBehaviour
 
         directionOfMovement = desiredDirection;
         lastDirection = directionOfMovement;
+
+        speedMultiplier = 0;
     }
 
     private void Update()
     {
         timeSinceHitWall += Time.unscaledDeltaTime;
+        speedMultiplier = Mathf.MoveTowards(speedMultiplier, 1, speedNormalizationStep * Time.unscaledDeltaTime);
 
         float topSpeed = Mathf.Lerp(minTopSpeed, maxTopSpeed, energyManager.GetEnergyPercent());
         float turnDegsPerSec = Mathf.Lerp(minTurnDegsPerSec, maxTurnDegsPerSec, energyManager.GetEnergyPercent());
@@ -83,14 +92,16 @@ public class SpiritMovement : MonoBehaviour
         {
             directionOfMovement.y *= -1;
             timeSinceHitWall = 0;
+            speedMultiplier = 0.5f;
         }
         if (controller.collisions.left || controller.collisions.right)
         {
             directionOfMovement.x *= -1;
             timeSinceHitWall = 0;
+            speedMultiplier = 0.5f;
         }
 
-        Vector2 velocity = directionOfMovement * topSpeed;
+        Vector2 velocity = directionOfMovement * topSpeed * speedMultiplier;
 
         controller.Move(velocity * Time.unscaledDeltaTime);
 
