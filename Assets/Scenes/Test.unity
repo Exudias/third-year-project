@@ -10004,30 +10004,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Player
       objectReference: {fileID: 0}
-    - target: {fileID: 4158628153760104930, guid: 75c100dbc04a6cb4c9cff285d1859583, type: 3}
-      propertyPath: maxTopSpeed
-      value: 16
-      objectReference: {fileID: 0}
-    - target: {fileID: 4158628153760104930, guid: 75c100dbc04a6cb4c9cff285d1859583, type: 3}
-      propertyPath: minTopSpeed
-      value: 16
-      objectReference: {fileID: 0}
-    - target: {fileID: 4462635132298974952, guid: 75c100dbc04a6cb4c9cff285d1859583, type: 3}
-      propertyPath: horizontalSuperJumpBoost
-      value: 50
-      objectReference: {fileID: 0}
     - target: {fileID: 7328808871941551571, guid: 75c100dbc04a6cb4c9cff285d1859583, type: 3}
       propertyPath: energyMeterFG
       value: 
       objectReference: {fileID: 607504389}
-    - target: {fileID: 7328808871941551571, guid: 75c100dbc04a6cb4c9cff285d1859583, type: 3}
-      propertyPath: timescaleAtMaxEnergy
-      value: 0.01
-      objectReference: {fileID: 0}
-    - target: {fileID: 7328808871941551571, guid: 75c100dbc04a6cb4c9cff285d1859583, type: 3}
-      propertyPath: timescaleAtMinEnergy
-      value: 0.5
-      objectReference: {fileID: 0}
     - target: {fileID: 9154736288115353201, guid: 75c100dbc04a6cb4c9cff285d1859583, type: 3}
       propertyPath: m_LocalPosition.x
       value: -3

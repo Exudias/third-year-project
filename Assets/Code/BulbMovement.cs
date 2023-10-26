@@ -148,7 +148,7 @@ public class BulbMovement : MonoBehaviour
         }
 
         float targetVelocityX = horizontalInput * topSpeed;
-        float accelToUse = ((targetVelocityX * horizontalInput <= 0) ? deceleration : acceleration) * (1 + energyManager.GetEnergyPercent());
+        float accelToUse = (targetVelocityX * horizontalInput <= 0) ? deceleration : acceleration;
         accelToUse *= controller.collisions.bottom ? 1 : airControlMult;
 
         // if just walljumped, take away control/friction
@@ -186,7 +186,7 @@ public class BulbMovement : MonoBehaviour
 
     private void WallJump(int direction)
     {
-        velocity.x = wallJumpStrength * (1 + energyManager.GetEnergyPercent()) * direction;
+        velocity.x = wallJumpStrength * direction;
         velocity.y = maxJumpVelocity * wallJumpHeightMultiplier;
         timeSinceJumpPressed = Mathf.Infinity;
         coyoteTime = Mathf.Infinity;

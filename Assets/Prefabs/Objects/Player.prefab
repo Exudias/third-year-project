@@ -162,8 +162,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fbedb9acb9351e940844afddd4d21f95, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  minTopSpeed: 6
-  maxTopSpeed: 12
+  minTopSpeed: 8
+  maxTopSpeed: 8
   acceleration: 100
   deceleration: 160
   airControlMult: 0.7
@@ -178,7 +178,6 @@ MonoBehaviour:
   wallJumpHeightMultiplier: 0.8
   wallJumpNoControlTime: 0.1
   huggingWallGravityMultiplier: 0.4
-  spiritVelocityMultiplier: {x: 2, y: 4}
   superJumpMaxTime: 0.2
   horizontalSuperJumpBoost: 40
 --- !u!114 &4158628153760104930
@@ -193,13 +192,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d439b8f2c80473542bbcd8267f2bb2e7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maxTopSpeed: 20
-  minTopSpeed: 8
-  minTurnDegsPerSec: 180
-  maxTurnDegsPerSec: 720
+  maxTopSpeed: 14
+  minTopSpeed: 14
+  minTurnDegsPerSec: 900
+  maxTurnDegsPerSec: 900
   wallHitTurnPenaltyTime: 0.2
   wallHitTurnPenaltyMultiplier: 0.2
   energyDissipationPerSec: 10
+  speedNormalizationTime: 0.3
 --- !u!114 &1105467402819965738
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -230,8 +230,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   startEnergy: 50
   energyMeterFG: {fileID: 0}
-  timescaleAtMaxEnergy: 0.1
-  timescaleAtMinEnergy: 1
+  timescaleAtMaxEnergy: 0.01
+  timescaleAtMinEnergy: 0.5
 --- !u!114 &4354015638752285145
 MonoBehaviour:
   m_ObjectHideFlags: 0
