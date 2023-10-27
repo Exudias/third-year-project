@@ -13,8 +13,11 @@ public class Controller2D : MonoBehaviour
     public static event DeathCollisionEvent OnDeathCollision;
 
     const float SKIN_WIDTH = 0.015f;
+    const float STATIC_SKIN_WIDTH = 0.02f;
     const int MIN_RAYS = 2;
     const int MAX_RAYS = 10;
+
+    const float NOT_MOVING_THRESHOLD = 0.00001f;
 
     private bool DEBUG = true;
 
@@ -81,9 +84,28 @@ public class Controller2D : MonoBehaviour
             VerticalCollisions(ref velocity);
         }
 
+        bool notMoving = Mathf.Abs(velocity.x) < NOT_MOVING_THRESHOLD && Mathf.Abs(velocity.y) < NOT_MOVING_THRESHOLD;
+        if (notMoving)
+        {
+            StaticCheck();
+        }
+
         lastActualVelocity = velocity;
 
         transform.Translate(velocity);
+    }
+
+    private void StaticCheck()
+    {
+        Bounds bounds = GetStaticCheckBounds();
+
+        Collider2D[] deathColls = Physics2D.OverlapAreaAll(bounds.min, bounds.max, deathMask);
+
+        if (deathColls.Length > 0)
+        {
+            bool isDirectionalDeath = deathColls[0].GetComponent<DirectionalKiller>() != null;
+            OnDeathCollision?.Invoke(Vector2.zero, isDirectionalDeath, deathColls[0].gameObject);
+        }
     }
 
     public bool CanWallJump(float leniency, int direction)
@@ -251,6 +273,13 @@ public class Controller2D : MonoBehaviour
 
         horizontalRaySpacing = bounds.size.y / (horizontalRayCount - 1);
         verticalRaySpacing = bounds.size.x / (verticalRayCount - 1);
+    }
+
+    private Bounds GetStaticCheckBounds()
+    {
+        Bounds bounds = coll.bounds;
+        bounds.Expand(STATIC_SKIN_WIDTH * -2);
+        return bounds;
     }
 
     private Bounds GetInsetBounds()
