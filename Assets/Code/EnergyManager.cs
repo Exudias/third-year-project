@@ -24,7 +24,11 @@ public class EnergyManager : MonoBehaviour
 
     private void Update()
     {
-        energyMeterFG.fillAmount = GetEnergyPercent();
+        if (energyMeterFG != null)
+        {
+            energyMeterFG.fillAmount = GetEnergyPercent();
+        }
+        
         if (formSwitcher.GetCurrentForm() == PlayerFormSwitcher.PlayerForm.Spirit)
         {
             Time.timeScale = Mathf.Lerp(timescaleAtMinEnergy, timescaleAtMaxEnergy, GetEnergyPercent());
