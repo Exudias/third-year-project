@@ -12,6 +12,11 @@ public class GameManager : MonoBehaviour
         SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
     }
 
+    public static void LoadNextScene()
+    {
+        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
+    }
+
     private void Update()
     {
         Time.fixedDeltaTime = DEFAULT_FIXED_TIMESTEP * Time.timeScale;

@@ -164,8 +164,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   minTopSpeed: 8
   maxTopSpeed: 8
-  acceleration: 100
-  deceleration: 160
+  acceleration: 120
+  deceleration: 200
   airControlMult: 0.7
   maxJumpHeight: 3.25
   minJumpHeight: 0.5
@@ -174,7 +174,7 @@ MonoBehaviour:
   coyoteJumpLeniency: 0.1
   terminalVelocity: 20
   wallJumpLeniency: 0.125
-  wallJumpStrength: 12
+  wallJumpStrength: 16
   wallJumpHeightMultiplier: 0.8
   wallJumpNoControlTime: 0.1
   huggingWallGravityMultiplier: 0.4
@@ -231,7 +231,7 @@ MonoBehaviour:
   startEnergy: 50
   energyMeterFG: {fileID: 0}
   timescaleAtMaxEnergy: 0.01
-  timescaleAtMinEnergy: 0.5
+  timescaleAtMinEnergy: 0.01
 --- !u!114 &4354015638752285145
 MonoBehaviour:
   m_ObjectHideFlags: 0
