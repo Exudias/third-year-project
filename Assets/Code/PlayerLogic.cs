@@ -4,6 +4,13 @@ using UnityEngine;
 
 public class PlayerLogic : MonoBehaviour
 {
+    private PlayerFormSwitcher formSwitcher;
+
+    private void Start()
+    {
+        formSwitcher = GetComponent<PlayerFormSwitcher>();
+    }
+
     private void OnEnable()
     {
         Controller2D.OnDeathCollision += OnControllerDeathCollision;
@@ -23,14 +30,36 @@ public class PlayerLogic : MonoBehaviour
     {
         if (!isDirectionalDeath)
         {
-            Die();
+            if (killer.GetComponent<FormKiller>() != null)
+            {
+                bool shouldKillForm = formSwitcher != null && formSwitcher.GetCurrentForm() == killer.GetComponent<FormKiller>().GetForm();
+                if (shouldKillForm)
+                {
+                    Die();
+                }
+            }
+            else
+            {
+                Die();
+            }
         }
         else
         {
             DirectionalKiller directionalKiller = killer.GetComponent<DirectionalKiller>();
             if (directionalKiller.ShouldKill(dir))
             {
-                Die();
+                if (killer.GetComponent<FormKiller>() != null)
+                {
+                    bool shouldKillForm = formSwitcher != null && formSwitcher.GetCurrentForm() == killer.GetComponent<FormKiller>().GetForm();
+                    if (shouldKillForm)
+                    {
+                        Die();
+                    }
+                }
+                else
+                {
+                    Die();
+                }
             }
         }
     }
