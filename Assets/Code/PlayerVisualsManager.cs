@@ -18,7 +18,7 @@ public class PlayerVisualsManager : MonoBehaviour
     private SpriteRenderer spriteRenderer;
     private Animator animator;
 
-    private const float MIN_VERT_VELOCITY_FOR_MOVEMENT = 0.01f;
+    private const float MIN_VERT_VELOCITY_FOR_MOVEMENT = 1f;
 
     private void Start()
     {
@@ -41,7 +41,7 @@ public class PlayerVisualsManager : MonoBehaviour
         {
             FlipBulbWhenAppropriate(lastDesiredVelocity);
 
-            if (Mathf.Abs(lastDesiredVelocity.y) > MIN_VERT_VELOCITY_FOR_MOVEMENT || !grounded)
+            if (Mathf.Abs(lastDesiredVelocity.y) / Time.deltaTime > MIN_VERT_VELOCITY_FOR_MOVEMENT || !grounded)
             {
                 if (lastDesiredVelocity.y > 0)
                 {
