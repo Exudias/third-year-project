@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: b2f424acb3af99c4991c5ec0f9f5b3e7
+guid: 9fb802ff369906440bd4945f3cd9b47f
 TextureImporter:
   internalIDToNameTable: []
   externalObjects: {}
@@ -110,7 +110,7 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: BulbFallingForward_0
+      name: BulbJumpingSide_0
       rect:
         serializedVersion: 2
         x: 0
@@ -124,8 +124,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: c1aced4031d495f4a9841d604318dcb1
-      internalID: -154378271
+      spriteID: eb1104fc00e386e429f42d5f5ae923c0
+      internalID: -1340421783
       vertices: []
       indices: 
       edges: []
@@ -141,7 +141,7 @@ TextureImporter:
     weights: []
     secondaryTextures: []
     nameFileIdTable:
-      BulbFallingForward_0: -154378271
+      BulbJumpingSide_0: -1340421783
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

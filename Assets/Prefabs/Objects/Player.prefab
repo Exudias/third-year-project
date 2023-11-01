@@ -38,7 +38,6 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 1524126410840315839}
-  - {fileID: 4455040105337905069}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!61 &2135643347228080215
@@ -245,37 +244,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ba06d0bd6d6d3e4498b978484b95fbd2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!1 &7618032230396601810
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 4455040105337905069}
-  m_Layer: 0
-  m_Name: PlayerCameraTarget
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &4455040105337905069
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7618032230396601810}
-  serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 9154736288115353201}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &7667418138490284168
 GameObject:
   m_ObjectHideFlags: 0
@@ -378,6 +346,10 @@ MonoBehaviour:
   controller: {fileID: 4046459696820276540}
   bulbIdleForward: {fileID: 7400000, guid: f352edc67ebdb4d45a175ff01e367386, type: 2}
   bulbWalk: {fileID: 7400000, guid: 349a73b67351db842a51e7bfe5efd57c, type: 2}
+  bulbJumpForward: {fileID: 7400000, guid: f1ff4dfb7fac9934daf4d27f8fb4bd8e, type: 2}
+  bulbFallForward: {fileID: 7400000, guid: 0ff47e0bc640e734886df854d27a896c, type: 2}
+  bulbJumpSide: {fileID: 7400000, guid: 933db060bc6c9c94d940536629544528, type: 2}
+  bulbFallSide: {fileID: 7400000, guid: ab03894c4032b9546a09df71ff4d0717, type: 2}
   spiritMove: {fileID: 7400000, guid: 423f6384845c5f04fb3165c8b457bfd2, type: 2}
 --- !u!95 &3598630173020043650
 Animator:

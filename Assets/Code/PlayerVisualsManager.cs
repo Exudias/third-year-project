@@ -9,10 +9,16 @@ public class PlayerVisualsManager : MonoBehaviour
 
     [SerializeField] private AnimationClip bulbIdleForward;
     [SerializeField] private AnimationClip bulbWalk;
+    [SerializeField] private AnimationClip bulbJumpForward;
+    [SerializeField] private AnimationClip bulbFallForward;
+    [SerializeField] private AnimationClip bulbJumpSide;
+    [SerializeField] private AnimationClip bulbFallSide;
     [SerializeField] private AnimationClip spiritMove;
 
     private SpriteRenderer spriteRenderer;
     private Animator animator;
+
+    private const float MIN_VERT_VELOCITY_FOR_MOVEMENT = 0.01f;
 
     private void Start()
     {
@@ -25,6 +31,7 @@ public class PlayerVisualsManager : MonoBehaviour
         PlayerFormSwitcher.PlayerForm form = formSwitcher.GetCurrentForm();
 
         Vector2 lastDesiredVelocity = controller.GetLastDesiredVelocity();
+        bool grounded = controller.IsGrounded();
 
         if (form == PlayerFormSwitcher.PlayerForm.Spirit)
         {
@@ -32,28 +39,61 @@ public class PlayerVisualsManager : MonoBehaviour
         }
         else if (form == PlayerFormSwitcher.PlayerForm.Bulb)
         {
-            if (spriteRenderer.flipX)
-            {
-                if (lastDesiredVelocity.x > 0)
-                {
-                    spriteRenderer.flipX = false;
-                }
-            }
-            else
-            {
-                if (lastDesiredVelocity.x < 0)
-                {
-                    spriteRenderer.flipX = true;
-                }
-            }
+            FlipBulbWhenAppropriate(lastDesiredVelocity);
 
-            if (lastDesiredVelocity.x != 0)
+            if (Mathf.Abs(lastDesiredVelocity.y) > MIN_VERT_VELOCITY_FOR_MOVEMENT || !grounded)
             {
-                animator.Play(bulbWalk.name);
+                if (lastDesiredVelocity.y > 0)
+                {
+                    if (lastDesiredVelocity.x != 0)
+                    {
+                        animator.Play(bulbJumpSide.name);
+                    }
+                    else
+                    {
+                        animator.Play(bulbJumpForward.name);
+                    }    
+                }
+                else
+                {
+                    if (lastDesiredVelocity.x != 0)
+                    {
+                        animator.Play(bulbFallSide.name);
+                    }
+                    else
+                    {
+                        animator.Play(bulbFallForward.name);
+                    }
+                }
             }
             else
             {
-                animator.Play(bulbIdleForward.name);
+                if (lastDesiredVelocity.x != 0)
+                {
+                    animator.Play(bulbWalk.name);
+                }
+                else
+                {
+                    animator.Play(bulbIdleForward.name);
+                }
+            }
+        }
+    }
+
+    private void FlipBulbWhenAppropriate(Vector2 lastDesiredVelocity)
+    {
+        if (spriteRenderer.flipX)
+        {
+            if (lastDesiredVelocity.x > 0)
+            {
+                spriteRenderer.flipX = false;
+            }
+        }
+        else
+        {
+            if (lastDesiredVelocity.x < 0)
+            {
+                spriteRenderer.flipX = true;
             }
         }
     }

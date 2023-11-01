@@ -68,6 +68,11 @@ public class Controller2D : MonoBehaviour
         return lastActualVelocity;
     }
 
+    public bool IsGrounded()
+    {
+        return collisions.bottom;
+    }
+
     public void Move(Vector2 velocity, GameObject pusher = null)
     {
         UpdateRaycastOrigins();
