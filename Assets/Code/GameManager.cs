@@ -5,7 +5,12 @@ using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviour
 {
-    private float DEFAULT_FIXED_TIMESTEP = 0.02f;   
+    private float DEFAULT_FIXED_TIMESTEP = 0.02f;
+
+    private void Start()
+    {
+        Application.targetFrameRate = 60;
+    }
 
     public static void ResetScene()
     {
