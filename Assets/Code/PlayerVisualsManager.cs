@@ -13,6 +13,7 @@ public class PlayerVisualsManager : MonoBehaviour
     [SerializeField] private AnimationClip bulbFallForward;
     [SerializeField] private AnimationClip bulbJumpSide;
     [SerializeField] private AnimationClip bulbFallSide;
+    [SerializeField] private AnimationClip bulbWallCling;
     [SerializeField] private AnimationClip spiritMove;
 
     private SpriteRenderer spriteRenderer;
@@ -32,6 +33,7 @@ public class PlayerVisualsManager : MonoBehaviour
 
         Vector2 lastDesiredVelocity = controller.GetLastDesiredVelocity();
         bool grounded = controller.IsGrounded();
+        bool huggingWall = controller.collisions.left || controller.collisions.right;
 
         if (form == PlayerFormSwitcher.PlayerForm.Spirit)
         {
@@ -56,13 +58,21 @@ public class PlayerVisualsManager : MonoBehaviour
                 }
                 else
                 {
-                    if (lastDesiredVelocity.x != 0)
+                    if (huggingWall)
                     {
-                        animator.Play(bulbFallSide.name);
+                        animator.Play(bulbWallCling.name);
+                        spriteRenderer.flipX = !spriteRenderer.flipX;
                     }
                     else
                     {
-                        animator.Play(bulbFallForward.name);
+                        if (lastDesiredVelocity.x != 0)
+                        {
+                            animator.Play(bulbFallSide.name);
+                        }
+                        else
+                        {
+                            animator.Play(bulbFallForward.name);
+                        }
                     }
                 }
             }
