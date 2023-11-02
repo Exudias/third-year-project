@@ -128,6 +128,8 @@ public class Controller2D : MonoBehaviour
         return false;
     }
 
+    const float MIN_DISTANCE_TO_DIE = 0.0001f; // if death collision is more than that closer than normal, die
+
     private void HorizontalCollisions(ref Vector2 velocity)
     {
         float directionX = Mathf.Sign(velocity.x);
@@ -184,10 +186,11 @@ public class Controller2D : MonoBehaviour
             }
         }
 
-        bool hitDeath = closestDeathHit < closestHit;
+        bool hitDeath = closestDeathHit - closestHit < -MIN_DISTANCE_TO_DIE;
 
         if (hitDeath)
         {
+            Debug.Log(closestDeathHit + " " + closestHit);
             bool isDirectionalDeath = deathCollider.gameObject.GetComponent<DirectionalKiller>() != null;
             OnDeathCollision?.Invoke(lastDesiredVelocity.normalized, isDirectionalDeath, deathCollider.gameObject);
         }
@@ -249,7 +252,7 @@ public class Controller2D : MonoBehaviour
             }
         }
 
-        bool hitDeath = closestDeathHit < closestHit;
+        bool hitDeath = closestDeathHit - closestHit < -MIN_DISTANCE_TO_DIE;
 
         if (hitDeath)
         {
