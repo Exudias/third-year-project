@@ -190,7 +190,6 @@ public class Controller2D : MonoBehaviour
 
         if (hitDeath)
         {
-            Debug.Log(closestDeathHit + " " + closestHit);
             bool isDirectionalDeath = deathCollider.gameObject.GetComponent<DirectionalKiller>() != null;
             OnDeathCollision?.Invoke(lastDesiredVelocity.normalized, isDirectionalDeath, deathCollider.gameObject);
         }
