@@ -231,7 +231,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7e8e22ba6843e4e47adeab19952cb8f0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  startEnergy: 50
+  startEnergy: 100
   energyMeterFG: {fileID: 0}
   timescaleAtMaxEnergy: 0.01
   timescaleAtMinEnergy: 0.01

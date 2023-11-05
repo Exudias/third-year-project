@@ -39,11 +39,13 @@ public class BulbMovement : MonoBehaviour
 
     private Controller2D controller;
     private EnergyManager energyManager;
+    private InputManager input;
 
     private void Start()
     {
         controller = GetComponent<Controller2D>();
         energyManager = GetComponent<EnergyManager>();
+        input = InputManager.instance;
 
         CalculateGravityAndJumpVelocity();
         timeSinceJumpPressed = Mathf.Infinity;
@@ -113,14 +115,14 @@ public class BulbMovement : MonoBehaviour
             jumping = false;
         }
 
-        float horizontalInput = Input.GetAxisRaw("Horizontal");
+        float horizontalInput = input.GetHorizontalRaw();
 
-        if (Input.GetKeyDown(KeyCode.Space))
+        if (input.IsDown(KeyCode.Space))
         {
             timeSinceJumpPressed = 0;
         }
 
-        if (jumping && !Input.GetKey(KeyCode.Space))
+        if (jumping && !input.IsPressed(KeyCode.Space))
         {
             EndJump();
         }
