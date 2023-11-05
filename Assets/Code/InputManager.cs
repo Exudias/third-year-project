@@ -100,7 +100,6 @@ public class InputManager : MonoBehaviour
         CalculateAxes();
 
         ButtonState rightButtonState = keyStates[KeyCode.RightArrow];
-        Debug.Log("Down: " + rightButtonState.timeAtLastDown + " Up: " + rightButtonState.timeAtLastUp + " Pressing: " + Input.GetKey(KeyCode.RightArrow));
 
         internalTimer += Time.unscaledDeltaTime;
     }
