@@ -99,10 +99,7 @@ public class InputManager : MonoBehaviour
         UpdateKeyStates();
         CalculateAxes();
 
-        ButtonState rightButtonState = keyStates[KeyCode.RightArrow];
-
         internalTimer += Time.unscaledDeltaTime;
-        Debug.Log(Input.GetKey(KeyCode.RightArrow));
     }
 
     public float GetHorizontalRaw() => horizontalRawInput;

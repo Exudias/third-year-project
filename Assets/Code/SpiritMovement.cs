@@ -25,12 +25,14 @@ public class SpiritMovement : MonoBehaviour
     private Controller2D controller;
     private EnergyManager energyManager;
     private PlayerLogic playerLogic;
+    private InputManager input;
 
     private void Start()
     {
         controller = GetComponent<Controller2D>();
         energyManager = GetComponent<EnergyManager>();
         playerLogic = GetComponent<PlayerLogic>();
+        input = InputManager.instance;
 
         if (directionOfMovement == Vector2.zero)
         {
@@ -45,8 +47,8 @@ public class SpiritMovement : MonoBehaviour
 
     private void OnEnable()
     {
-        float horizontalInput = Input.GetAxisRaw("Horizontal");
-        float verticalInput = Input.GetAxisRaw("Vertical");
+        float horizontalInput = input.GetHorizontalRaw();
+        float verticalInput = input.GetVerticalRaw();
 
         Vector2 desiredDirection = new Vector2(horizontalInput, verticalInput).normalized;
 
@@ -70,8 +72,8 @@ public class SpiritMovement : MonoBehaviour
             playerLogic.Die();
         }
 
-        float horizontalInput = Input.GetAxisRaw("Horizontal");
-        float verticalInput = Input.GetAxisRaw("Vertical");
+        float horizontalInput = input.GetHorizontalRaw();
+        float verticalInput = input.GetVerticalRaw();
 
         Vector2 desiredDirection = new Vector2(horizontalInput, verticalInput).normalized;
         if (desiredDirection == Vector2.zero)

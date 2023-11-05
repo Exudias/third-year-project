@@ -20,18 +20,20 @@ public class PlayerFormSwitcher : MonoBehaviour
     private BulbMovement bulbMovement;
     private SpiritMovement spiritMovement;
     private Controller2D controller;
+    private InputManager input;
 
     private void Start()
     {
         bulbMovement = GetComponent<BulbMovement>();
         spiritMovement = GetComponent<SpiritMovement>();
         controller = GetComponent<Controller2D>();
+        input = InputManager.instance;
     }
 
     private void Update()
     {
         // go spirit from bulb, but to return you must collide with a bulb, so no on-demand
-        if (Input.GetKeyDown(KeyCode.LeftShift) && currentForm == PlayerForm.Bulb)
+        if (input.IsDown(KeyCode.LeftShift) && currentForm == PlayerForm.Bulb)
         {
             ToggleForm();
         }
