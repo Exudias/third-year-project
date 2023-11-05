@@ -56,6 +56,8 @@ public class GameManager : MonoBehaviour
     public async static void ResetScene()
     {
         int index = GetNonPersistentSceneBuildIndex();
+        Debug.Log(SceneManager.GetSceneByBuildIndex(index).name);
+        if (!SceneManager.GetSceneByBuildIndex(index).isLoaded) return;
         await SceneManager.UnloadSceneAsync(index);
         SceneManager.LoadScene(index);
     }

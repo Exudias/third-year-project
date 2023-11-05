@@ -102,24 +102,13 @@ public class InputManager : MonoBehaviour
         ButtonState rightButtonState = keyStates[KeyCode.RightArrow];
 
         internalTimer += Time.unscaledDeltaTime;
+        Debug.Log(Input.GetKey(KeyCode.RightArrow));
     }
 
     public float GetHorizontalRaw() => horizontalRawInput;
     public float GetVerticalRaw() => verticalRawInput;
 
-    public bool IsPressed(KeyCode key)
-    {
-        if (keyStates.ContainsKey(key))
-        {
-            ButtonState buttonState = keyStates[key];
-            return buttonState.timeAtLastDown > buttonState.timeAtLastUp;
-        }
-        else
-        {
-            throw new System.Exception($"Key {key} not bound to anything!");
-        }
-    }
-
+    public bool IsPressed(KeyCode key) => Input.GetKey(key);
     public bool IsDown(KeyCode key) => Input.GetKeyDown(key);
     public bool IsUp(KeyCode key) => Input.GetKeyUp(key);
 
