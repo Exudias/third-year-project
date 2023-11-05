@@ -47,11 +47,12 @@ public class SpiritMovement : MonoBehaviour
 
     private void OnEnable()
     {
+        if (input == null) input = InputManager.instance;
         float horizontalInput = input.GetHorizontalRaw();
         float verticalInput = input.GetVerticalRaw();
 
         Vector2 desiredDirection = new Vector2(horizontalInput, verticalInput).normalized;
-
+            
         directionOfMovement = desiredDirection;
         lastDirection = directionOfMovement;
 

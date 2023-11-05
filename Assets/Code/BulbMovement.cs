@@ -32,7 +32,6 @@ public class BulbMovement : MonoBehaviour
     private float minJumpVelocity;
     private Vector2 velocity;
     private float coyoteTime;
-    private float timeSinceJumpPressed;
     private bool jumping;
     private float timeSinceWallJump;
     private float timeSinceSuperJumpTransformation;
@@ -48,7 +47,6 @@ public class BulbMovement : MonoBehaviour
         input = InputManager.instance;
 
         CalculateGravityAndJumpVelocity();
-        timeSinceJumpPressed = Mathf.Infinity;
         coyoteTime = Mathf.Infinity;
         timeSinceWallJump = Mathf.Infinity;
         timeSinceSuperJumpTransformation = Mathf.Infinity;
@@ -57,7 +55,6 @@ public class BulbMovement : MonoBehaviour
     // Used when switching from spirit to reset to initial state
     private void ResetForFreshBulb()
     {
-        timeSinceJumpPressed = Mathf.Infinity;
         coyoteTime = Mathf.Infinity;
         timeSinceWallJump = Mathf.Infinity;
         timeSinceSuperJumpTransformation = Mathf.Infinity;
@@ -98,7 +95,6 @@ public class BulbMovement : MonoBehaviour
     private void Update()
     {
         coyoteTime += Time.deltaTime;
-        timeSinceJumpPressed += Time.deltaTime;
         timeSinceWallJump += Time.deltaTime;
         timeSinceSuperJumpTransformation += Time.deltaTime;
 
@@ -117,18 +113,13 @@ public class BulbMovement : MonoBehaviour
 
         float horizontalInput = input.GetHorizontalRaw();
 
-        if (input.IsDown(KeyCode.Space))
-        {
-            timeSinceJumpPressed = 0;
-        }
-
         if (jumping && !input.IsPressed(KeyCode.Space))
         {
             EndJump();
         }
 
         // regular jump
-        if (coyoteTime <= coyoteJumpLeniency && timeSinceJumpPressed <= jumpBufferLeniency)
+        if (coyoteTime <= coyoteJumpLeniency && input.SecondsSincePressed(KeyCode.Space) <= jumpBufferLeniency)
         {
             Jump();
         }
@@ -137,7 +128,7 @@ public class BulbMovement : MonoBehaviour
         const int DIR_RIGHT = 1;
 
         //wall jump
-        if (timeSinceJumpPressed <= jumpBufferLeniency)
+        if (input.SecondsSincePressed(KeyCode.Space) <= jumpBufferLeniency)
         {
             if (controller.CanWallJump(wallJumpLeniency, DIR_LEFT))
             {
@@ -173,8 +164,8 @@ public class BulbMovement : MonoBehaviour
 
     private void Jump()
     {
+        input.ConsumeBuffer(KeyCode.Space);
         velocity.y = maxJumpVelocity;
-        timeSinceJumpPressed = Mathf.Infinity;
         coyoteTime = Mathf.Infinity;
         jumping = true;
 
@@ -188,9 +179,9 @@ public class BulbMovement : MonoBehaviour
 
     private void WallJump(int direction)
     {
+        input.ConsumeBuffer(KeyCode.Space);
         velocity.x = wallJumpStrength * direction;
         velocity.y = maxJumpVelocity * wallJumpHeightMultiplier;
-        timeSinceJumpPressed = Mathf.Infinity;
         coyoteTime = Mathf.Infinity;
         timeSinceWallJump = 0;
     }

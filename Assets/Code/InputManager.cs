@@ -89,11 +89,6 @@ public class InputManager : MonoBehaviour
         verticalRawInput = (down ? -1 : 0) + (up ? 1 : 0);
     }
 
-    private void OnLevelWasLoaded(int level)
-    {
-        Input.ResetInputAxes();
-    }
-
     private void Update()
     {
         UpdateKeyStates();
@@ -119,6 +114,13 @@ public class InputManager : MonoBehaviour
         {
             throw new System.Exception($"Key {key} not bound to anything!");
         }
+    }
+
+    public void ConsumeBuffer(KeyCode key)
+    {
+        ButtonState state = keyStates[key];
+        state.timeAtLastDown = Mathf.NegativeInfinity;
+        keyStates[key] = state;
     }
 
     private struct ButtonState

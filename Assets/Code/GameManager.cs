@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -56,7 +54,6 @@ public class GameManager : MonoBehaviour
     public async static void ResetScene()
     {
         int index = GetNonPersistentSceneBuildIndex();
-        Debug.Log(SceneManager.GetSceneByBuildIndex(index).name);
         if (!SceneManager.GetSceneByBuildIndex(index).isLoaded) return;
         await SceneManager.UnloadSceneAsync(index);
         SceneManager.LoadScene(index);
@@ -64,11 +61,6 @@ public class GameManager : MonoBehaviour
 
     public async static void LoadNextScene()
     {
-        for (int i = 0; i < SceneManager.sceneCount; i++)
-        {
-            Debug.Log(SceneManager.GetSceneAt(i).name);
-        }
-
         int currentBuildIndex = GetNonPersistentSceneBuildIndex();
 
         if (SceneManager.GetSceneByBuildIndex(currentBuildIndex + 1).name == gameplayPersistentSceneName)
