@@ -3,8 +3,6 @@ using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviour
 {
-    private float DEFAULT_FIXED_TIMESTEP = 0.02f;
-
     private static string gameplayPersistentSceneName = "GAMEPLAY_PERSIST";
 
     private void Start()
@@ -82,10 +80,5 @@ public class GameManager : MonoBehaviour
 
         await SceneManager.UnloadSceneAsync(currentLevelBuildIndex);
         SceneManager.LoadScene(currentLevelBuildIndex + 1, LoadSceneMode.Additive);
-    }
-
-    private void Update()
-    {
-        Time.fixedDeltaTime = DEFAULT_FIXED_TIMESTEP * Time.timeScale;
     }
 }

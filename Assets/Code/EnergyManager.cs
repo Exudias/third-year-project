@@ -15,11 +15,34 @@ public class EnergyManager : MonoBehaviour
     private static float energy;
 
     private PlayerFormSwitcher formSwitcher;
+    private SpiritMovement spiritMovement;
+
+    private void OnEnable()
+    {
+        Controller2D.OnOtherCollision += OnControllerOtherCollision;
+    }
+
+    private void OnDisable()
+    {
+        Controller2D.OnOtherCollision -= OnControllerOtherCollision;
+    }
+
+    private void OnControllerOtherCollision(Vector2 dir, GameObject obj)
+    {
+        if (obj.GetComponent<EnergyPickupLogic>() != null)
+        {
+            if (spiritMovement != null && spiritMovement.enabled)
+            {
+                obj.GetComponent<EnergyPickupLogic>().PlayerCollect(this);
+            }
+        }
+    }
 
     private void Start()
     {
         energy = Mathf.Clamp(startEnergy, MIN_ENERGY, MAX_ENERGY);
         formSwitcher = GetComponent<PlayerFormSwitcher>();
+        spiritMovement = GetComponent<SpiritMovement>();
     }
 
     private void Update()

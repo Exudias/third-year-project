@@ -1,4 +1,5 @@
 using UnityEngine;
+using System.Collections.Generic;
 
 // Controller2D class based on Sebastian Lague's (https://www.youtube.com/@SebastianLague) 2D platformer series
 // The original repo can be found here: https://github.com/SebLague/2DPlatformer-Tutorial
@@ -9,8 +10,10 @@ public class Controller2D : MonoBehaviour
 {
     public delegate void CollisionEvent(Vector2 direction);
     public delegate void DeathCollisionEvent(Vector2 direction, bool isDirectionalDeath, GameObject killer);
+    public delegate void OtherCollision(Vector2 direction, GameObject other);
     public static event CollisionEvent OnCollision;
     public static event DeathCollisionEvent OnDeathCollision;
+    public static event OtherCollision OnOtherCollision;
 
     const float SKIN_WIDTH = 0.015f;
     const float STATIC_SKIN_WIDTH = 0.02f;
@@ -26,6 +29,7 @@ public class Controller2D : MonoBehaviour
     [SerializeField, Range(MIN_RAYS, MAX_RAYS)] private int verticalRayCount = 4;
     [SerializeField] private LayerMask collisionMask;
     [SerializeField] private LayerMask deathMask;
+    [SerializeField] private LayerMask otherMask;
 
     private float horizontalRaySpacing;
     private float verticalRaySpacing;
@@ -105,11 +109,17 @@ public class Controller2D : MonoBehaviour
         Bounds bounds = GetStaticCheckBounds();
 
         Collider2D[] deathColls = Physics2D.OverlapAreaAll(bounds.min, bounds.max, deathMask);
+        Collider2D[] otherColls = Physics2D.OverlapAreaAll(bounds.min, bounds.max, otherMask);
 
-        if (deathColls.Length > 0)
+        foreach(Collider2D deathColl in deathColls)
         {
-            bool isDirectionalDeath = deathColls[0].GetComponent<DirectionalKiller>() != null;
-            OnDeathCollision?.Invoke(Vector2.zero, isDirectionalDeath, deathColls[0].gameObject);
+            bool isDirectionalDeath = deathColl.GetComponent<DirectionalKiller>() != null;
+            OnDeathCollision?.Invoke(Vector2.zero, isDirectionalDeath, deathColl.gameObject);
+        }
+
+        foreach (Collider2D otherColl in otherColls)
+        {
+            OnOtherCollision?.Invoke(Vector2.zero, otherColl.gameObject);
         }
     }
 
@@ -138,6 +148,7 @@ public class Controller2D : MonoBehaviour
         Collider2D deathCollider = null;
         float closestHit = Mathf.Infinity;
         float closestDeathHit = Mathf.Infinity;
+        List<RaycastHit2D> allOtherHits = new List<RaycastHit2D>();
 
         for (int i = 0; i < horizontalRayCount; i++)
         {
@@ -146,6 +157,7 @@ public class Controller2D : MonoBehaviour
 
             RaycastHit2D hit = Physics2D.Raycast(rayOrigin, Vector2.right * directionX, rayLength, collisionMask);
             RaycastHit2D deathHit = Physics2D.Raycast(rayOrigin, Vector2.right * directionX, rayLength, deathMask);
+            allOtherHits.AddRange(Physics2D.RaycastAll(rayOrigin, Vector2.right * directionX, rayLength, otherMask));
 
             if (DEBUG)
             {
@@ -193,6 +205,25 @@ public class Controller2D : MonoBehaviour
             bool isDirectionalDeath = deathCollider.gameObject.GetComponent<DirectionalKiller>() != null;
             OnDeathCollision?.Invoke(lastDesiredVelocity.normalized, isDirectionalDeath, deathCollider.gameObject);
         }
+
+        // Find all objects you could collide with
+        List<GameObject> hitOtherObjects = new List<GameObject>();
+        foreach(RaycastHit2D hit in allOtherHits)
+        {
+            if (hit.distance - closestHit < -MIN_DISTANCE_TO_DIE)
+            {
+                hitOtherObjects.Add(hit.collider.gameObject);
+            }
+        }
+
+        // Remove duplicates
+        List<int> IDs = new List<int>();
+        foreach(GameObject obj in hitOtherObjects)
+        {
+            if (IDs.Contains(obj.GetInstanceID())) continue;
+            OnOtherCollision?.Invoke(lastDesiredVelocity.normalized, obj);
+            IDs.Add(obj.GetInstanceID());
+        }
     }
 
     private void VerticalCollisions(ref Vector2 velocity)
@@ -203,6 +234,7 @@ public class Controller2D : MonoBehaviour
         Collider2D deathCollider = null;
         float closestHit = Mathf.Infinity;
         float closestDeathHit = Mathf.Infinity;
+        List<RaycastHit2D> allOtherHits = new List<RaycastHit2D>();
 
         for (int i = 0; i < verticalRayCount; i++)
         {
@@ -211,6 +243,7 @@ public class Controller2D : MonoBehaviour
 
             RaycastHit2D hit = Physics2D.Raycast(rayOrigin, Vector2.up * directionY, rayLength, collisionMask);
             RaycastHit2D deathHit = Physics2D.Raycast(rayOrigin, Vector2.up * directionY, rayLength, deathMask);
+            allOtherHits.AddRange(Physics2D.RaycastAll(rayOrigin, Vector2.up * directionY, rayLength, otherMask));
 
             if (DEBUG)
             {
@@ -257,6 +290,25 @@ public class Controller2D : MonoBehaviour
         {
             bool isDirectionalDeath = deathCollider.gameObject.GetComponent<DirectionalKiller>() != null;
             OnDeathCollision?.Invoke(lastDesiredVelocity.normalized, isDirectionalDeath, deathCollider.gameObject);
+        }
+
+        // Find all objects you could collide with
+        List<GameObject> hitOtherObjects = new List<GameObject>();
+        foreach (RaycastHit2D hit in allOtherHits)
+        {
+            if (hit.distance - closestHit < -MIN_DISTANCE_TO_DIE)
+            {
+                hitOtherObjects.Add(hit.collider.gameObject);
+            }
+        }
+
+        // Remove duplicates
+        List<int> IDs = new List<int>();
+        foreach (GameObject obj in hitOtherObjects)
+        {
+            if (IDs.Contains(obj.GetInstanceID())) continue;
+            OnOtherCollision?.Invoke(lastDesiredVelocity.normalized, obj);
+            IDs.Add(obj.GetInstanceID());
         }
     }
 
