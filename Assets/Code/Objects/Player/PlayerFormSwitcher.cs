@@ -38,7 +38,8 @@ public class PlayerFormSwitcher : MonoBehaviour
         {
             if (spiritMovement != null && spiritMovement.enabled)
             {
-                TurnIntoBulbAt(obj.transform.position);
+                const float OFF_GROUND_OFFSET = 0.25f;
+                TurnIntoBulbAt(obj.transform.position + Vector3.up * OFF_GROUND_OFFSET);
             }
         }
     }
