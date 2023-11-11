@@ -153,6 +153,9 @@ MonoBehaviour:
   deathMask:
     serializedVersion: 2
     m_Bits: 128
+  otherMask:
+    serializedVersion: 2
+    m_Bits: 768
 --- !u!114 &4462635132298974952
 MonoBehaviour:
   m_ObjectHideFlags: 0

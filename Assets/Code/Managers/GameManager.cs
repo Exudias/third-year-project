@@ -3,8 +3,6 @@ using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviour
 {
-    private float DEFAULT_FIXED_TIMESTEP = 0.02f;
-
     private static string gameplayPersistentSceneName = "GAMEPLAY_PERSIST";
 
     private void Start()
@@ -51,29 +49,36 @@ public class GameManager : MonoBehaviour
         throw new System.Exception("Could not find non-persistent scene!");
     }
 
+    private static int GetCurrentLevelBuildIndex()
+    {
+        for (int i = 0; i < SceneManager.sceneCount; i++)
+        {
+            if (SceneManager.GetSceneAt(i).name.StartsWith("LVL_"))
+            {
+                return SceneManager.GetSceneAt(i).buildIndex;
+            }
+        }
+        throw new System.Exception("Could not find level scene!");
+    }
+
     public async static void ResetScene()
     {
-        int index = GetNonPersistentSceneBuildIndex();
-        if (!SceneManager.GetSceneByBuildIndex(index).isLoaded) return;
-        await SceneManager.UnloadSceneAsync(index);
-        SceneManager.LoadScene(index);
+        int currentLevel = GetCurrentLevelBuildIndex();
+        if (!SceneManager.GetSceneByBuildIndex(currentLevel).isLoaded) return;
+        await SceneManager.UnloadSceneAsync(currentLevel);
+        SceneManager.LoadScene(currentLevel);
     }
 
     public async static void LoadNextScene()
     {
-        int currentBuildIndex = GetNonPersistentSceneBuildIndex();
+        int currentLevelBuildIndex = GetCurrentLevelBuildIndex();
 
-        if (SceneManager.GetSceneByBuildIndex(currentBuildIndex + 1).name == gameplayPersistentSceneName)
+        if (SceneManager.GetSceneByBuildIndex(currentLevelBuildIndex + 1).name == gameplayPersistentSceneName)
         {
             throw new System.Exception("Trying to load invalid scene! (Persistent one!)");
         }
 
-        await SceneManager.UnloadSceneAsync(currentBuildIndex);
-        SceneManager.LoadScene(currentBuildIndex + 1, LoadSceneMode.Additive);
-    }
-
-    private void Update()
-    {
-        Time.fixedDeltaTime = DEFAULT_FIXED_TIMESTEP * Time.timeScale;
+        await SceneManager.UnloadSceneAsync(currentLevelBuildIndex);
+        SceneManager.LoadScene(currentLevelBuildIndex + 1, LoadSceneMode.Additive);
     }
 }
