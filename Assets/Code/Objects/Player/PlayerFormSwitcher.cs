@@ -22,28 +22,6 @@ public class PlayerFormSwitcher : MonoBehaviour
     private Controller2D controller;
     private InputManager input;
 
-    private void OnEnable()
-    {
-        Controller2D.OnOtherCollision += OnControllerOtherCollision;
-    }
-
-    private void OnDisable()
-    {
-        Controller2D.OnOtherCollision -= OnControllerOtherCollision;
-    }
-
-    private void OnControllerOtherCollision(Vector2 dir, GameObject obj)
-    {
-        if (obj.GetComponent<BulbSpawnerLogic>() != null)
-        {
-            if (spiritMovement != null && spiritMovement.enabled)
-            {
-                const float OFF_GROUND_OFFSET = 0f;
-                TurnIntoBulbAt(obj.transform.position + Vector3.up * OFF_GROUND_OFFSET);
-            }
-        }
-    }
-
     private void Start()
     {
         bulbMovement = GetComponent<BulbMovement>();

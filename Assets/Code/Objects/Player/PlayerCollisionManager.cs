@@ -1,18 +1,45 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class PlayerCollisionManager : MonoBehaviour
 {
-    // Start is called before the first frame update
-    void Start()
+    private BulbMovement bulbMovement;
+    private SpiritMovement spiritMovement;
+    private EnergyManager energyManager;
+    private PlayerFormSwitcher formSwitcher;
+
+    private void Start()
     {
-        
+        bulbMovement = GetComponent<BulbMovement>();
+        spiritMovement = GetComponent<SpiritMovement>();
+        energyManager = GetComponent<EnergyManager>();
+        formSwitcher = GetComponent<PlayerFormSwitcher>();
     }
 
-    // Update is called once per frame
-    void Update()
+    private void OnEnable()
     {
-        
+        Controller2D.OnOtherCollision += OnControllerOtherCollision;
+    }
+
+    private void OnDisable()
+    {
+        Controller2D.OnOtherCollision -= OnControllerOtherCollision;
+    }
+
+    private void OnControllerOtherCollision(Vector2 dir, GameObject obj)
+    {
+        if (obj.GetComponent<EnergyPickupLogic>() != null)
+        {
+            if (spiritMovement != null && spiritMovement.enabled)
+            {
+                obj.GetComponent<EnergyPickupLogic>().PlayerCollect(energyManager);
+            }
+        }
+        if (obj.GetComponent<BulbSpawnerLogic>() != null)
+        {
+            if (spiritMovement != null && spiritMovement.enabled)
+            {
+                formSwitcher.TurnIntoBulbAt(obj.transform.position);
+            }
+        }
     }
 }
