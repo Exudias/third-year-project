@@ -77,6 +77,21 @@ public class Controller2D : MonoBehaviour
         return collisions.bottom;
     }
 
+    public void UpdatePosition()
+    {
+        UpdateRaycastOrigins();
+    }
+
+    public void MoveImmediate(Vector2 position)
+    {
+        UpdateRaycastOrigins();
+        stopMovementThisFrame = true;
+        collisions.Reset();
+        transform.position = position;
+    }
+
+    bool stopMovementThisFrame = false;
+
     public void Move(Vector2 velocity, GameObject pusher = null)
     {
         UpdateRaycastOrigins();
@@ -100,6 +115,12 @@ public class Controller2D : MonoBehaviour
         }
 
         lastActualVelocity = velocity;
+
+        if (stopMovementThisFrame)
+        {
+            stopMovementThisFrame = false;
+            return;
+        }
 
         transform.Translate(velocity);
     }

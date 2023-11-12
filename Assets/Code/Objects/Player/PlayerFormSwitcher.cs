@@ -38,7 +38,7 @@ public class PlayerFormSwitcher : MonoBehaviour
         {
             if (spiritMovement != null && spiritMovement.enabled)
             {
-                const float OFF_GROUND_OFFSET = 0.25f;
+                const float OFF_GROUND_OFFSET = 0f;
                 TurnIntoBulbAt(obj.transform.position + Vector3.up * OFF_GROUND_OFFSET);
             }
         }
@@ -79,7 +79,7 @@ public class PlayerFormSwitcher : MonoBehaviour
 
     public void TurnIntoBulbAt(Vector2 bulbPosition)
     {
-        transform.position = bulbPosition;
+        controller.MoveImmediate(bulbPosition);
         InitBulb();
     }
 
