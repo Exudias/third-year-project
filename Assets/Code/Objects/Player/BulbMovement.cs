@@ -17,6 +17,7 @@ public class BulbMovement : MonoBehaviour
     [SerializeField] private float jumpBufferLeniency = 0.1f;
     [SerializeField] private float coyoteJumpLeniency = 0.1f;
     [SerializeField] private float terminalVelocity = 10f;
+    [SerializeField] private float minVelocityToHitGround = 1f;
     [Header("Wall Jump")]
     [SerializeField] private float wallJumpLeniency = 0.125f;
     [SerializeField] private float wallJumpStrength = 12f;
@@ -39,6 +40,12 @@ public class BulbMovement : MonoBehaviour
     private Controller2D controller;
     private EnergyManager energyManager;
     private InputManager input;
+
+    public delegate void JumpEvent();
+    public delegate void FallEvent();
+    public static event JumpEvent OnPlayerJump;
+    public static event JumpEvent OnPlayerWallJump;
+    public static event FallEvent OnPlayerHitGround;
 
     private void Start()
     {
@@ -109,6 +116,12 @@ public class BulbMovement : MonoBehaviour
         {
             coyoteTime = 0;
             jumping = false;
+
+            float lastYVelocity = controller.GetLastActualVelocity().y / Time.deltaTime;
+            if (Mathf.Abs(lastYVelocity) > minVelocityToHitGround)
+            {
+                OnPlayerHitGround?.Invoke();
+            }
         }
 
         float horizontalInput = input.GetHorizontalRaw();
@@ -164,6 +177,7 @@ public class BulbMovement : MonoBehaviour
 
     private void Jump()
     {
+        OnPlayerJump?.Invoke();
         input.ConsumeBuffer(KeyCode.Space);
         velocity.y = maxJumpVelocity;
         coyoteTime = Mathf.Infinity;
@@ -179,6 +193,7 @@ public class BulbMovement : MonoBehaviour
 
     private void WallJump(int direction)
     {
+        OnPlayerWallJump?.Invoke();
         input.ConsumeBuffer(KeyCode.Space);
         velocity.x = wallJumpStrength * direction;
         velocity.y = maxJumpVelocity * wallJumpHeightMultiplier;

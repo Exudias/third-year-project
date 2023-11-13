@@ -21,6 +21,39 @@ public class PlayerVisualsManager : MonoBehaviour
 
     private const float MIN_VERT_VELOCITY_FOR_MOVEMENT = 2f;
 
+    private void OnEnable()
+    {
+        BulbMovement.OnPlayerJump += OnPlayerJump;
+        BulbMovement.OnPlayerWallJump += OnPlayerWallJump;
+        BulbMovement.OnPlayerHitGround += OnPlayerHitGround;
+    }
+
+    private void OnDisable()
+    {
+        BulbMovement.OnPlayerJump -= OnPlayerJump;
+        BulbMovement.OnPlayerWallJump -= OnPlayerWallJump;
+        BulbMovement.OnPlayerHitGround -= OnPlayerHitGround;
+    }
+
+    const float X_STRETCH_AFTER_JUMP = 0.6f;
+    const float Y_STRETCH_AFTER_JUMP = 1.4f;
+    private void OnPlayerJump()
+    {
+        transform.localScale = new Vector3(X_STRETCH_AFTER_JUMP, Y_STRETCH_AFTER_JUMP, transform.localScale.z);
+    }
+
+    private void OnPlayerWallJump()
+    {
+        transform.localScale = new Vector3(X_STRETCH_AFTER_JUMP, Y_STRETCH_AFTER_JUMP, transform.localScale.z);
+    }
+
+    const float X_STRETCH_AFTER_FALL = 1.4f;
+    const float Y_STRETCH_AFTER_FALL = 0.6f;
+    private void OnPlayerHitGround()
+    {
+        transform.localScale = new Vector3(X_STRETCH_AFTER_FALL, Y_STRETCH_AFTER_FALL, transform.localScale.z);
+    }
+
     private void Start()
     {
         spriteRenderer = GetComponent<SpriteRenderer>();
@@ -29,6 +62,8 @@ public class PlayerVisualsManager : MonoBehaviour
 
     private void Update()
     {
+        NormalizeScale();
+
         PlayerFormSwitcher.PlayerForm form = formSwitcher.GetCurrentForm();
 
         Vector2 lastDesiredVelocity = controller.GetLastDesiredVelocity();
@@ -88,6 +123,20 @@ public class PlayerVisualsManager : MonoBehaviour
                 }
             }
         }
+    }
+
+    [SerializeField] private float scaleResetTime = 1.75f;
+
+    private void NormalizeScale()
+    {
+        float xScale = transform.localScale.x;
+        float yScale = transform.localScale.y;
+        float zScale = transform.localScale.z;
+
+        xScale = Mathf.MoveTowards(xScale, 1f, scaleResetTime * Time.unscaledDeltaTime);
+        yScale = Mathf.MoveTowards(yScale, 1f, scaleResetTime * Time.unscaledDeltaTime);
+
+        transform.localScale = new Vector3(xScale, yScale, zScale);
     }
 
     private void FlipBulbWhenAppropriate(Vector2 lastDesiredVelocity)
