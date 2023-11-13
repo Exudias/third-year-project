@@ -5,9 +5,12 @@ public class GameManager : MonoBehaviour
 {
     private static string gameplayPersistentSceneName = "GAMEPLAY_PERSIST";
 
+    private static bool loadingScene;
+
     private void Start()
     {
         Application.targetFrameRate = 60;
+        loadingScene = false;
     }
 
     private void Awake()
@@ -37,18 +40,6 @@ public class GameManager : MonoBehaviour
         return false;
     }
 
-    private static int GetNonPersistentSceneBuildIndex()
-    {
-        for (int i = 0; i < SceneManager.sceneCount; i++)
-        {
-            if (SceneManager.GetSceneAt(i).name != gameplayPersistentSceneName)
-            {
-                return SceneManager.GetSceneAt(i).buildIndex;
-            }
-        }
-        throw new System.Exception("Could not find non-persistent scene!");
-    }
-
     private static int GetCurrentLevelBuildIndex()
     {
         for (int i = 0; i < SceneManager.sceneCount; i++)
@@ -71,6 +62,10 @@ public class GameManager : MonoBehaviour
 
     public async static void LoadNextScene()
     {
+        if (loadingScene) return;
+
+        loadingScene = true;
+
         int currentLevelBuildIndex = GetCurrentLevelBuildIndex();
 
         if (SceneManager.GetSceneByBuildIndex(currentLevelBuildIndex + 1).name == gameplayPersistentSceneName)
@@ -80,5 +75,7 @@ public class GameManager : MonoBehaviour
 
         await SceneManager.UnloadSceneAsync(currentLevelBuildIndex);
         SceneManager.LoadScene(currentLevelBuildIndex + 1, LoadSceneMode.Additive);
+
+        loadingScene = false;
     }
 }
