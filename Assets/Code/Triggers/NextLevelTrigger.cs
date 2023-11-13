@@ -1,10 +1,10 @@
 using UnityEngine;
 
-public class NextLevelTrigger : MonoBehaviour
+public class NextLevelTrigger : Trigger
 {
-    private void OnTriggerEnter2D(Collider2D collision)
+    public override void Activate(Collider2D activator)
     {
-        bool collisionIsPlayer = collision.gameObject.GetComponent<PlayerLogic>() != null;
+        bool collisionIsPlayer = activator.gameObject.GetComponent<PlayerLogic>() != null;
         if (collisionIsPlayer)
         {
             GameManager.LoadNextScene();

@@ -62,6 +62,8 @@ public class Controller2D : MonoBehaviour
         CalculateRaySpacing();
     }
 
+    public Collider2D GetCurrentCollider() => coll;
+
     public Vector2 GetLastDesiredVelocity()
     {
         return lastDesiredVelocity;

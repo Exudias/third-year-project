@@ -6,6 +6,7 @@ public class PlayerCollisionManager : MonoBehaviour
     private SpiritMovement spiritMovement;
     private EnergyManager energyManager;
     private PlayerFormSwitcher formSwitcher;
+    private Controller2D controller;
 
     private void Start()
     {
@@ -13,6 +14,7 @@ public class PlayerCollisionManager : MonoBehaviour
         spiritMovement = GetComponent<SpiritMovement>();
         energyManager = GetComponent<EnergyManager>();
         formSwitcher = GetComponent<PlayerFormSwitcher>();
+        controller = GetComponent<Controller2D>();
     }
 
     private void OnEnable()
@@ -41,5 +43,9 @@ public class PlayerCollisionManager : MonoBehaviour
                 formSwitcher.TurnIntoBulbAt(obj.transform.position);
             }
         }
+        if (obj.GetComponent<Trigger>() != null)
+        {
+            obj.GetComponent<Trigger>().Activate(controller.GetCurrentCollider());
+        }    
     }
 }

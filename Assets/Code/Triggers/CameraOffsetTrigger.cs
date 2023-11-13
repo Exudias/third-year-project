@@ -1,16 +1,14 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
-public class CameraOffsetTrigger : MonoBehaviour
+public class CameraOffsetTrigger : Trigger
 {
     [SerializeField] private bool affectBulb;
     [SerializeField] private bool affectSpirit;
     [SerializeField] private Vector2 offsetToApply;
 
-    private void OnTriggerEnter2D(Collider2D collision)
+    public override void Activate(Collider2D activator)
     {
-        PlayerFormSwitcher formSwitcher = collision.GetComponent<PlayerFormSwitcher>();
+        PlayerFormSwitcher formSwitcher = activator.GetComponent<PlayerFormSwitcher>();
 
         if (formSwitcher != null)
         {
