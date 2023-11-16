@@ -30,6 +30,8 @@ public class Controller2D : MonoBehaviour
     [SerializeField] private LayerMask collisionMask;
     [SerializeField] private LayerMask deathMask;
     [SerializeField] private LayerMask otherMask;
+    [SerializeField] private float collisionLeniencyStep = 1f / 16f;
+    [SerializeField] private int collisionLeniencyIterations = 2;
 
     private float horizontalRaySpacing;
     private float verticalRaySpacing;
@@ -173,6 +175,8 @@ public class Controller2D : MonoBehaviour
         float closestDeathHit = Mathf.Infinity;
         List<RaycastHit2D> allOtherHits = new List<RaycastHit2D>();
 
+        List<bool> rayHits = new List<bool>();
+
         for (int i = 0; i < horizontalRayCount; i++)
         {
             Vector2 rayOrigin = (directionX == -1) ? raycastOrigins.bottomLeft : raycastOrigins.bottomRight;
@@ -186,6 +190,9 @@ public class Controller2D : MonoBehaviour
             {
                 Debug.DrawRay(rayOrigin, Vector2.right * directionX * rayLength, Color.red);
             }
+
+            float newLength = rayLength + (i == 0 ? 0 : collisionLeniencyStep);
+            rayHits.Add(Physics2D.Raycast(rayOrigin, Vector2.right * directionX, newLength, collisionMask));
 
             if (hit)
             {
@@ -246,6 +253,29 @@ public class Controller2D : MonoBehaviour
             if (IDs.Contains(obj.GetInstanceID())) continue;
             OnOtherCollision?.Invoke(lastDesiredVelocity.normalized, obj);
             IDs.Add(obj.GetInstanceID());
+        }
+
+        // Leniency (walk up small ledges)
+        bool shouldApplyLeniency = false;
+        for (int i = 0; i < rayHits.Count; i++)
+        {
+            bool rayResult = rayHits[i];
+
+            if (i == 0 && rayResult)
+            {
+                shouldApplyLeniency = true;
+            }
+            else if (i > 0 && rayResult)
+            {
+                shouldApplyLeniency = false;
+            }
+        }
+        if (shouldApplyLeniency)
+        {
+            if (velocity.y < collisionLeniencyStep * collisionLeniencyIterations)
+            {
+                velocity.y = collisionLeniencyStep * collisionLeniencyIterations;
+            }
         }
     }
 

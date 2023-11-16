@@ -19,7 +19,7 @@ public class PlayerVisualsManager : MonoBehaviour
     private SpriteRenderer spriteRenderer;
     private Animator animator;
 
-    private const float MIN_VERT_VELOCITY_FOR_MOVEMENT = 2f;
+    private const float MIN_VERT_VELOCITY_FOR_MOVEMENT = 3f;
 
     private void OnEnable()
     {
