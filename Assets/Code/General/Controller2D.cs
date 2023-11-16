@@ -11,9 +11,11 @@ public class Controller2D : MonoBehaviour
     public delegate void CollisionEvent(Vector2 direction);
     public delegate void DeathCollisionEvent(Vector2 direction, bool isDirectionalDeath, GameObject killer);
     public delegate void OtherCollision(Vector2 direction, GameObject other);
+    public delegate void ControllerEvent();
     public static event CollisionEvent OnCollision;
     public static event DeathCollisionEvent OnDeathCollision;
     public static event OtherCollision OnOtherCollision;
+    public static event ControllerEvent OnPostControllerMove;
 
     const float SKIN_WIDTH = 0.015f;
     const float STATIC_SKIN_WIDTH = 0.02f;
@@ -127,6 +129,8 @@ public class Controller2D : MonoBehaviour
         }
 
         transform.Translate(velocity);
+
+        OnPostControllerMove?.Invoke();
     }
 
     private void StaticCheck()

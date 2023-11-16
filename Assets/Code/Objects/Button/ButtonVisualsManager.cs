@@ -18,7 +18,7 @@ public class ButtonVisualsManager : MonoBehaviour
         spriteRenderer.sprite = pressedSprite;
     }
 
-    private void Update()
+    public void OnButtonUnpressed()
     {
         spriteRenderer.sprite = unpressedSprite;
     }

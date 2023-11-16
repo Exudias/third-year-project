@@ -8,6 +8,7 @@ public class CameraOffsetTrigger : Trigger
 
     public override void Activate(Collider2D activator)
     {
+        base.Activate(activator);
         PlayerFormSwitcher formSwitcher = activator.GetComponent<PlayerFormSwitcher>();
 
         if (formSwitcher != null)
