@@ -180,6 +180,7 @@ MonoBehaviour:
   jumpBufferLeniency: 0.1
   coyoteJumpLeniency: 0.1
   terminalVelocity: 20
+  minVelocityToHitGround: 1
   wallJumpLeniency: 0.125
   wallJumpStrength: 16
   wallJumpHeightMultiplier: 0.8
@@ -375,7 +376,7 @@ Transform:
   m_GameObject: {fileID: 7667418138490284168}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 0, y: -0.5, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -455,6 +456,7 @@ MonoBehaviour:
   bulbFallSide: {fileID: 7400000, guid: ab03894c4032b9546a09df71ff4d0717, type: 2}
   bulbWallCling: {fileID: 7400000, guid: 4e3eaf1098d7a8f4ebef942a65160af9, type: 2}
   spiritMove: {fileID: 7400000, guid: 423f6384845c5f04fb3165c8b457bfd2, type: 2}
+  scaleResetTime: 1.75
 --- !u!95 &3598630173020043650
 Animator:
   serializedVersion: 7
