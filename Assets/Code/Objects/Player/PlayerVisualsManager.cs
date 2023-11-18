@@ -7,6 +7,9 @@ public class PlayerVisualsManager : MonoBehaviour
     [SerializeField] private PlayerFormSwitcher formSwitcher;
     [SerializeField] private Controller2D controller;
 
+    [SerializeField] private Vector2 bulbSpriteOffset = new Vector3(0f, -0.5f, 0f);
+    [SerializeField] private Vector2 spiritSpriteOffset = new Vector3(0f, 0f, 0f);
+
     [SerializeField] private AnimationClip bulbIdleForward;
     [SerializeField] private AnimationClip bulbWalk;
     [SerializeField] private AnimationClip bulbJumpForward;
@@ -72,10 +75,13 @@ public class PlayerVisualsManager : MonoBehaviour
 
         if (form == PlayerFormSwitcher.PlayerForm.Spirit)
         {
+            transform.localPosition = spiritSpriteOffset;
             transform.right = controller.GetLastDesiredVelocity().normalized;
         }
         else if (form == PlayerFormSwitcher.PlayerForm.Bulb)
         {
+            transform.localPosition = bulbSpriteOffset;
+
             FlipBulbWhenAppropriate(lastDesiredVelocity);
 
             if (Mathf.Abs(lastDesiredVelocity.y) / Time.deltaTime > MIN_VERT_VELOCITY_FOR_MOVEMENT || !grounded)

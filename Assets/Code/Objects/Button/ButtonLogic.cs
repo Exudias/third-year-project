@@ -2,15 +2,15 @@ using UnityEngine;
 
 public class ButtonLogic : MonoBehaviour
 {
+    [SerializeField] private GameObject activateable;
+
     public void OnButtonPressed()
     {
-        // Open door or whatever
-        Debug.Log("Pressed!");
+        activateable.GetComponent<IActivatable>().Activate();
     }
 
     public void OnButtonUnpressed()
     {
-        // Close door or whatever
-        Debug.Log("Unpressed!");
+        activateable.GetComponent<IActivatable>().Deactivate();
     }
 }

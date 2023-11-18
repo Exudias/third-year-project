@@ -1,7 +1,10 @@
 fileFormatVersion: 2
-guid: 2362047798f081146af975bf7f948e0c
+guid: f52c7074f9ba5cd45b8f3feab49cee09
 TextureImporter:
-  internalIDToNameTable: []
+  internalIDToNameTable:
+  - first:
+      213: 5213229242370633579
+    second: Door_0
   externalObjects: {}
   serializedVersion: 12
   mipmaps:
@@ -107,13 +110,13 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: SpiritMove_0
+      name: Door_0
       rect:
         serializedVersion: 2
         x: 0
         y: 0
-        width: 16
-        height: 16
+        width: 6
+        height: 18
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -121,8 +124,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 27f72f0ac19786f4fb2e48a549b19873
-      internalID: 44290809
+      spriteID: 7779f3dd76651444d859a5c125a28758
+      internalID: 1480332399
       vertices: []
       indices: 
       edges: []
@@ -138,7 +141,7 @@ TextureImporter:
     weights: []
     secondaryTextures: []
     nameFileIdTable:
-      SpiritMove_0: 44290809
+      Door_0: 1480332399
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 
