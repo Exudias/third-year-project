@@ -125,6 +125,7 @@ public class Controller2D : MonoBehaviour
         if (stopMovementThisFrame)
         {
             stopMovementThisFrame = false;
+            Move(velocity);
             return;
         }
 

@@ -63,6 +63,21 @@ public class PlayerVisualsManager : MonoBehaviour
         animator = GetComponent<Animator>();
     }
 
+    private void UpdateSpriteOffset()
+    {
+        PlayerFormSwitcher.PlayerForm form = formSwitcher.GetCurrentForm();
+
+        if (form == PlayerFormSwitcher.PlayerForm.Spirit)
+        {
+            transform.localPosition = spiritSpriteOffset;
+            transform.right = controller.GetLastDesiredVelocity().normalized;
+        }
+        else if (form == PlayerFormSwitcher.PlayerForm.Bulb)
+        {
+            transform.localPosition = bulbSpriteOffset;
+        }
+    }
+
     private void Update()
     {
         NormalizeScale();
@@ -75,13 +90,10 @@ public class PlayerVisualsManager : MonoBehaviour
 
         if (form == PlayerFormSwitcher.PlayerForm.Spirit)
         {
-            transform.localPosition = spiritSpriteOffset;
             transform.right = controller.GetLastDesiredVelocity().normalized;
         }
         else if (form == PlayerFormSwitcher.PlayerForm.Bulb)
         {
-            transform.localPosition = bulbSpriteOffset;
-
             FlipBulbWhenAppropriate(lastDesiredVelocity);
 
             if (Mathf.Abs(lastDesiredVelocity.y) / Time.deltaTime > MIN_VERT_VELOCITY_FOR_MOVEMENT || !grounded)
@@ -167,11 +179,13 @@ public class PlayerVisualsManager : MonoBehaviour
     {
         transform.rotation = Quaternion.identity;
         animator.Play(bulbIdleForward.name);
+        UpdateSpriteOffset();
     }
 
     public void InitSpirit()
     {
         spriteRenderer.flipX = false;
         animator.Play(spiritMove.name);
+        UpdateSpriteOffset();
     }
 }

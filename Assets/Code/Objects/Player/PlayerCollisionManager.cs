@@ -40,7 +40,9 @@ public class PlayerCollisionManager : MonoBehaviour
         {
             if (spiritMovement != null && spiritMovement.enabled)
             {
-                formSwitcher.TurnIntoBulbAt(obj.transform.position);
+                BulbSpawnerLogic bulbSpawner = obj.GetComponent<BulbSpawnerLogic>();
+                bulbSpawner.HandlePickup();
+                formSwitcher.TurnIntoBulbAt(bulbSpawner.GetSpawnPoint());
             }
         }
         if (obj.GetComponent<Trigger>() != null)
