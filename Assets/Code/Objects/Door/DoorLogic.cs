@@ -4,6 +4,7 @@ public class DoorLogic : MonoBehaviour, IActivatable
 {
     [SerializeField] private Transform door1;
     [SerializeField] private Transform door2;
+    [SerializeField] private PlayerDetectorTrigger detector;
     [SerializeField] private float openTime;
     [SerializeField] private float closeTime;
     [SerializeField] private float openDistance;
@@ -50,15 +51,18 @@ public class DoorLogic : MonoBehaviour, IActivatable
 
     private void CalculateOpenPercent()
     {
-        if (active)
+        if (!detector.IsPlayerInside())
         {
-            percentOpen += openProgressPerSecond * Time.deltaTime;
+            if (active)
+            {
+                percentOpen += openProgressPerSecond * Time.deltaTime;
+            }
+            else
+            {
+                percentOpen -= closeProgressPerSecond * Time.deltaTime;
+            }
+            percentOpen = Mathf.Clamp01(percentOpen);
         }
-        else
-        {
-            percentOpen -= closeProgressPerSecond * Time.deltaTime;
-        }
-        percentOpen = Mathf.Clamp01(percentOpen);
     }
 
     public void Activate()
