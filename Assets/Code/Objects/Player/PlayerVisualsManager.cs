@@ -6,9 +6,13 @@ public class PlayerVisualsManager : MonoBehaviour
 {
     [SerializeField] private PlayerFormSwitcher formSwitcher;
     [SerializeField] private Controller2D controller;
+    [SerializeField] private EnergyManager energyManager;
 
     [SerializeField] private Vector2 bulbSpriteOffset = new Vector3(0f, -0.5f, 0f);
     [SerializeField] private Vector2 spiritSpriteOffset = new Vector3(0f, 0f, 0f);
+
+    [SerializeField] private Material bulbMaterial;
+    [SerializeField] private Material spiritMaterial;
 
     [SerializeField] private AnimationClip bulbIdleForward;
     [SerializeField] private AnimationClip bulbWalk;
@@ -96,6 +100,15 @@ public class PlayerVisualsManager : MonoBehaviour
         {
             FlipBulbWhenAppropriate(lastDesiredVelocity);
 
+            if (energyManager != null && energyManager.enabled)
+            {
+                spriteRenderer.material.SetFloat("_PercentEnergy", energyManager.GetEnergyPercent());
+            }
+            else
+            {
+                spriteRenderer.material.SetFloat("_PercentEnergy", 1);
+            }
+
             if (Mathf.Abs(lastDesiredVelocity.y) / Time.deltaTime > MIN_VERT_VELOCITY_FOR_MOVEMENT || !grounded)
             {
                 if (lastDesiredVelocity.y > 0)
@@ -114,7 +127,7 @@ public class PlayerVisualsManager : MonoBehaviour
                     if (huggingWall)
                     {
                         animator.Play(bulbWallCling.name);
-                        spriteRenderer.flipX = !spriteRenderer.flipX;
+                        FlipXScaleSign();
                     }
                     else
                     {
@@ -151,7 +164,16 @@ public class PlayerVisualsManager : MonoBehaviour
         float yScale = transform.localScale.y;
         float zScale = transform.localScale.z;
 
-        xScale = Mathf.MoveTowards(xScale, 1f, scaleResetTime * Time.unscaledDeltaTime);
+        if (xScale > 0)
+        {
+            xScale = Mathf.MoveTowards(xScale, 1f, scaleResetTime * Time.unscaledDeltaTime);
+        }
+        else if (xScale < 0)
+        {
+            xScale = Mathf.MoveTowards(xScale, -1f, scaleResetTime * Time.unscaledDeltaTime);
+        }
+
+        
         yScale = Mathf.MoveTowards(yScale, 1f, scaleResetTime * Time.unscaledDeltaTime);
 
         transform.localScale = new Vector3(xScale, yScale, zScale);
@@ -159,24 +181,26 @@ public class PlayerVisualsManager : MonoBehaviour
 
     private void FlipBulbWhenAppropriate(Vector2 lastDesiredVelocity)
     {
-        if (spriteRenderer.flipX)
+        bool xScaleIsNegative = transform.localScale.x < 0;
+        if (xScaleIsNegative)
         {
             if (lastDesiredVelocity.x > 0)
             {
-                spriteRenderer.flipX = false;
+                MakeXScalePositive();
             }
         }
         else
         {
             if (lastDesiredVelocity.x < 0)
             {
-                spriteRenderer.flipX = true;
+                MakeXScaleNegative();
             }
         }
     }
 
     public void InitBulb()
     {
+        spriteRenderer.material = bulbMaterial;
         transform.rotation = Quaternion.identity;
         animator.Play(bulbIdleForward.name);
         UpdateSpriteOffset();
@@ -184,8 +208,30 @@ public class PlayerVisualsManager : MonoBehaviour
 
     public void InitSpirit()
     {
-        spriteRenderer.flipX = false;
+        spriteRenderer.material = spiritMaterial;
+        MakeXScalePositive();
         animator.Play(spiritMove.name);
         UpdateSpriteOffset();
+    }
+
+    private void FlipXScaleSign()
+    {
+        float xScale = transform.localScale.x;
+        xScale *= -1;
+        transform.localScale = new Vector3(xScale, transform.localScale.y, transform.localScale.z);
+    }
+
+    private void MakeXScaleNegative()
+    {
+        float xScale = transform.localScale.x;
+        xScale = -Mathf.Abs(xScale);
+        transform.localScale = new Vector3(xScale, transform.localScale.y, transform.localScale.z);
+    }
+
+    private void MakeXScalePositive()
+    {
+        float xScale = transform.localScale.x;
+        xScale = Mathf.Abs(xScale);
+        transform.localScale = new Vector3(xScale, transform.localScale.y, transform.localScale.z);
     }
 }

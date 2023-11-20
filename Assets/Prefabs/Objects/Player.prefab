@@ -157,6 +157,8 @@ MonoBehaviour:
   otherMask:
     serializedVersion: 2
     m_Bits: 1792
+  collisionLeniencyStep: 0.0625
+  collisionLeniencyIterations: 2
 --- !u!114 &4462635132298974952
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -402,7 +404,7 @@ SpriteRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: a97c105638bdf8b4a8650670310a4cd3, type: 2}
+  - {fileID: 2100000, guid: 4a3ebc4f01e6a924e83fb1e97f3dbe45, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -423,7 +425,7 @@ SpriteRenderer:
   m_SortingLayerID: 714017931
   m_SortingLayer: 1
   m_SortingOrder: 999
-  m_Sprite: {fileID: -1980238579, guid: 5fe740cb971b61c418abf5d8b8a0ac6e, type: 3}
+  m_Sprite: {fileID: -1258624929, guid: c37398d9675c82848a281ec1aa5b4983, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -448,6 +450,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   formSwitcher: {fileID: 1105467402819965738}
   controller: {fileID: 4046459696820276540}
+  energyManager: {fileID: 7328808871941551571}
+  bulbSpriteOffset: {x: 0, y: -0.5}
+  spiritSpriteOffset: {x: 0, y: 0}
+  bulbMaterial: {fileID: 2100000, guid: 4a3ebc4f01e6a924e83fb1e97f3dbe45, type: 2}
+  spiritMaterial: {fileID: 2100000, guid: 9769f203c379cca43a6ca21d4cd71f99, type: 2}
   bulbIdleForward: {fileID: 7400000, guid: f352edc67ebdb4d45a175ff01e367386, type: 2}
   bulbWalk: {fileID: 7400000, guid: 349a73b67351db842a51e7bfe5efd57c, type: 2}
   bulbJumpForward: {fileID: 7400000, guid: f1ff4dfb7fac9934daf4d27f8fb4bd8e, type: 2}
