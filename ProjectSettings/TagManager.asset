@@ -41,6 +41,9 @@ TagManager:
   - name: BGTiles
     uniqueID: 2436784299
     locked: 0
+  - name: BGDecals
+    uniqueID: 4929565
+    locked: 0
   - name: BGObjects
     uniqueID: 556312267
     locked: 0
@@ -52,4 +55,7 @@ TagManager:
     locked: 0
   - name: FGTiles
     uniqueID: 839730033
+    locked: 0
+  - name: FGDecals
+    uniqueID: 851167905
     locked: 0
