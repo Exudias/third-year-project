@@ -41,8 +41,11 @@ public class PlayerCollisionManager : MonoBehaviour
             if (spiritMovement != null && spiritMovement.enabled)
             {
                 BulbSpawnerLogic bulbSpawner = obj.GetComponent<BulbSpawnerLogic>();
-                bulbSpawner.HandlePickup();
-                formSwitcher.TurnIntoBulbAt(bulbSpawner.GetSpawnPoint());
+                if (!bulbSpawner.IsEmpty())
+                {
+                    bulbSpawner.HandlePickup();
+                    formSwitcher.TurnIntoBulbAt(bulbSpawner.GetSpawnPoint());
+                }
             }
         }
         if (obj.GetComponent<Trigger>() != null)
