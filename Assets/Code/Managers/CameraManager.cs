@@ -32,22 +32,48 @@ public class CameraManager : MonoBehaviour
 
     public void ActivateBulbCamera()
     {
+        // Save info from old cam to transfer to new one, resetting old one
+        CinemachineVirtualCamera activeVcam = CinemachineCore.Instance.GetActiveBrain(0).ActiveVirtualCamera.
+            VirtualCameraGameObject.GetComponent<CinemachineVirtualCamera>();
+        bool oldForceX = activeVcam.GetComponent<LockCameraXY>().m_LockX;
+        bool oldForceY = activeVcam.GetComponent<LockCameraXY>().m_LockY;
+        float oldPosX = activeVcam.GetComponent<LockCameraXY>().m_XPosition;
+        float oldPosY = activeVcam.GetComponent<LockCameraXY>().m_YPosition;
+        // Reset old one
+        DisableForcedCameraPosition();
+
         currentFormCamera = PlayerFormSwitcher.PlayerForm.Bulb;
 
         virtualBulbCam.GetCinemachineComponent<CinemachineFramingTransposer>().m_TrackedObjectOffset = baseBulbOffset;
 
         bulbCamera.SetActive(true);
         spiritCamera.SetActive(false);
+
+        // Transfer old cam's forced pos info to new one
+        SetForcedCameraPosition(new Vector2(oldPosX, oldPosY), oldForceX, oldForceY);
     }
 
     public void ActivateSpiritCamera()
     {
+        // Save info from old cam to transfer to new one, resetting old one
+        CinemachineVirtualCamera activeVcam = CinemachineCore.Instance.GetActiveBrain(0).ActiveVirtualCamera.
+             VirtualCameraGameObject.GetComponent<CinemachineVirtualCamera>();
+        bool oldForceX = activeVcam.GetComponent<LockCameraXY>().m_LockX;
+        bool oldForceY = activeVcam.GetComponent<LockCameraXY>().m_LockY;
+        float oldPosX = activeVcam.GetComponent<LockCameraXY>().m_XPosition;
+        float oldPosY = activeVcam.GetComponent<LockCameraXY>().m_YPosition;
+        // Reset old one
+        DisableForcedCameraPosition();
+
         currentFormCamera = PlayerFormSwitcher.PlayerForm.Spirit;
 
         virtualSpiritCam.GetCinemachineComponent<CinemachineFramingTransposer>().m_TrackedObjectOffset = baseSpiritOffset;
 
         bulbCamera.SetActive(false);
         spiritCamera.SetActive(true);
+
+        // Transfer old cam's forced pos info to new one
+        SetForcedCameraPosition(new Vector2(oldPosX, oldPosY), oldForceX, oldForceY);
     }
 
     public void SetCurrentCameraOffset(Vector2 offset)
