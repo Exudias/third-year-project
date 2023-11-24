@@ -26,7 +26,7 @@ public class PlayerVisualsManager : MonoBehaviour
     private SpriteRenderer spriteRenderer;
     private Animator animator;
 
-    private const float MIN_VERT_VELOCITY_FOR_MOVEMENT = 3f;
+    private const float MIN_VERT_VELOCITY_FOR_MOVEMENT = 10f;
 
     private void OnEnable()
     {
@@ -92,6 +92,15 @@ public class PlayerVisualsManager : MonoBehaviour
         bool grounded = controller.IsGrounded();
         bool huggingWall = controller.collisions.left || controller.collisions.right;
 
+        if (energyManager != null && energyManager.enabled)
+        {
+            spriteRenderer.material.SetFloat("_PercentEnergy", energyManager.GetEnergyPercent());
+        }
+        else
+        {
+            spriteRenderer.material.SetFloat("_PercentEnergy", 1);
+        }
+
         if (form == PlayerFormSwitcher.PlayerForm.Spirit)
         {
             transform.right = controller.GetLastDesiredVelocity().normalized;
@@ -99,15 +108,6 @@ public class PlayerVisualsManager : MonoBehaviour
         else if (form == PlayerFormSwitcher.PlayerForm.Bulb)
         {
             FlipBulbWhenAppropriate(lastDesiredVelocity);
-
-            if (energyManager != null && energyManager.enabled)
-            {
-                spriteRenderer.material.SetFloat("_PercentEnergy", energyManager.GetEnergyPercent());
-            }
-            else
-            {
-                spriteRenderer.material.SetFloat("_PercentEnergy", 1);
-            }
 
             if (Mathf.Abs(lastDesiredVelocity.y) / Time.deltaTime > MIN_VERT_VELOCITY_FOR_MOVEMENT || !grounded)
             {

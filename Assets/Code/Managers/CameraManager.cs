@@ -17,11 +17,17 @@ public class CameraManager : MonoBehaviour
 
     private void Start()
     {
-        virtualBulbCam = bulbCamera.GetComponent<CinemachineVirtualCamera>();
-        virtualSpiritCam = spiritCamera.GetComponent<CinemachineVirtualCamera>();
-
-        baseBulbOffset = virtualBulbCam.GetCinemachineComponent<CinemachineFramingTransposer>().m_TrackedObjectOffset;
-        baseSpiritOffset = virtualSpiritCam.GetCinemachineComponent<CinemachineFramingTransposer>().m_TrackedObjectOffset;
+        if (bulbCamera != null)
+        {
+            virtualBulbCam = bulbCamera.GetComponent<CinemachineVirtualCamera>();
+            baseBulbOffset = virtualBulbCam.GetCinemachineComponent<CinemachineFramingTransposer>().m_TrackedObjectOffset;
+        }
+        
+        if (spiritCamera != null)
+        {
+            virtualSpiritCam = spiritCamera.GetComponent<CinemachineVirtualCamera>();
+            baseSpiritOffset = virtualSpiritCam.GetCinemachineComponent<CinemachineFramingTransposer>().m_TrackedObjectOffset;
+        }
     }
 
     public void ActivateBulbCamera()
@@ -46,18 +52,27 @@ public class CameraManager : MonoBehaviour
 
     public void SetCurrentCameraOffset(Vector2 offset)
     {
-        if (currentFormCamera == PlayerFormSwitcher.PlayerForm.Bulb)
-        {
-            virtualBulbCam.GetCinemachineComponent<CinemachineFramingTransposer>().m_TrackedObjectOffset = offset;
-        }
-        else if (currentFormCamera == PlayerFormSwitcher.PlayerForm.Spirit)
-        {
-            virtualSpiritCam.GetCinemachineComponent<CinemachineFramingTransposer>().m_TrackedObjectOffset = offset;
-        }
-        else
-        {
-            throw new System.Exception("Current form camera state invalid!");
-        }
+        CinemachineVirtualCamera activeVcam = CinemachineCore.Instance.GetActiveBrain(0).ActiveVirtualCamera.
+            VirtualCameraGameObject.GetComponent<CinemachineVirtualCamera>();
+        activeVcam.GetCinemachineComponent<CinemachineFramingTransposer>().m_TrackedObjectOffset = offset;
+    }
+
+    public void SetForcedCameraPosition(Vector2 pos, bool forceX, bool forceY)
+    {
+        CinemachineVirtualCamera activeVcam = CinemachineCore.Instance.GetActiveBrain(0).ActiveVirtualCamera.
+            VirtualCameraGameObject.GetComponent<CinemachineVirtualCamera>();
+        activeVcam.GetComponent<LockCameraXY>().m_LockX = forceX;
+        activeVcam.GetComponent<LockCameraXY>().m_LockY = forceY;
+        activeVcam.GetComponent<LockCameraXY>().m_XPosition = pos.x;
+        activeVcam.GetComponent<LockCameraXY>().m_YPosition = pos.y;
+    }
+
+    public void DisableForcedCameraPosition()
+    {
+        CinemachineVirtualCamera activeVcam = CinemachineCore.Instance.GetActiveBrain(0).ActiveVirtualCamera.
+            VirtualCameraGameObject.GetComponent<CinemachineVirtualCamera>();
+        activeVcam.GetComponent<LockCameraXY>().m_LockX = false;
+        activeVcam.GetComponent<LockCameraXY>().m_LockY = false;
     }
 
     public PlayerFormSwitcher.PlayerForm GetCurrentCameraForm() => currentFormCamera;
