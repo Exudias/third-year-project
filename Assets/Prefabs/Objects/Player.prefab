@@ -276,6 +276,7 @@ GameObject:
   m_Component:
   - component: {fileID: 3849449671819658026}
   - component: {fileID: 5875749098464504876}
+  - component: {fileID: 5234873787960593759}
   m_Layer: 0
   m_Name: PlayerLightSource
   m_TagString: Untagged
@@ -350,6 +351,21 @@ MonoBehaviour:
   - {x: 0.5, y: -0.5, z: 0}
   - {x: 0.5, y: 0.5, z: 0}
   - {x: -0.5, y: 0.5, z: 0}
+--- !u!114 &5234873787960593759
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5015638272116533265}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9c97c324badaab24b8bc611bca0b96bd, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  playerLight: {fileID: 5875749098464504876}
+  minLightMultiplier: 0.2
+  energyManager: {fileID: 7328808871941551571}
 --- !u!1 &7667418138490284168
 GameObject:
   m_ObjectHideFlags: 0
