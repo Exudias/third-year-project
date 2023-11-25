@@ -18,7 +18,7 @@ public class PlayerLightManager : MonoBehaviour
 
     void Update()
     {
-        float energyPercent = energyManager != null ? energyManager.GetEnergyPercent() : 1f;
+        float energyPercent = energyManager != null && energyManager.enabled ? energyManager.GetEnergyPercent() : 1f;
         playerLight.pointLightInnerRadius = Mathf.Lerp(startInnerRadius * minLightMultiplier, startInnerRadius, energyPercent);
         playerLight.pointLightOuterRadius = Mathf.Lerp(startOuterRadius * minLightMultiplier, startOuterRadius, energyPercent);
     }
