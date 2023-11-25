@@ -44,5 +44,6 @@ public class SchuteLogic : MonoBehaviour
         Vector3 offset = new Vector2((Random.value - 0.5f) * 2 * maxOffset.x, (Random.value - 0.5f) * 2 * maxOffset.y);
         GlassShardLogic shard = Instantiate(glassShardPrefab, topSchute.position + offset, Quaternion.identity).GetComponent<GlassShardLogic>();
         shard.Initialize(topSchute.position + offset, botSchute.position + offset, shardTimeThrough);
+        GameManager.MoveObjectToLevelScene(shard.gameObject);
     }
 }

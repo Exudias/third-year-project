@@ -52,6 +52,23 @@ public class GameManager : MonoBehaviour
         throw new System.Exception("Could not find level scene!");
     }
 
+    private static Scene GetCurrentLevel()
+    {
+        for (int i = 0; i < SceneManager.sceneCount; i++)
+        {
+            if (SceneManager.GetSceneAt(i).name.StartsWith("LVL_"))
+            {
+                return SceneManager.GetSceneAt(i);
+            }
+        }
+        throw new System.Exception("Could not find level scene!");
+    }
+
+    public static void MoveObjectToLevelScene(GameObject obj)
+    {
+        SceneManager.MoveGameObjectToScene(obj, GetCurrentLevel());
+    }
+
     public async static void ResetScene()
     {
         int currentLevel = GetCurrentLevelBuildIndex();
