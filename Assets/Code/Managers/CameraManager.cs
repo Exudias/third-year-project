@@ -28,6 +28,23 @@ public class CameraManager : MonoBehaviour
             virtualSpiritCam = spiritCamera.GetComponent<CinemachineVirtualCamera>();
             baseSpiritOffset = virtualSpiritCam.GetCinemachineComponent<CinemachineFramingTransposer>().m_TrackedObjectOffset;
         }
+
+        StartCoroutine(ResetVcamConfines());
+    }
+
+    IEnumerator ResetVcamConfines()
+    {
+        yield return null; // wait a frame
+
+        if (bulbCamera != null)
+        {
+            bulbCamera.GetComponent<CinemachineConfiner2D>().InvalidateCache();
+        }
+
+        if (spiritCamera != null)
+        {
+            spiritCamera.GetComponent<CinemachineConfiner2D>().InvalidateCache();
+        }
     }
 
     public void ActivateBulbCamera()
