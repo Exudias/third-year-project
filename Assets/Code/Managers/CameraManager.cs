@@ -1,6 +1,6 @@
 using UnityEngine;
 using Cinemachine;
-using UnityEngine.Experimental.Rendering.Universal;
+using System.Collections;
 
 public class CameraManager : MonoBehaviour
 {
@@ -32,48 +32,22 @@ public class CameraManager : MonoBehaviour
 
     public void ActivateBulbCamera()
     {
-        // Save info from old cam to transfer to new one, resetting old one
-        CinemachineVirtualCamera activeVcam = CinemachineCore.Instance.GetActiveBrain(0).ActiveVirtualCamera.
-            VirtualCameraGameObject.GetComponent<CinemachineVirtualCamera>();
-        bool oldForceX = activeVcam.GetComponent<LockCameraXY>().m_LockX;
-        bool oldForceY = activeVcam.GetComponent<LockCameraXY>().m_LockY;
-        float oldPosX = activeVcam.GetComponent<LockCameraXY>().m_XPosition;
-        float oldPosY = activeVcam.GetComponent<LockCameraXY>().m_YPosition;
-        // Reset old one
-        DisableForcedCameraPosition();
-
         currentFormCamera = PlayerFormSwitcher.PlayerForm.Bulb;
 
         virtualBulbCam.GetCinemachineComponent<CinemachineFramingTransposer>().m_TrackedObjectOffset = baseBulbOffset;
 
         bulbCamera.SetActive(true);
         spiritCamera.SetActive(false);
-
-        // Transfer old cam's forced pos info to new one
-        SetForcedCameraPosition(new Vector2(oldPosX, oldPosY), oldForceX, oldForceY);
     }
 
     public void ActivateSpiritCamera()
     {
-        // Save info from old cam to transfer to new one, resetting old one
-        CinemachineVirtualCamera activeVcam = CinemachineCore.Instance.GetActiveBrain(0).ActiveVirtualCamera.
-             VirtualCameraGameObject.GetComponent<CinemachineVirtualCamera>();
-        bool oldForceX = activeVcam.GetComponent<LockCameraXY>().m_LockX;
-        bool oldForceY = activeVcam.GetComponent<LockCameraXY>().m_LockY;
-        float oldPosX = activeVcam.GetComponent<LockCameraXY>().m_XPosition;
-        float oldPosY = activeVcam.GetComponent<LockCameraXY>().m_YPosition;
-        // Reset old one
-        DisableForcedCameraPosition();
-
         currentFormCamera = PlayerFormSwitcher.PlayerForm.Spirit;
 
         virtualSpiritCam.GetCinemachineComponent<CinemachineFramingTransposer>().m_TrackedObjectOffset = baseSpiritOffset;
 
         bulbCamera.SetActive(false);
         spiritCamera.SetActive(true);
-
-        // Transfer old cam's forced pos info to new one
-        SetForcedCameraPosition(new Vector2(oldPosX, oldPosY), oldForceX, oldForceY);
     }
 
     public void SetCurrentCameraOffset(Vector2 offset)
@@ -85,20 +59,34 @@ public class CameraManager : MonoBehaviour
 
     public void SetForcedCameraPosition(Vector2 pos, bool forceX, bool forceY)
     {
-        CinemachineVirtualCamera activeVcam = CinemachineCore.Instance.GetActiveBrain(0).ActiveVirtualCamera.
-            VirtualCameraGameObject.GetComponent<CinemachineVirtualCamera>();
-        activeVcam.GetComponent<LockCameraXY>().m_LockX = forceX;
-        activeVcam.GetComponent<LockCameraXY>().m_LockY = forceY;
-        activeVcam.GetComponent<LockCameraXY>().m_XPosition = pos.x;
-        activeVcam.GetComponent<LockCameraXY>().m_YPosition = pos.y;
+        if (bulbCamera != null)
+        {
+            bulbCamera.GetComponent<LockCameraXY>().m_LockX = forceX;
+            bulbCamera.GetComponent<LockCameraXY>().m_LockY = forceY;
+            bulbCamera.GetComponent<LockCameraXY>().m_XPosition = pos.x;
+            bulbCamera.GetComponent<LockCameraXY>().m_YPosition = pos.y;
+        }
+        if (spiritCamera != null)
+        {
+            spiritCamera.GetComponent<LockCameraXY>().m_LockX = forceX;
+            spiritCamera.GetComponent<LockCameraXY>().m_LockY = forceY;
+            spiritCamera.GetComponent<LockCameraXY>().m_XPosition = pos.x;
+            spiritCamera.GetComponent<LockCameraXY>().m_YPosition = pos.y;
+        }
     }
 
     public void DisableForcedCameraPosition()
     {
-        CinemachineVirtualCamera activeVcam = CinemachineCore.Instance.GetActiveBrain(0).ActiveVirtualCamera.
-            VirtualCameraGameObject.GetComponent<CinemachineVirtualCamera>();
-        activeVcam.GetComponent<LockCameraXY>().m_LockX = false;
-        activeVcam.GetComponent<LockCameraXY>().m_LockY = false;
+        if (bulbCamera != null)
+        {
+            bulbCamera.GetComponent<LockCameraXY>().m_LockX = false;
+            bulbCamera.GetComponent<LockCameraXY>().m_LockY = false;
+        }
+        if (spiritCamera != null)
+        {
+            spiritCamera.GetComponent<LockCameraXY>().m_LockX = false;
+            spiritCamera.GetComponent<LockCameraXY>().m_LockY = false;
+        }
     }
 
     public PlayerFormSwitcher.PlayerForm GetCurrentCameraForm() => currentFormCamera;
