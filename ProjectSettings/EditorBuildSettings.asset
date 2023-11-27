@@ -24,6 +24,9 @@ EditorBuildSettings:
     path: Assets/Scenes/LVL_Tut04.unity
     guid: 742ee901734e25e42a4d353227e89a2a
   - enabled: 1
+    path: Assets/Scenes/LVL_Tut05.unity
+    guid: a36d914d0494f48489aec6a80998a64a
+  - enabled: 1
     path: Assets/Scenes/GAMEPLAY_PERSIST.unity
     guid: 7bee9905693e10241bd727442b56cfcb
   m_configObjects: {}
