@@ -80,10 +80,10 @@ public class InputManager : MonoBehaviour
 
     private void CalculateAxes()
     {
-        bool left = IsPressed(KeyCode.LeftArrow);
-        bool right = IsPressed(KeyCode.RightArrow);
-        bool up = IsPressed(KeyCode.UpArrow);
-        bool down = IsPressed(KeyCode.DownArrow);
+        bool left = IsPressed(KeyCode.LeftArrow) || IsPressed(KeyCode.A);
+        bool right = IsPressed(KeyCode.RightArrow) || IsPressed(KeyCode.D);
+        bool up = IsPressed(KeyCode.UpArrow) || IsPressed(KeyCode.W);
+        bool down = IsPressed(KeyCode.DownArrow) || IsPressed(KeyCode.S);
 
         horizontalRawInput = (left ? -1 : 0) + (right ? 1 : 0);
         verticalRawInput = (down ? -1 : 0) + (up ? 1 : 0);
