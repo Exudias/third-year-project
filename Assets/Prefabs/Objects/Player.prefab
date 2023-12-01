@@ -364,8 +364,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   playerLight: {fileID: 5875749098464504876}
-  minLightMultiplier: 0.2
   energyManager: {fileID: 7328808871941551571}
+  formSwitcher: {fileID: 1105467402819965738}
+  minLightMultiplier: 0.2
+  bulbLightPosOffset: {x: 0, y: 0.25}
+  spiritLightPosOffset: {x: 0, y: 0}
 --- !u!1 &7667418138490284168
 GameObject:
   m_ObjectHideFlags: 0

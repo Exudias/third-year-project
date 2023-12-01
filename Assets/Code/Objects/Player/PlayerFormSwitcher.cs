@@ -33,7 +33,7 @@ public class PlayerFormSwitcher : MonoBehaviour
     private void Update()
     {
         // go spirit from bulb, but to return you must collide with a bulb, so no on-demand
-        if (input.IsDown(KeyCode.LeftShift) && currentForm == PlayerForm.Bulb)
+        if ((input.IsDown(KeyCode.LeftShift) || input.IsDown(KeyCode.RightShift)) && currentForm == PlayerForm.Bulb)
         {
             ToggleForm();
         }
