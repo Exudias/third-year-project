@@ -1,14 +1,18 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class PlayerLogic : MonoBehaviour
 {
     private PlayerFormSwitcher formSwitcher;
+    private Controller2D controller;
 
     private void Start()
     {
         formSwitcher = GetComponent<PlayerFormSwitcher>();
+        controller = GetComponent<Controller2D>();
+        if (GameManager.HasCustomSpawn())
+        {
+            controller.MoveImmediate(GameManager.GetCustomSpawnPoint());
+        }
     }
 
     private void OnEnable()

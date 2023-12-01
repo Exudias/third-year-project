@@ -1036,10 +1036,10 @@ Camera:
   m_LensShift: {x: 0, y: 0}
   m_NormalizedViewPortRect:
     serializedVersion: 2
-    x: 0.321875
-    y: 0.008333334
-    width: 0.5
-    height: 0.5
+    x: 0
+    y: 0
+    width: 1
+    height: 1
   near clip plane: 0.3
   far clip plane: 1000
   field of view: 60
@@ -1843,9 +1843,84 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 1882671710}
+  - {fileID: 839825650}
   m_Father: {fileID: 745610246}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!43 &864753335
+--- !u!1001 &839825649
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 765969738}
+    m_Modifications:
+    - target: {fileID: 4930529955760196481, guid: 68eb4b55dd3a29441b4a79529d213462, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 7.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 5189848108451886993, guid: 68eb4b55dd3a29441b4a79529d213462, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: -2.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 5189848108451886993, guid: 68eb4b55dd3a29441b4a79529d213462, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: -3.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 5189848108451886993, guid: 68eb4b55dd3a29441b4a79529d213462, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5189848108451886993, guid: 68eb4b55dd3a29441b4a79529d213462, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5189848108451886993, guid: 68eb4b55dd3a29441b4a79529d213462, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5189848108451886993, guid: 68eb4b55dd3a29441b4a79529d213462, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5189848108451886993, guid: 68eb4b55dd3a29441b4a79529d213462, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5189848108451886993, guid: 68eb4b55dd3a29441b4a79529d213462, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5189848108451886993, guid: 68eb4b55dd3a29441b4a79529d213462, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5189848108451886993, guid: 68eb4b55dd3a29441b4a79529d213462, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5826402083100947538, guid: 68eb4b55dd3a29441b4a79529d213462, type: 3}
+      propertyPath: m_Name
+      value: Change Respawn Trigger
+      objectReference: {fileID: 0}
+    - target: {fileID: 6080965495419286916, guid: 68eb4b55dd3a29441b4a79529d213462, type: 3}
+      propertyPath: m_Size.y
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 6080965495419286916, guid: 68eb4b55dd3a29441b4a79529d213462, type: 3}
+      propertyPath: m_Offset.y
+      value: 1
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 68eb4b55dd3a29441b4a79529d213462, type: 3}
+--- !u!4 &839825650 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 5189848108451886993, guid: 68eb4b55dd3a29441b4a79529d213462, type: 3}
+  m_PrefabInstance: {fileID: 839825649}
+  m_PrefabAsset: {fileID: 0}
+--- !u!43 &849071333
 Mesh:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -8013,7 +8088,7 @@ MonoBehaviour:
     rid: 2297376804898603009
   m_ShadowCastingSource: 2
   m_ShadowMesh:
-    m_Mesh: {fileID: 864753335}
+    m_Mesh: {fileID: 849071333}
     m_LocalBounds:
       m_Center: {x: 9.5, y: 4.5, z: 0}
       m_Extent: {x: 15.500015, y: 11.500015, z: 0}

@@ -51,8 +51,6 @@ public class CameraManager : MonoBehaviour
     {
         currentFormCamera = PlayerFormSwitcher.PlayerForm.Bulb;
 
-        virtualBulbCam.GetCinemachineComponent<CinemachineFramingTransposer>().m_TrackedObjectOffset = baseBulbOffset;
-
         bulbCamera.SetActive(true);
         spiritCamera.SetActive(false);
     }
@@ -61,17 +59,22 @@ public class CameraManager : MonoBehaviour
     {
         currentFormCamera = PlayerFormSwitcher.PlayerForm.Spirit;
 
-        virtualSpiritCam.GetCinemachineComponent<CinemachineFramingTransposer>().m_TrackedObjectOffset = baseSpiritOffset;
-
         bulbCamera.SetActive(false);
         spiritCamera.SetActive(true);
     }
 
-    public void SetCurrentCameraOffset(Vector2 offset)
+    public void SetCurrentCameraOffset(Vector2 offset, bool bulb, bool spirit)
     {
-        CinemachineVirtualCamera activeVcam = CinemachineCore.Instance.GetActiveBrain(0).ActiveVirtualCamera.
-            VirtualCameraGameObject.GetComponent<CinemachineVirtualCamera>();
-        activeVcam.GetCinemachineComponent<CinemachineFramingTransposer>().m_TrackedObjectOffset = offset;
+        CinemachineVirtualCamera bulbVcam = bulbCamera.GetComponent<CinemachineVirtualCamera>();
+        CinemachineVirtualCamera spiritVcam = spiritCamera.GetComponent<CinemachineVirtualCamera>();
+        if (bulb)
+        {
+            bulbVcam.GetCinemachineComponent<CinemachineFramingTransposer>().m_TrackedObjectOffset = offset;
+        }
+        if (spirit)
+        {
+            spiritVcam.GetCinemachineComponent<CinemachineFramingTransposer>().m_TrackedObjectOffset = offset;
+        }
     }
 
     public void SetForcedCameraPosition(Vector2 pos, bool forceX, bool forceY)

@@ -20,7 +20,7 @@ public class CameraOffsetTrigger : Trigger
 
             if (successfullyAffect)
             {
-                Camera.main.GetComponent<CameraManager>().SetCurrentCameraOffset(offsetToApply);
+                Camera.main.GetComponent<CameraManager>().SetCurrentCameraOffset(offsetToApply, affectBulb, affectSpirit);
             }
         }
     }

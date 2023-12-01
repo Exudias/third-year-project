@@ -7,8 +7,28 @@ public class GameManager : MonoBehaviour
 
     private static bool loadingScene;
 
+    private static GameManager Instance;
+
+    private static Vector2 spawnPoint;
+    private static bool setCustomSpawn;
+
     private void Start()
     {
+        if (Instance == null)
+        {
+            Instance = this;
+            InitGameState();
+            DontDestroyOnLoad(gameObject);
+        }
+        else
+        {
+            Destroy(this);
+        }
+    }
+
+    private void InitGameState()
+    {
+        setCustomSpawn = false;
         Application.targetFrameRate = 60;
         loadingScene = false;
     }
@@ -39,6 +59,16 @@ public class GameManager : MonoBehaviour
 
         return false;
     }
+
+    public static void SetSpawn(Vector2 loc)
+    {
+        spawnPoint = loc;
+        setCustomSpawn = true;
+    }
+
+    public static bool HasCustomSpawn() => setCustomSpawn;
+
+    public static Vector2 GetCustomSpawnPoint() => spawnPoint;
 
     private static int GetCurrentLevelBuildIndex()
     {
@@ -79,6 +109,8 @@ public class GameManager : MonoBehaviour
 
     public async static void LoadNextScene()
     {
+        setCustomSpawn = false;
+
         if (loadingScene) return;
 
         loadingScene = true;
