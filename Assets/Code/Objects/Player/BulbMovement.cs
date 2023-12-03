@@ -197,7 +197,6 @@ public class BulbMovement : MonoBehaviour
 
     private void WallJump(int direction)
     {
-        Debug.Log("SADA");
         OnPlayerWallJump?.Invoke();
         input.ConsumeBuffer(KeyCode.Space);
         velocity.x = wallJumpStrength * direction;
