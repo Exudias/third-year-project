@@ -61,6 +61,8 @@ public class SpiritMovement : MonoBehaviour
 
     private void Update()
     {
+        if (GameManager.IsGamePaused()) return;
+
         timeSinceHitWall += Time.unscaledDeltaTime;
         speedMultiplier = Mathf.MoveTowards(speedMultiplier, 1, speedNormalizationStep * Time.unscaledDeltaTime);
 

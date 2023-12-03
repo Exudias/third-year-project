@@ -155,6 +155,8 @@ public class Controller2D : MonoBehaviour
 
     public bool CanWallJump(float leniency, int direction)
     {
+        UpdateRaycastOrigins();
+
         float rayLength = leniency + SKIN_WIDTH;
 
         for (int i = 0; i < horizontalRayCount; i++)

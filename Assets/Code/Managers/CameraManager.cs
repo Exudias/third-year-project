@@ -110,4 +110,9 @@ public class CameraManager : MonoBehaviour
     }
 
     public PlayerFormSwitcher.PlayerForm GetCurrentCameraForm() => currentFormCamera;
+
+    public void SetIgnoreTimeScale(bool ignore)
+    {
+        GetComponent<CinemachineBrain>().m_IgnoreTimeScale = ignore;
+    }
 }

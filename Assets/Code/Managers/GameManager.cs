@@ -1,5 +1,6 @@
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using Cinemachine;
 
 public class GameManager : MonoBehaviour
 {
@@ -11,6 +12,8 @@ public class GameManager : MonoBehaviour
 
     private static Vector2 spawnPoint;
     private static bool setCustomSpawn;
+
+    private InputManager input;
 
     private void Start()
     {
@@ -26,11 +29,29 @@ public class GameManager : MonoBehaviour
         }
     }
 
+    private void Update()
+    {
+        if (input.IsDown(KeyCode.Escape))
+        {
+            if (paused)
+            {
+                ResumeGame();
+            }
+            else
+            {
+                PauseGame();
+            }
+        }
+    }
+
     private void InitGameState()
     {
+        input = InputManager.instance;
         setCustomSpawn = false;
         Application.targetFrameRate = 60;
         loadingScene = false;
+        paused = false;
+        timeScaleBeforePause = 1;
     }
 
     private void Awake()
@@ -40,6 +61,8 @@ public class GameManager : MonoBehaviour
             LoadPersistentScene();
         }
     }
+
+    #region Scene Management
 
     private void LoadPersistentScene()
     {
@@ -59,16 +82,6 @@ public class GameManager : MonoBehaviour
 
         return false;
     }
-
-    public static void SetSpawn(Vector2 loc)
-    {
-        spawnPoint = loc;
-        setCustomSpawn = true;
-    }
-
-    public static bool HasCustomSpawn() => setCustomSpawn;
-
-    public static Vector2 GetCustomSpawnPoint() => spawnPoint;
 
     private static int GetCurrentLevelBuildIndex()
     {
@@ -101,6 +114,7 @@ public class GameManager : MonoBehaviour
 
     public async static void ResetScene()
     {
+        ResumeGame();
         int currentLevel = GetCurrentLevelBuildIndex();
         if (!SceneManager.GetSceneByBuildIndex(currentLevel).isLoaded) return;
         await SceneManager.UnloadSceneAsync(currentLevel);
@@ -127,4 +141,46 @@ public class GameManager : MonoBehaviour
 
         loadingScene = false;
     }
+
+    #endregion
+
+    #region Level Data
+    public static void SetSpawn(Vector2 loc)
+    {
+        spawnPoint = loc;
+        setCustomSpawn = true;
+    }
+
+    public static bool HasCustomSpawn() => setCustomSpawn;
+
+    public static Vector2 GetCustomSpawnPoint() => spawnPoint;
+    #endregion
+
+    #region Game State
+    private static bool paused = false;
+    private static float timeScaleBeforePause = 1;
+
+    public static void PauseGame()
+    {
+        if (Camera.main != null)
+        {
+            Camera.main.GetComponent<CameraManager>().SetIgnoreTimeScale(false);
+        }
+        timeScaleBeforePause = Time.timeScale;
+        Time.timeScale = 0;
+        paused = true;
+    }
+
+    public static void ResumeGame()
+    {
+        if (Camera.main != null)
+        {
+            Camera.main.GetComponent<CameraManager>().SetIgnoreTimeScale(true);
+        }
+        Time.timeScale = timeScaleBeforePause;
+        paused = false;
+    }
+
+    public static bool IsGamePaused() => paused;
+    #endregion
 }

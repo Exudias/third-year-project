@@ -1174,7 +1174,7 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!43 &1243956106
+--- !u!43 &1213713624
 Mesh:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -6635,7 +6635,7 @@ MonoBehaviour:
     rid: 2297376804898603016
   m_ShadowCastingSource: 2
   m_ShadowMesh:
-    m_Mesh: {fileID: 1243956106}
+    m_Mesh: {fileID: 1213713624}
     m_LocalBounds:
       m_Center: {x: 1, y: 5, z: 0}
       m_Extent: {x: 16.000015, y: 11.000015, z: 0}
@@ -14167,6 +14167,10 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6904169580368490572, guid: 854472f808d794a45a52cbaf5e306851, type: 3}
       propertyPath: m_NormalizedViewPortRect.height
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8058619834469056216, guid: 854472f808d794a45a52cbaf5e306851, type: 3}
+      propertyPath: m_IgnoreTimeScale
       value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents:

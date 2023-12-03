@@ -101,6 +101,8 @@ public class BulbMovement : MonoBehaviour
 
     private void Update()
     {
+        if (GameManager.IsGamePaused()) return;
+
         coyoteTime += Time.deltaTime;
         timeSinceWallJump += Time.deltaTime;
         timeSinceSuperJumpTransformation += Time.deltaTime;
@@ -141,7 +143,9 @@ public class BulbMovement : MonoBehaviour
         const int DIR_RIGHT = 1;
 
         //wall jump
-        if (input.SecondsSincePressed(KeyCode.Space) <= jumpBufferLeniency)
+        float timeSinceJumpPress = input.SecondsSincePressed(KeyCode.Space);
+        // time since jump press is <0 if hasn't ever been pressed
+        if (timeSinceJumpPress <= jumpBufferLeniency && timeSinceJumpPress >= 0)
         {
             if (controller.CanWallJump(wallJumpLeniency, DIR_LEFT))
             {
@@ -193,6 +197,7 @@ public class BulbMovement : MonoBehaviour
 
     private void WallJump(int direction)
     {
+        Debug.Log("SADA");
         OnPlayerWallJump?.Invoke();
         input.ConsumeBuffer(KeyCode.Space);
         velocity.x = wallJumpStrength * direction;

@@ -29,13 +29,16 @@ public class EnergyManager : MonoBehaviour
             energyMeterFG.fillAmount = GetEnergyPercent();
         }
         
-        if (formSwitcher.GetCurrentForm() == PlayerFormSwitcher.PlayerForm.Spirit)
+        if (!GameManager.IsGamePaused())
         {
-            Time.timeScale = Mathf.Lerp(timescaleAtMinEnergy, timescaleAtMaxEnergy, GetEnergyPercent());
-        }
-        else
-        {
-            Time.timeScale = 1;
+            if (formSwitcher.GetCurrentForm() == PlayerFormSwitcher.PlayerForm.Spirit)
+            {
+                Time.timeScale = Mathf.Lerp(timescaleAtMinEnergy, timescaleAtMaxEnergy, GetEnergyPercent());
+            }
+            else
+            {
+                Time.timeScale = 1;
+            }
         }
     }
 

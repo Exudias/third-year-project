@@ -45,13 +45,18 @@ public class InputManager : MonoBehaviour
             {KeyCode.RightArrow, rightButtonState},
         };
 
+        Dictionary<KeyCode, ButtonState> newKeyStates = new Dictionary<KeyCode, ButtonState>();
         foreach (KeyValuePair<KeyCode, ButtonState> state in keyStates)
         {
+            KeyCode keyCode = state.Key;
             ButtonState buttonState = state.Value;
 
             buttonState.timeAtLastDown = Mathf.NegativeInfinity;
             buttonState.timeAtLastUp = Mathf.NegativeInfinity;
+
+            newKeyStates[keyCode] = buttonState;
         }
+        keyStates = newKeyStates;
 
         internalTimer = 0;
     }

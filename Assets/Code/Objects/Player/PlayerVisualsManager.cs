@@ -84,6 +84,8 @@ public class PlayerVisualsManager : MonoBehaviour
 
     private void Update()
     {
+        if (GameManager.IsGamePaused()) return;
+
         NormalizeScale();
 
         PlayerFormSwitcher.PlayerForm form = formSwitcher.GetCurrentForm();
