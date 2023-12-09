@@ -92,7 +92,7 @@ public class GameManager : MonoBehaviour
                 return SceneManager.GetSceneAt(i).buildIndex;
             }
         }
-        throw new System.Exception("Could not find level scene!");
+        return -1;
     }
 
     private static Scene GetCurrentLevel()
@@ -131,6 +131,14 @@ public class GameManager : MonoBehaviour
 
         int currentLevelBuildIndex = GetCurrentLevelBuildIndex();
 
+        // If there is no gameplay scene, simply load the next scene without unloading anything
+        if (currentLevelBuildIndex == -1)
+        {
+            SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
+            loadingScene = false;
+            return;
+        }
+
         if (SceneManager.GetSceneByBuildIndex(currentLevelBuildIndex + 1).name == gameplayPersistentSceneName)
         {
             throw new System.Exception("Trying to load invalid scene! (Persistent one!)");
@@ -159,6 +167,11 @@ public class GameManager : MonoBehaviour
     #region Game State
     private static bool paused = false;
     private static float timeScaleBeforePause = 1;
+
+    public static void QuitGame()
+    {
+        Application.Quit();
+    }
 
     public static void PauseGame()
     {
