@@ -168,9 +168,16 @@ public class GameManager : MonoBehaviour
     private static bool paused = false;
     private static float timeScaleBeforePause = 1;
 
+    // Credit to https://community.gamedev.tv/t/how-do-i-make-the-quit-button-work-for-webgl/40403/5
     public static void QuitGame()
     {
-        Application.Quit();
+        #if (UNITY_EDITOR)
+            UnityEditor.EditorApplication.isPlaying = false;
+        #elif (UNITY_STANDALONE)
+            Application.Quit();
+        #elif (UNITY_WEBGL)
+            Application.OpenURL("https://exudias.itch.io/");
+        #endif
     }
 
     public static void PauseGame()
