@@ -1,6 +1,5 @@
 using UnityEngine;
 using UnityEngine.SceneManagement;
-using Cinemachine;
 
 public class GameManager : MonoBehaviour
 {
@@ -114,7 +113,6 @@ public class GameManager : MonoBehaviour
 
     public async static void ResetScene()
     {
-        ResumeGame();
         int currentLevel = GetCurrentLevelBuildIndex();
         if (!SceneManager.GetSceneByBuildIndex(currentLevel).isLoaded) return;
         await SceneManager.UnloadSceneAsync(currentLevel);
@@ -150,6 +148,14 @@ public class GameManager : MonoBehaviour
         loadingScene = false;
     }
 
+    const string MAIN_MENU_SCENE_NAME = "MAIN_MENU";
+
+    public static void LoadMenu()
+    {
+        ResumeGame();
+        SceneManager.LoadScene(MAIN_MENU_SCENE_NAME);
+    }
+
     #endregion
 
     #region Level Data
@@ -180,8 +186,9 @@ public class GameManager : MonoBehaviour
         #endif
     }
 
-    public static void PauseGame()
+    public void PauseGame()
     {
+        MenuManager.instance.ShowPauseMenu();
         if (Camera.main != null)
         {
             Camera.main.GetComponent<CameraManager>().SetIgnoreTimeScale(false);
@@ -199,6 +206,7 @@ public class GameManager : MonoBehaviour
         }
         Time.timeScale = timeScaleBeforePause;
         paused = false;
+        MenuManager.instance.HidePauseMenu();
     }
 
     public static bool IsGamePaused() => paused;

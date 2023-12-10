@@ -11,11 +11,13 @@ public class MenuButton : MonoBehaviour
 
     public void Hover()
     {
+        if (bgImage == null) return;
         bgImage.sprite = hoverSprite;
     }
 
     public void UnHover()
     {
+        if (bgImage == null) return;
         bgImage.sprite = defaultSprite;
     }
 

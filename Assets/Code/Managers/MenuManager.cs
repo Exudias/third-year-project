@@ -2,7 +2,11 @@ using UnityEngine;
 
 public class MenuManager : MonoBehaviour
 {
+    public static MenuManager instance;
+
     [SerializeField] private MenuContext[] contexts;
+    [SerializeField] private GameObject dimmer;
+    [SerializeField] private MenuContext pauseContext;
 
     private MenuContext activeContext = null;
     private MenuButton hoveredButton = null;
@@ -13,6 +17,7 @@ public class MenuManager : MonoBehaviour
     private void OnEnable()
     {
         MenuContext.OnContextEnabled += OnContextEnabled;
+        MenuContext.OnContextDisabled += OnContextDisabled;
     }
 
     private void OnDisable()
@@ -22,12 +27,21 @@ public class MenuManager : MonoBehaviour
 
     private void Start()
     {
+        instance = this;
         input = InputManager.instance;
-        ActivateContext(contexts[0]);
+        for (int i = 0; i < contexts.Length; i++)
+        {
+            if (contexts[i].IsEnabled())
+            {
+                ActivateContext(contexts[i]);
+                break;
+            }
+        }
     }
 
     private void Update()
     {
+        if (activeContext == null) return;
         // Both enters or space press selected button
         if (input.IsDown(KeyCode.Return) || input.IsDown(KeyCode.Space) || input.IsDown(KeyCode.KeypadEnter))
         {
@@ -61,12 +75,41 @@ public class MenuManager : MonoBehaviour
         }
     }
 
+    public void ShowPauseMenu()
+    {
+        SetDimmerActive(true);
+        pauseContext.Enable();
+    }
+
+    public void HidePauseMenu()
+    {
+        SetDimmerActive(false);
+        pauseContext.Disable();
+    }
+
+    private void SetDimmerActive(bool active)
+    {
+        dimmer.SetActive(active);
+    }
+
     private void ActivateContext(MenuContext context)
     {
         hoveredButton?.UnHover();
         activeContext = context;
         hoveredButton = context.GetButtons()[0];
         hoveredButton.Hover();
+    }
+
+    private void DeactivateContext(MenuContext context)
+    {
+        hoveredButton?.UnHover();
+        activeContext = null;
+        hoveredButton = null;
+    }
+
+    private void OnContextDisabled(MenuContext context)
+    {
+        DeactivateContext(context);
     }
 
     private void OnContextEnabled(MenuContext context)
