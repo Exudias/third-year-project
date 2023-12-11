@@ -90,8 +90,9 @@ public class BulbMovement : MonoBehaviour
         Controller2D.OnCollision -= OnControllerCollision;
     }
 
-    private void OnControllerCollision(Vector2 dir)
+    private void OnControllerCollision(Controller2D source, Vector2 dir)
     {
+        if (source != controller) return;
         // If horizontal collision, stop counting as walljump
         if (dir.x != 0)
         {

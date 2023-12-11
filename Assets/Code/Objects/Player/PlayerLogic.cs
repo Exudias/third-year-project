@@ -30,8 +30,9 @@ public class PlayerLogic : MonoBehaviour
         GameManager.ResetScene();
     }
 
-    private void OnControllerDeathCollision(Vector2 dir, bool isDirectionalDeath, GameObject killer)
+    private void OnControllerDeathCollision(Controller2D source, Vector2 dir, bool isDirectionalDeath, GameObject killer)
     {
+        if (source != controller) return;
         if (!isDirectionalDeath)
         {
             if (killer.GetComponent<FormKiller>() != null)

@@ -14,6 +14,22 @@ public class EmptyBulbLogic : MonoBehaviour
     private float deceleration = 0;
     private Vector2 velocity = Vector2.zero;
 
+    private void OnEnable()
+    {
+        Controller2D.OnCollision += OnControllerCollide;
+    }
+
+    private void OnDisable()
+    {
+        Controller2D.OnCollision -= OnControllerCollide;
+    }
+
+    private void OnControllerCollide(Controller2D source, Vector2 dir)
+    {
+        if (source != controller) return;
+        Debug.Log("Yeah.");
+    }
+
     private void Start()
     {
         controller = GetComponent<Controller2D>();

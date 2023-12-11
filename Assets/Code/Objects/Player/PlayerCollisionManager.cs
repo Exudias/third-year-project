@@ -27,8 +27,9 @@ public class PlayerCollisionManager : MonoBehaviour
         Controller2D.OnOtherCollision -= OnControllerOtherCollision;
     }
 
-    private void OnControllerOtherCollision(Vector2 dir, GameObject obj)
+    private void OnControllerOtherCollision(Controller2D source, Vector2 dir, GameObject obj)
     {
+        if (source != controller) return;
         if (obj.GetComponent<EnergyPickupLogic>() != null)
         {
             if (spiritMovement != null && spiritMovement.enabled)

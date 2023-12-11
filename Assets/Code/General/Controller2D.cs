@@ -8,9 +8,9 @@ using System.Collections.Generic;
 [RequireComponent(typeof(BoxCollider2D))]
 public class Controller2D : MonoBehaviour
 {
-    public delegate void CollisionEvent(Vector2 direction);
-    public delegate void DeathCollisionEvent(Vector2 direction, bool isDirectionalDeath, GameObject killer);
-    public delegate void OtherCollision(Vector2 direction, GameObject other);
+    public delegate void CollisionEvent(Controller2D source, Vector2 direction);
+    public delegate void DeathCollisionEvent(Controller2D source, Vector2 direction, bool isDirectionalDeath, GameObject killer);
+    public delegate void OtherCollision(Controller2D source, Vector2 direction, GameObject other);
     public delegate void ControllerEvent();
     public static event CollisionEvent OnCollision;
     public static event DeathCollisionEvent OnDeathCollision;
@@ -144,12 +144,12 @@ public class Controller2D : MonoBehaviour
         foreach(Collider2D deathColl in deathColls)
         {
             bool isDirectionalDeath = deathColl.GetComponent<DirectionalKiller>() != null;
-            OnDeathCollision?.Invoke(Vector2.zero, isDirectionalDeath, deathColl.gameObject);
+            OnDeathCollision?.Invoke(this, Vector2.zero, isDirectionalDeath, deathColl.gameObject);
         }
 
         foreach (Collider2D otherColl in otherColls)
         {
-            OnOtherCollision?.Invoke(Vector2.zero, otherColl.gameObject);
+            OnOtherCollision?.Invoke(this, Vector2.zero, otherColl.gameObject);
         }
     }
 
@@ -213,13 +213,13 @@ public class Controller2D : MonoBehaviour
 
                 if (directionX == -1)
                 {
-                    OnCollision?.Invoke(Vector2.left);
+                    OnCollision?.Invoke(this, Vector2.left);
                     collisions.left = true;
                     collisions.right = false;
                 }
                 else if (directionX == 1)
                 {
-                    OnCollision?.Invoke(Vector2.right);
+                    OnCollision?.Invoke(this, Vector2.right);
                     collisions.left = false;
                     collisions.right = true;
                 }
@@ -240,7 +240,7 @@ public class Controller2D : MonoBehaviour
         if (hitDeath)
         {
             bool isDirectionalDeath = deathCollider.gameObject.GetComponent<DirectionalKiller>() != null;
-            OnDeathCollision?.Invoke(lastDesiredVelocity.normalized, isDirectionalDeath, deathCollider.gameObject);
+            OnDeathCollision?.Invoke(this, lastDesiredVelocity.normalized, isDirectionalDeath, deathCollider.gameObject);
         }
 
         // Find all objects you could collide with
@@ -258,7 +258,7 @@ public class Controller2D : MonoBehaviour
         foreach(GameObject obj in hitOtherObjects)
         {
             if (IDs.Contains(obj.GetInstanceID())) continue;
-            OnOtherCollision?.Invoke(lastDesiredVelocity.normalized, obj);
+            OnOtherCollision?.Invoke(this, lastDesiredVelocity.normalized, obj);
             IDs.Add(obj.GetInstanceID());
         }
 
@@ -322,13 +322,13 @@ public class Controller2D : MonoBehaviour
 
                 if (directionY == -1)
                 {
-                    OnCollision?.Invoke(Vector2.down);
+                    OnCollision?.Invoke(this, Vector2.down);
                     collisions.bottom = true;
                     collisions.top = false;
                 }
                 else if (directionY == 1)
                 {
-                    OnCollision?.Invoke(Vector2.up);
+                    OnCollision?.Invoke(this, Vector2.up);
                     collisions.bottom = false;
                     collisions.top = true;
                 }
@@ -349,7 +349,7 @@ public class Controller2D : MonoBehaviour
         if (hitDeath)
         {
             bool isDirectionalDeath = deathCollider.gameObject.GetComponent<DirectionalKiller>() != null;
-            OnDeathCollision?.Invoke(lastDesiredVelocity.normalized, isDirectionalDeath, deathCollider.gameObject);
+            OnDeathCollision?.Invoke(this, lastDesiredVelocity.normalized, isDirectionalDeath, deathCollider.gameObject);
         }
 
         // Find all objects you could collide with
@@ -367,7 +367,7 @@ public class Controller2D : MonoBehaviour
         foreach (GameObject obj in hitOtherObjects)
         {
             if (IDs.Contains(obj.GetInstanceID())) continue;
-            OnOtherCollision?.Invoke(lastDesiredVelocity.normalized, obj);
+            OnOtherCollision?.Invoke(this, lastDesiredVelocity.normalized, obj);
             IDs.Add(obj.GetInstanceID());
         }
     }
