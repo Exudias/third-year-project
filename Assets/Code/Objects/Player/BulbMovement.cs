@@ -216,4 +216,8 @@ public class BulbMovement : MonoBehaviour
         maxJumpVelocity = Mathf.Abs(gravity) * timeToJumpApex;
         minJumpVelocity = Mathf.Sqrt(2 * Mathf.Abs(gravity) * minJumpHeight);
     }
+
+    public float GetGravity() => gravity;
+
+    public float GetTerminalVelocity() => terminalVelocity;
 }

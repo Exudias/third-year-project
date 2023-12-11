@@ -88,6 +88,8 @@ public class PlayerFormSwitcher : MonoBehaviour
     {
         EmptyBulbLogic emptyBulb = Instantiate(emptyBulbPrefab, transform.position, Quaternion.identity).GetComponent<EmptyBulbLogic>();
         emptyBulb.SetVelocity(controller.GetLastActualVelocity() / Time.deltaTime);
+        emptyBulb.SetGravity(bulbMovement.GetGravity());
+        emptyBulb.SetTerminalVelocity(bulbMovement.GetTerminalVelocity());
 
         currentForm = PlayerForm.Spirit;
 

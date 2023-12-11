@@ -9,6 +9,8 @@ public class EmptyBulbLogic : MonoBehaviour
 
     private float currentCooldown;
 
+    private float gravity = 0;
+    private float terminalVelocity = 0;
     private Vector2 velocity = Vector2.zero;
 
     private void Start()
@@ -26,12 +28,28 @@ public class EmptyBulbLogic : MonoBehaviour
         {
             currentCooldown -= Time.unscaledDeltaTime;
         }
+        if (!controller.collisions.bottom)
+        {
+            float gravityStep = gravity * Time.deltaTime;
+            velocity.y = Mathf.Clamp(velocity.y + gravityStep, -terminalVelocity, Mathf.Infinity);
+        }
+
         controller.Move(velocity * Time.deltaTime);
     }
 
     public void SetVelocity(Vector2 newVelocity)
     {
         velocity = newVelocity;
+    }
+
+    public void SetGravity(float newGravity)
+    {
+        gravity = newGravity;
+    }
+
+    public void SetTerminalVelocity(float newTerminalVelocity)
+    {
+        terminalVelocity = newTerminalVelocity;
     }
 
     public bool HasCooldown()
