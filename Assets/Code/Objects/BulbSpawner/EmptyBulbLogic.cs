@@ -11,6 +11,7 @@ public class EmptyBulbLogic : MonoBehaviour
 
     private float gravity = 0;
     private float terminalVelocity = 0;
+    private float deceleration = 0;
     private Vector2 velocity = Vector2.zero;
 
     private void Start()
@@ -33,6 +34,9 @@ public class EmptyBulbLogic : MonoBehaviour
             float gravityStep = gravity * Time.deltaTime;
             velocity.y = Mathf.Clamp(velocity.y + gravityStep, -terminalVelocity, Mathf.Infinity);
         }
+        const float AIR_CONTROL_MULT = 0.2f;
+
+        velocity.x = Mathf.MoveTowards(velocity.x, 0, deceleration * (controller.collisions.bottom ? 1 : AIR_CONTROL_MULT) * Time.deltaTime);
 
         controller.Move(velocity * Time.deltaTime);
     }
@@ -50,6 +54,11 @@ public class EmptyBulbLogic : MonoBehaviour
     public void SetTerminalVelocity(float newTerminalVelocity)
     {
         terminalVelocity = newTerminalVelocity;
+    }
+
+    public void SetDeceleration(float newDeceleration)
+    {
+        deceleration = newDeceleration;
     }
 
     public bool HasCooldown()

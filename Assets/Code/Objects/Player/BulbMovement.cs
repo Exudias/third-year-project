@@ -220,4 +220,6 @@ public class BulbMovement : MonoBehaviour
     public float GetGravity() => gravity;
 
     public float GetTerminalVelocity() => terminalVelocity;
+
+    public float GetDeceleration() => deceleration;
 }

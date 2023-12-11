@@ -204,8 +204,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   maxTopSpeed: 10
   minTopSpeed: 10
-  minTurnDegsPerSec: 360
-  maxTurnDegsPerSec: 360
+  minTurnDegsPerSec: 400
+  maxTurnDegsPerSec: 400
   wallHitTurnPenaltyTime: 0.2
   wallHitTurnPenaltyMultiplier: 0.2
   energyDissipationPerSec: 10

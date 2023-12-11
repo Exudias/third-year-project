@@ -90,6 +90,8 @@ public class PlayerFormSwitcher : MonoBehaviour
         emptyBulb.SetVelocity(controller.GetLastActualVelocity() / Time.deltaTime);
         emptyBulb.SetGravity(bulbMovement.GetGravity());
         emptyBulb.SetTerminalVelocity(bulbMovement.GetTerminalVelocity());
+        emptyBulb.SetDeceleration(bulbMovement.GetDeceleration());
+        GameManager.MoveObjectToLevelScene(emptyBulb.gameObject);
 
         currentForm = PlayerForm.Spirit;
 
