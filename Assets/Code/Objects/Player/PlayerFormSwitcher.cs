@@ -86,13 +86,13 @@ public class PlayerFormSwitcher : MonoBehaviour
 
     private void InitSpirit()
     {
-        EmptyBulbLogic emptyBulb = Instantiate(emptyBulbPrefab, transform.position, Quaternion.identity).GetComponent<EmptyBulbLogic>();
+        EmptyBulbLogic emptyBulb = Instantiate(emptyBulbPrefab, transform.position, Quaternion.identity).transform.GetChild(0).GetComponent<EmptyBulbLogic>();
         emptyBulb.SetVelocity(controller.GetLastActualVelocity() / Time.deltaTime);
         emptyBulb.SetGravity(bulbMovement.GetGravity());
         emptyBulb.SetTerminalVelocity(bulbMovement.GetTerminalVelocity());
         emptyBulb.SetDeceleration(bulbMovement.GetDeceleration());
         emptyBulb.SetDestroyOnSolid(!controller.collisions.bottom);
-        GameManager.MoveObjectToLevelScene(emptyBulb.gameObject);
+        GameManager.MoveObjectToLevelScene(emptyBulb.transform.parent.gameObject);
 
         currentForm = PlayerForm.Spirit;
 

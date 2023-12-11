@@ -4,8 +4,7 @@ public class EmptyBulbLogic : MonoBehaviour
 {
     [SerializeField] private bool hasCooldown = true;
     [SerializeField] private float cooldownLength = 0.5f;
-
-    private Controller2D controller;
+    [SerializeField] private Controller2D controller;
 
     private float currentCooldown;
 
@@ -36,7 +35,6 @@ public class EmptyBulbLogic : MonoBehaviour
 
     private void Start()
     {
-        controller = GetComponent<Controller2D>();
         if (hasCooldown)
         {
             currentCooldown = cooldownLength;
@@ -93,11 +91,11 @@ public class EmptyBulbLogic : MonoBehaviour
 
     public void Collect()
     {
-        Destroy(gameObject);
+        Destroy(transform.parent.gameObject);
     }
 
     public void DestroySelf()
     {
-        Destroy(gameObject);
+        Destroy(transform.parent.gameObject);
     }
 }
