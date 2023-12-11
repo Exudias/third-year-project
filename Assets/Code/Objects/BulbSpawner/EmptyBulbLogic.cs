@@ -13,6 +13,7 @@ public class EmptyBulbLogic : MonoBehaviour
     private float terminalVelocity = 0;
     private float deceleration = 0;
     private Vector2 velocity = Vector2.zero;
+    private bool destroyOnSolid = false;
 
     private void OnEnable()
     {
@@ -27,7 +28,10 @@ public class EmptyBulbLogic : MonoBehaviour
     private void OnControllerCollide(Controller2D source, Vector2 dir)
     {
         if (source != controller) return;
-        Debug.Log("Yeah.");
+        if (destroyOnSolid && dir == Vector2.down)
+        {
+            DestroySelf();
+        }
     }
 
     private void Start()
@@ -57,6 +61,11 @@ public class EmptyBulbLogic : MonoBehaviour
         controller.Move(velocity * Time.deltaTime);
     }
 
+    public void SetDestroyOnSolid(bool newSetting)
+    {
+        destroyOnSolid = newSetting;
+    }
+
     public void SetVelocity(Vector2 newVelocity)
     {
         velocity = newVelocity;
@@ -83,6 +92,11 @@ public class EmptyBulbLogic : MonoBehaviour
     }
 
     public void Collect()
+    {
+        Destroy(gameObject);
+    }
+
+    public void DestroySelf()
     {
         Destroy(gameObject);
     }
