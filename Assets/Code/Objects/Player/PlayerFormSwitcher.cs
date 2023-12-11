@@ -16,6 +16,8 @@ public class PlayerFormSwitcher : MonoBehaviour
 
     [SerializeField] private BoxCollider2D bulbCollider;
     [SerializeField] private BoxCollider2D spiritCollider;
+
+    [SerializeField] private GameObject emptyBulbPrefab;
      
     private BulbMovement bulbMovement;
     private SpiritMovement spiritMovement;
@@ -84,6 +86,9 @@ public class PlayerFormSwitcher : MonoBehaviour
 
     private void InitSpirit()
     {
+        EmptyBulbLogic emptyBulb = Instantiate(emptyBulbPrefab, transform.position, Quaternion.identity).GetComponent<EmptyBulbLogic>();
+        emptyBulb.SetVelocity(controller.GetLastActualVelocity() / Time.deltaTime);
+
         currentForm = PlayerForm.Spirit;
 
         spiritMovement.enabled = true;

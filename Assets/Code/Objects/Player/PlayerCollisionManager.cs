@@ -48,6 +48,18 @@ public class PlayerCollisionManager : MonoBehaviour
                 }
             }
         }
+        if (obj.GetComponent<EmptyBulbLogic>() != null)
+        {
+            if (spiritMovement != null && spiritMovement.enabled)
+            {
+                EmptyBulbLogic emptyBulb = obj.GetComponent<EmptyBulbLogic>();
+                if (!emptyBulb.HasCooldown())
+                {
+                    formSwitcher.TurnIntoBulbAt(emptyBulb.transform.position);
+                    emptyBulb.Collect();
+                }
+            }
+        }
         if (obj.GetComponent<Trigger>() != null)
         {
             obj.GetComponent<Trigger>().Activate(controller.GetCurrentCollider());

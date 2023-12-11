@@ -226,6 +226,7 @@ MonoBehaviour:
   visualsManager: {fileID: 2487319561339568246}
   bulbCollider: {fileID: 2135643347228080215}
   spiritCollider: {fileID: 8269110859821591401}
+  emptyBulbPrefab: {fileID: 3248282195052513860, guid: 36721032084af2b438a4ac94f828c84b, type: 3}
 --- !u!114 &7328808871941551571
 MonoBehaviour:
   m_ObjectHideFlags: 0
