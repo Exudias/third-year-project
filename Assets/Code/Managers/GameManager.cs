@@ -113,6 +113,7 @@ public class GameManager : MonoBehaviour
 
     public async static void ResetScene()
     {
+        ResumeGame();
         int currentLevel = GetCurrentLevelBuildIndex();
         if (!SceneManager.GetSceneByBuildIndex(currentLevel).isLoaded) return;
         await SceneManager.UnloadSceneAsync(currentLevel);
