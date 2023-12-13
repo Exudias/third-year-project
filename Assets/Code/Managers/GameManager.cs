@@ -11,6 +11,7 @@ public class GameManager : MonoBehaviour
 
     private static Vector2 spawnPoint;
     private static bool setCustomSpawn;
+    private static bool isFromPrevious;
 
     private InputManager input;
 
@@ -47,6 +48,7 @@ public class GameManager : MonoBehaviour
     {
         input = InputManager.instance;
         setCustomSpawn = false;
+        isFromPrevious = false;
         Application.targetFrameRate = 60;
         loadingScene = false;
         paused = false;
@@ -120,7 +122,7 @@ public class GameManager : MonoBehaviour
         SceneManager.LoadScene(currentLevel);
     }
 
-    public async static void LoadNextScene()
+    public async static void LoadSceneByID(int ID)
     {
         setCustomSpawn = false;
 
@@ -130,23 +132,45 @@ public class GameManager : MonoBehaviour
 
         int currentLevelBuildIndex = GetCurrentLevelBuildIndex();
 
-        // If there is no gameplay scene, simply load the next scene without unloading anything
+        // If there is no gameplay scene, simply load the scene without unloading anything
         if (currentLevelBuildIndex == -1)
         {
-            SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
+            SceneManager.LoadScene(ID);
             loadingScene = false;
             return;
         }
 
-        if (SceneManager.GetSceneByBuildIndex(currentLevelBuildIndex + 1).name == gameplayPersistentSceneName)
+        if (SceneManager.GetSceneByBuildIndex(ID).name == gameplayPersistentSceneName)
         {
             throw new System.Exception("Trying to load invalid scene! (Persistent one!)");
         }
 
         await SceneManager.UnloadSceneAsync(currentLevelBuildIndex);
-        SceneManager.LoadScene(currentLevelBuildIndex + 1, LoadSceneMode.Additive);
+        SceneManager.LoadScene(ID, LoadSceneMode.Additive);
 
         loadingScene = false;
+    }
+
+    public static void LoadSceneByAdditiveID(int addID)
+    {
+        int currentLevelBuildIndex = GetCurrentLevelBuildIndex();
+        if (currentLevelBuildIndex == -1)
+        {
+            currentLevelBuildIndex = SceneManager.GetActiveScene().buildIndex;
+        }
+        LoadSceneByID(currentLevelBuildIndex + addID);
+    }
+
+    public static void LoadPreviousScene()
+    {
+        isFromPrevious = true;
+        LoadSceneByAdditiveID(-1);
+    }
+
+    public static void LoadNextScene()
+    {
+        isFromPrevious = false;
+        LoadSceneByAdditiveID(1);
     }
 
     const string MAIN_MENU_SCENE_NAME = "MAIN_MENU";
@@ -165,6 +189,8 @@ public class GameManager : MonoBehaviour
         spawnPoint = loc;
         setCustomSpawn = true;
     }
+
+    public static bool IsFromPrevious() => isFromPrevious;
 
     public static bool HasCustomSpawn() => setCustomSpawn;
 

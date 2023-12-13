@@ -2,6 +2,8 @@ using UnityEngine;
 
 public class PlayerLogic : MonoBehaviour
 {
+    [SerializeField] private Vector2 fromPreviousSpawnPoint;
+
     private PlayerFormSwitcher formSwitcher;
     private Controller2D controller;
 
@@ -12,6 +14,11 @@ public class PlayerLogic : MonoBehaviour
         if (GameManager.HasCustomSpawn())
         {
             controller.MoveImmediate(GameManager.GetCustomSpawnPoint());
+        }
+        else if (GameManager.IsFromPrevious())
+        {
+            controller.MoveImmediate(fromPreviousSpawnPoint);
+            GameManager.SetSpawn(fromPreviousSpawnPoint);
         }
     }
 
@@ -67,5 +74,11 @@ public class PlayerLogic : MonoBehaviour
                 }
             }
         }
+    }
+
+    private void OnDrawGizmosSelected()
+    {
+        Gizmos.color = new Color(0.5f, 0.5f, 0.5f, 0.5f);
+        Gizmos.DrawSphere(fromPreviousSpawnPoint, 0.5f);
     }
 }
