@@ -232,7 +232,7 @@ public class GameManager : MonoBehaviour
     {
         if (Camera.main != null)
         {
-            Camera.main.GetComponent<CameraManager>().SetIgnoreTimeScale(true);
+            Camera.main.GetComponent<CameraManager>()?.SetIgnoreTimeScale(true);
         }
         Time.timeScale = timeScaleBeforePause;
         paused = false;
