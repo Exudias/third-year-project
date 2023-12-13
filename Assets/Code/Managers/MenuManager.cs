@@ -75,10 +75,12 @@ public class MenuManager : MonoBehaviour
         }
     }
 
-    public void ShowPauseMenu()
+    public bool ShowPauseMenu()
     {
+        if (pauseContext == null) return false;
         SetDimmerActive(true);
         pauseContext.Enable();
+        return true;
     }
 
     public void HidePauseMenu()

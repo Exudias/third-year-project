@@ -218,7 +218,7 @@ public class GameManager : MonoBehaviour
 
     public void PauseGame()
     {
-        MenuManager.instance.ShowPauseMenu();
+        if (!MenuManager.instance.ShowPauseMenu()) return; // if can't pause, don't try
         if (Camera.main != null)
         {
             Camera.main.GetComponent<CameraManager>().SetIgnoreTimeScale(false);
