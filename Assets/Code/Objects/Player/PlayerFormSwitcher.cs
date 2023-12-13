@@ -84,9 +84,11 @@ public class PlayerFormSwitcher : MonoBehaviour
         Camera.main.GetComponent<CameraManager>().ActivateBulbCamera();
     }
 
+    Vector3 EMPTY_BULB_SPAWN_OFFSET = new Vector2(0, 0.25f);
     private void InitSpirit()
     {
-        EmptyBulbLogic emptyBulb = Instantiate(emptyBulbPrefab, transform.position, Quaternion.identity).transform.GetChild(0).GetComponent<EmptyBulbLogic>();
+        
+        EmptyBulbLogic emptyBulb = Instantiate(emptyBulbPrefab, transform.position + EMPTY_BULB_SPAWN_OFFSET, Quaternion.identity).transform.GetChild(0).GetComponent<EmptyBulbLogic>();
         emptyBulb.SetVelocity(controller.GetLastActualVelocity() / Time.deltaTime);
         emptyBulb.SetGravity(bulbMovement.GetGravity());
         emptyBulb.SetTerminalVelocity(bulbMovement.GetTerminalVelocity());
