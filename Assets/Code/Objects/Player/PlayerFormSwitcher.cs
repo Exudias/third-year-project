@@ -87,8 +87,9 @@ public class PlayerFormSwitcher : MonoBehaviour
     Vector3 EMPTY_BULB_SPAWN_OFFSET = new Vector2(0, 0.25f);
     private void InitSpirit()
     {
-        
-        EmptyBulbLogic emptyBulb = Instantiate(emptyBulbPrefab, transform.position + EMPTY_BULB_SPAWN_OFFSET, Quaternion.identity).transform.GetChild(0).GetComponent<EmptyBulbLogic>();
+        // offset only if off the ground, otherwise put on ground (mainly for super jump)
+        Vector3 offset = controller.collisions.bottom ? Vector3.zero : EMPTY_BULB_SPAWN_OFFSET;
+        EmptyBulbLogic emptyBulb = Instantiate(emptyBulbPrefab, transform.position + offset, Quaternion.identity).transform.GetChild(0).GetComponent<EmptyBulbLogic>();
         emptyBulb.SetVelocity(controller.GetLastActualVelocity() / Time.deltaTime);
         emptyBulb.SetGravity(bulbMovement.GetGravity());
         emptyBulb.SetTerminalVelocity(bulbMovement.GetTerminalVelocity());
