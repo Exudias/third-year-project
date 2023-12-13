@@ -1,11 +1,10 @@
 using UnityEngine;
+using System.Collections.Generic;
 
 public class Trigger : MonoBehaviour
 {
-    private bool wasTriggeredLastFrame;
-    private bool triggeredThisFrame;
-
-    private Collider2D lastActivator;
+    private List<Collider2D> inLastFrame;
+    private List<Collider2D> inThisFrame;
 
     public delegate void TriggerEvent(Collider2D activator);
     public event TriggerEvent OnTriggerEnter;
@@ -22,31 +21,44 @@ public class Trigger : MonoBehaviour
         Controller2D.OnPostControllerMove -= TriggerUpdate;
     }
 
-    private void Start()
+    public virtual void Start()
     {
-        wasTriggeredLastFrame = false;
-        triggeredThisFrame = false;
+        inLastFrame = new List<Collider2D>();
+        inThisFrame = new List<Collider2D>();
     }
 
     public virtual void Activate(Collider2D activator)
     {
-        triggeredThisFrame = true;
-        lastActivator = activator;
+        if (!inThisFrame.Contains(activator))
+        {
+            inThisFrame.Add(activator);
+        }
 
         OnTriggerStay?.Invoke(activator);
     }
 
-    private void TriggerUpdate()
+    private void TriggerUpdate(Controller2D controller)
     {
-        if (!wasTriggeredLastFrame && triggeredThisFrame)
+        Collider2D activator = controller.GetCurrentCollider();
+        if (activator == null) return;
+        if (!inLastFrame.Contains(activator) && inThisFrame.Contains(activator))
         {
-            OnTriggerEnter?.Invoke(lastActivator);
+            OnTriggerEnter?.Invoke(activator);
         }
-        if (wasTriggeredLastFrame && !triggeredThisFrame)
+        if (inLastFrame.Contains(activator) && !inThisFrame.Contains(activator))
         {
-            OnTriggerExit?.Invoke(lastActivator);
+            OnTriggerExit?.Invoke(activator);
         }
-        wasTriggeredLastFrame = triggeredThisFrame;
-        triggeredThisFrame = false;
+
+        if (!inThisFrame.Contains(activator) && inLastFrame.Contains(activator))
+        {
+            inLastFrame.Remove(activator);    
+        }
+        if (inThisFrame.Contains(activator) && !inLastFrame.Contains(activator))
+        {
+            inLastFrame.Add(activator);
+        }
+
+        inThisFrame.Remove(activator);
     }
 }

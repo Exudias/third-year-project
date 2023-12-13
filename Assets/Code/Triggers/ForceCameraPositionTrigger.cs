@@ -27,11 +27,19 @@ public class ForceCameraPositionTrigger : Trigger
 
     private void OnEntered(Collider2D activator)
     {
-        Camera.main.GetComponent<CameraManager>().SetForcedCameraPosition(forcedPosition, lockX, lockY);
+        bool collisionIsPlayer = activator.gameObject.GetComponent<PlayerLogic>() != null;
+        if (collisionIsPlayer)
+        {
+            Camera.main.GetComponent<CameraManager>().SetForcedCameraPosition(forcedPosition, lockX, lockY);
+        }
     }
 
     private void OnExited(Collider2D activator)
     {
-        Camera.main.GetComponent<CameraManager>().DisableForcedCameraPosition();
+        bool collisionIsPlayer = activator.gameObject.GetComponent<PlayerLogic>() != null;
+        if (collisionIsPlayer)
+        {
+            Camera.main.GetComponent<CameraManager>().DisableForcedCameraPosition();
+        }
     }
 }

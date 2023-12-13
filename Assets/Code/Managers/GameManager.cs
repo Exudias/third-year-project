@@ -124,6 +124,9 @@ public class GameManager : MonoBehaviour
 
     public async static void LoadSceneByID(int ID)
     {
+        timeScaleBeforePause = 1;
+        ResumeGame();
+
         setCustomSpawn = false;
 
         if (loadingScene) return;

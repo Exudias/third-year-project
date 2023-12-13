@@ -89,7 +89,7 @@ public class MenuManager : MonoBehaviour
 
     private void SetDimmerActive(bool active)
     {
-        dimmer.SetActive(active);
+        dimmer?.SetActive(active);
     }
 
     private void ActivateContext(MenuContext context)

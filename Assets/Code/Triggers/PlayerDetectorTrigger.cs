@@ -4,8 +4,9 @@ public class PlayerDetectorTrigger : Trigger
 {
     private bool playerInside;
 
-    private void Start()
+    public override void Start()
     {
+        base.Start();
         playerInside = false;
     }
 

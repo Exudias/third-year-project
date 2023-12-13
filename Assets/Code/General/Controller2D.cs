@@ -11,7 +11,7 @@ public class Controller2D : MonoBehaviour
     public delegate void CollisionEvent(Controller2D source, Vector2 direction);
     public delegate void DeathCollisionEvent(Controller2D source, Vector2 direction, bool isDirectionalDeath, GameObject killer);
     public delegate void OtherCollision(Controller2D source, Vector2 direction, GameObject other);
-    public delegate void ControllerEvent();
+    public delegate void ControllerEvent(Controller2D source);
     public static event CollisionEvent OnCollision;
     public static event DeathCollisionEvent OnDeathCollision;
     public static event OtherCollision OnOtherCollision;
@@ -131,7 +131,7 @@ public class Controller2D : MonoBehaviour
 
         transform.Translate(velocity);
 
-        OnPostControllerMove?.Invoke();
+        OnPostControllerMove?.Invoke(this);
     }
 
     private void StaticCheck()
