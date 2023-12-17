@@ -63,7 +63,7 @@ public class GameManager : MonoBehaviour
         }
     }
 
-    #region Scene Management
+#region Scene Management
 
     private void LoadPersistentScene()
     {
@@ -115,10 +115,10 @@ public class GameManager : MonoBehaviour
 
     public void ResetScene()
     {
-        LoadSceneByAdditiveID(0);
+        LoadSceneByAdditiveID(0, false);
     }
 
-    public async static void LoadSceneByID(int ID)
+    public async static void LoadSceneByID(int ID, bool resetSpawn = true)
     {
         if (loadingScene) return;
 
@@ -131,7 +131,10 @@ public class GameManager : MonoBehaviour
 
         await Awaitable.WaitForSecondsAsync(transitionTime);
 
-        setCustomSpawn = false;
+        if (resetSpawn)
+        {
+            setCustomSpawn = false;
+        }
 
         int currentLevelBuildIndex = GetCurrentLevelBuildIndex();
 
@@ -154,14 +157,14 @@ public class GameManager : MonoBehaviour
         loadingScene = false;
     }
 
-    public static void LoadSceneByAdditiveID(int addID)
+    public static void LoadSceneByAdditiveID(int addID, bool resetSpawn = true)
     {
         int currentLevelBuildIndex = GetCurrentLevelBuildIndex();
         if (currentLevelBuildIndex == -1)
         {
             currentLevelBuildIndex = SceneManager.GetActiveScene().buildIndex;
         }
-        LoadSceneByID(currentLevelBuildIndex + addID);
+        LoadSceneByID(currentLevelBuildIndex + addID, resetSpawn);
     }
 
     public static void LoadPreviousScene()
@@ -184,9 +187,9 @@ public class GameManager : MonoBehaviour
         SceneManager.LoadScene(MAIN_MENU_SCENE_NAME);
     }
 
-    #endregion
+#endregion
 
-    #region Level Data
+#region Level Data
     public static void SetSpawn(Vector2 loc)
     {
         spawnPoint = loc;
@@ -198,22 +201,22 @@ public class GameManager : MonoBehaviour
     public static bool HasCustomSpawn() => setCustomSpawn;
 
     public static Vector2 GetCustomSpawnPoint() => spawnPoint;
-    #endregion
+#endregion
 
-    #region Game State
+#region Game State
     private static bool paused = false;
     private static float timeScaleBeforePause = 1;
 
     // Credit to https://community.gamedev.tv/t/how-do-i-make-the-quit-button-work-for-webgl/40403/5
     public static void QuitGame()
     {
-        #if (UNITY_EDITOR)
+#if (UNITY_EDITOR)
             UnityEditor.EditorApplication.isPlaying = false;
-        #elif (UNITY_STANDALONE)
+#elif (UNITY_STANDALONE)
             Application.Quit();
-        #elif (UNITY_WEBGL)
+#elif (UNITY_WEBGL)
             Application.OpenURL("https://exudias.itch.io/");
-        #endif
+#endif
     }
 
     public void PauseGame()
@@ -242,5 +245,5 @@ public class GameManager : MonoBehaviour
     public static bool IsGamePaused() => paused;
 
     public static bool IsLoadingScene() => loadingScene;
-    #endregion
+#endregion
 }
