@@ -31,7 +31,13 @@ public class GameManager : MonoBehaviour
 
     private void Update()
     {
-        if (input.IsDown(KeyCode.Escape))
+        KeyCode pauseKeyCode = KeyCode.Escape;
+#if (UNITY_EDITOR)
+        pauseKeyCode = KeyCode.Escape;
+#elif (UNITY_WEBGL)
+        pauseKeyCode = KeyCode.P;
+#endif
+        if (input.IsDown(pauseKeyCode))
         {
             if (paused)
             {
