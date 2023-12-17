@@ -100,6 +100,8 @@ public class Controller2D : MonoBehaviour
 
     public void Move(Vector2 velocity, GameObject pusher = null)
     {
+        if (GameManager.IsLoadingScene()) return;
+
         UpdateRaycastOrigins();
         collisions.Reset();
 

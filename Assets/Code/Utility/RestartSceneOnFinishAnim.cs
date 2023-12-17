@@ -4,6 +4,7 @@ using UnityEngine;
 public class RestartSceneOnFinishAnim : MonoBehaviour
 {
     private Animator animator;
+    private bool reset = false;
     
     void Start()
     {
@@ -14,9 +15,11 @@ public class RestartSceneOnFinishAnim : MonoBehaviour
     {
         float normalizedTime = animator.GetCurrentAnimatorStateInfo(0).normalizedTime;
 
-        if (normalizedTime > 1)
+        if (normalizedTime > 1 && !reset)
         {
-            GameManager.ResetScene();
+            reset = true;
+            GameManager.Instance.ResetScene();
+            Destroy(gameObject);
         }
     }
 }

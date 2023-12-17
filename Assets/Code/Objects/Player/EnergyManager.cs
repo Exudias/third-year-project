@@ -29,7 +29,7 @@ public class EnergyManager : MonoBehaviour
             energyMeterFG.fillAmount = GetEnergyPercent();
         }
         
-        if (!GameManager.IsGamePaused())
+        if (!GameManager.IsGamePaused() && !GameManager.IsLoadingScene())
         {
             if (formSwitcher.GetCurrentForm() == PlayerFormSwitcher.PlayerForm.Spirit)
             {

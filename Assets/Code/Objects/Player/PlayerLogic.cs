@@ -37,7 +37,8 @@ public class PlayerLogic : MonoBehaviour
     {
         if (formSwitcher.GetCurrentForm() == PlayerFormSwitcher.PlayerForm.Bulb)
         {
-            Instantiate(bulbDeathObject, transform.position, transform.rotation);
+            GameObject deathObj = Instantiate(bulbDeathObject, transform.position, transform.rotation);
+            GameManager.MoveObjectToLevelScene(deathObj);
         }
         Destroy(gameObject);
     }

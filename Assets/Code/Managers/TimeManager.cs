@@ -27,7 +27,7 @@ public class TimeManager : MonoBehaviour
 
     private void TimeOut()
     {
-        GameManager.ResetScene();
+        GameManager.Instance.ResetScene();
     }
 
     private void UpdateUI()

@@ -6,6 +6,7 @@ public class MenuManager : MonoBehaviour
 
     [SerializeField] private MenuContext[] contexts;
     [SerializeField] private GameObject dimmer;
+    [SerializeField] private Animator screenTransition;
     [SerializeField] private MenuContext pauseContext;
 
     private MenuContext activeContext = null;
@@ -73,6 +74,12 @@ public class MenuManager : MonoBehaviour
             hoveredButton = activeContext.GetButtons()[activeButtonIndex];
             hoveredButton.Hover();
         }
+    }
+
+    public float PlayTransitionOut()
+    {
+        screenTransition.SetTrigger("Out");
+        return screenTransition.GetCurrentAnimatorStateInfo(0).length;
     }
 
     public bool ShowPauseMenu()

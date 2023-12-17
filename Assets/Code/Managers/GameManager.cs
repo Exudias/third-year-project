@@ -7,7 +7,7 @@ public class GameManager : MonoBehaviour
 
     private static bool loadingScene;
 
-    private static GameManager Instance;
+    public static GameManager Instance;
 
     private static Vector2 spawnPoint;
     private static bool setCustomSpawn;
@@ -113,25 +113,25 @@ public class GameManager : MonoBehaviour
         SceneManager.MoveGameObjectToScene(obj, GetCurrentLevel());
     }
 
-    public async static void ResetScene()
+    public void ResetScene()
     {
-        ResumeGame();
-        int currentLevel = GetCurrentLevelBuildIndex();
-        if (!SceneManager.GetSceneByBuildIndex(currentLevel).isLoaded) return;
-        await SceneManager.UnloadSceneAsync(currentLevel);
-        SceneManager.LoadScene(currentLevel);
+        LoadSceneByAdditiveID(0);
     }
 
     public async static void LoadSceneByID(int ID)
     {
-        timeScaleBeforePause = 1;
-        ResumeGame();
-
-        setCustomSpawn = false;
-
         if (loadingScene) return;
 
         loadingScene = true;
+
+        timeScaleBeforePause = 1;
+        ResumeGame();
+
+        float transitionTime = MenuManager.instance.PlayTransitionOut();
+
+        await Awaitable.WaitForSecondsAsync(transitionTime);
+
+        setCustomSpawn = false;
 
         int currentLevelBuildIndex = GetCurrentLevelBuildIndex();
 
@@ -240,5 +240,7 @@ public class GameManager : MonoBehaviour
     }
 
     public static bool IsGamePaused() => paused;
+
+    public static bool IsLoadingScene() => loadingScene;
     #endregion
 }
