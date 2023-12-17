@@ -257,6 +257,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   fromPreviousSpawnPoint: {x: 0, y: 0}
   bulbDeathObject: {fileID: 1527128465969541140, guid: b6d2f3623bf21ce4ca124d16f59e6f03, type: 3}
+  spiritDeathObject: {fileID: 1527128465969541140, guid: b6d2f3623bf21ce4ca124d16f59e6f03, type: 3}
 --- !u!114 &584288346550627785
 MonoBehaviour:
   m_ObjectHideFlags: 0

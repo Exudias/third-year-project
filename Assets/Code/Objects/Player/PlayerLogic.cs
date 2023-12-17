@@ -4,6 +4,7 @@ public class PlayerLogic : MonoBehaviour
 {
     [SerializeField] private Vector2 fromPreviousSpawnPoint;
     [SerializeField] private GameObject bulbDeathObject;
+    [SerializeField] private GameObject spiritDeathObject;
 
     private PlayerFormSwitcher formSwitcher;
     private Controller2D controller;
@@ -38,6 +39,11 @@ public class PlayerLogic : MonoBehaviour
         if (formSwitcher.GetCurrentForm() == PlayerFormSwitcher.PlayerForm.Bulb)
         {
             GameObject deathObj = Instantiate(bulbDeathObject, transform.position, transform.rotation);
+            GameManager.MoveObjectToLevelScene(deathObj);
+        }
+        else
+        {
+            GameObject deathObj = Instantiate(spiritDeathObject, transform.position, transform.rotation);
             GameManager.MoveObjectToLevelScene(deathObj);
         }
         Destroy(gameObject);
