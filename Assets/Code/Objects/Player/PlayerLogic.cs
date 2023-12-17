@@ -3,6 +3,7 @@ using UnityEngine;
 public class PlayerLogic : MonoBehaviour
 {
     [SerializeField] private Vector2 fromPreviousSpawnPoint;
+    [SerializeField] private GameObject bulbDeathObject;
 
     private PlayerFormSwitcher formSwitcher;
     private Controller2D controller;
@@ -34,7 +35,11 @@ public class PlayerLogic : MonoBehaviour
 
     public void Die()
     {
-        GameManager.ResetScene();
+        if (formSwitcher.GetCurrentForm() == PlayerFormSwitcher.PlayerForm.Bulb)
+        {
+            Instantiate(bulbDeathObject, transform.position, transform.rotation);
+        }
+        Destroy(gameObject);
     }
 
     private void OnControllerDeathCollision(Controller2D source, Vector2 dir, bool isDirectionalDeath, GameObject killer)

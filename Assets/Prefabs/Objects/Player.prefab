@@ -255,6 +255,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ba06d0bd6d6d3e4498b978484b95fbd2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  fromPreviousSpawnPoint: {x: 0, y: 0}
+  bulbDeathObject: {fileID: 1527128465969541140, guid: b6d2f3623bf21ce4ca124d16f59e6f03, type: 3}
 --- !u!114 &584288346550627785
 MonoBehaviour:
   m_ObjectHideFlags: 0
