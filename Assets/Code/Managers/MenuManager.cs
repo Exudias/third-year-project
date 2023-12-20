@@ -43,11 +43,19 @@ public class MenuManager : MonoBehaviour
     private void Update()
     {
         if (activeContext == null) return;
+#if (UNITY_EDITOR || UNITY_STANDALONE)
         // Both enters or space press selected button
         if (input.IsDown(KeyCode.Return) || input.IsDown(KeyCode.Space) || input.IsDown(KeyCode.KeypadEnter))
         {
             hoveredButton.Activate();
         }
+#elif (UNITY_WEBGL)
+        // Only space to press selected button on WebGL
+        if (input.IsDown(KeyCode.Space))
+        {
+            hoveredButton.Activate();
+        }
+#endif
         if (input.IsDown(KeyCode.DownArrow) || input.IsDown(KeyCode.S))
         {
             activeButtonIndex++;
