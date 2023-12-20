@@ -24,6 +24,10 @@ public class PlayerFormSwitcher : MonoBehaviour
     private Controller2D controller;
     private InputManager input;
 
+    public delegate void FormSwitchEvent();
+    public static event FormSwitchEvent OnSwitchToBulb;
+    public static event FormSwitchEvent OnSwitchToSpirit;
+
     private void Start()
     {
         bulbMovement = GetComponent<BulbMovement>();
@@ -82,6 +86,7 @@ public class PlayerFormSwitcher : MonoBehaviour
         controller.UpdateCollider();
 
         Camera.main.GetComponent<CameraManager>().ActivateBulbCamera();
+        OnSwitchToBulb?.Invoke();
     }
 
     Vector3 EMPTY_BULB_SPAWN_OFFSET = new Vector2(0, 0.25f);
@@ -109,5 +114,6 @@ public class PlayerFormSwitcher : MonoBehaviour
         controller.UpdateCollider();
 
         Camera.main.GetComponent<CameraManager>().ActivateSpiritCamera();
+        OnSwitchToSpirit?.Invoke();
     }
 }

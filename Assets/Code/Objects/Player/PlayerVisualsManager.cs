@@ -33,6 +33,7 @@ public class PlayerVisualsManager : MonoBehaviour
         BulbMovement.OnPlayerJump += OnPlayerJump;
         BulbMovement.OnPlayerWallJump += OnPlayerWallJump;
         BulbMovement.OnPlayerHitGround += OnPlayerHitGround;
+        PlayerFormSwitcher.OnSwitchToSpirit += OnSwitchToSpirit;
     }
 
     private void OnDisable()
@@ -40,6 +41,7 @@ public class PlayerVisualsManager : MonoBehaviour
         BulbMovement.OnPlayerJump -= OnPlayerJump;
         BulbMovement.OnPlayerWallJump -= OnPlayerWallJump;
         BulbMovement.OnPlayerHitGround -= OnPlayerHitGround;
+        PlayerFormSwitcher.OnSwitchToSpirit -= OnSwitchToSpirit;
     }
 
     const float X_STRETCH_AFTER_JUMP = 0.6f;
@@ -52,6 +54,12 @@ public class PlayerVisualsManager : MonoBehaviour
     private void OnPlayerWallJump()
     {
         transform.localScale = new Vector3(X_STRETCH_AFTER_JUMP, Y_STRETCH_AFTER_JUMP, transform.localScale.z);
+    }
+
+    const float SCALE_AFTER_SPIRIT = 0.2f;
+    private void OnSwitchToSpirit()
+    {
+        transform.localScale = new Vector3(SCALE_AFTER_SPIRIT, SCALE_AFTER_SPIRIT, transform.localScale.z);
     }
 
     const float X_STRETCH_AFTER_FALL = 1.4f;
