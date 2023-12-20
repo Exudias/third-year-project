@@ -2,17 +2,20 @@ using UnityEngine;
 
 public class PlayerLogic : MonoBehaviour
 {
+    [SerializeField] private PlayerVisualsManager visualsManager;
     [SerializeField] private Vector2 fromPreviousSpawnPoint;
     [SerializeField] private GameObject bulbDeathObject;
     [SerializeField] private GameObject spiritDeathObject;
 
     private PlayerFormSwitcher formSwitcher;
     private Controller2D controller;
+    private EnergyManager energyManager;
 
     private void Start()
     {
         formSwitcher = GetComponent<PlayerFormSwitcher>();
         controller = GetComponent<Controller2D>();
+        energyManager = GetComponent<EnergyManager>();
         if (GameManager.HasCustomSpawn())
         {
             controller.MoveImmediate(GameManager.GetCustomSpawnPoint());
@@ -38,13 +41,14 @@ public class PlayerLogic : MonoBehaviour
     {
         if (formSwitcher.GetCurrentForm() == PlayerFormSwitcher.PlayerForm.Bulb)
         {
-            GameObject deathObj = Instantiate(bulbDeathObject, transform.position, transform.rotation);
+            GameObject deathObj = Instantiate(bulbDeathObject, transform.position, visualsManager.transform.rotation);
             GameManager.MoveObjectToLevelScene(deathObj);
         }
         else
         {
-            GameObject deathObj = Instantiate(spiritDeathObject, transform.position, transform.rotation);
+            GameObject deathObj = Instantiate(spiritDeathObject, transform.position, visualsManager.transform.rotation);
             GameManager.MoveObjectToLevelScene(deathObj);
+            deathObj.GetComponent<Animator>().Play(0, 0, 1 - energyManager.GetEnergyPercent());
         }
         Destroy(gameObject);
     }
