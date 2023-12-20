@@ -121,7 +121,7 @@ public class BulbMovement : MonoBehaviour
             jumping = false;
 
             float lastYVelocity = controller.GetLastActualVelocity().y / Time.deltaTime;
-            if (Mathf.Abs(lastYVelocity) > minVelocityToHitGround)
+            if (Time.deltaTime != 0 && Mathf.Abs(lastYVelocity) > minVelocityToHitGround)
             {
                 OnPlayerHitGround?.Invoke();
             }
