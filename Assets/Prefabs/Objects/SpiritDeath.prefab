@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 4352616720348237456}
   - component: {fileID: 311880098906848254}
   - component: {fileID: 3130791211747490100}
+  - component: {fileID: -1806853770302849483}
   m_Layer: 0
   m_Name: SpiritDeath
   m_TagString: Untagged
@@ -77,7 +78,7 @@ SpriteRenderer:
   m_SortingLayerID: 714017931
   m_SortingLayer: 1
   m_SortingOrder: 999
-  m_Sprite: {fileID: -984587911, guid: d77481f09d5ffab4a8e66fbb11dcbe3b, type: 3}
+  m_Sprite: {fileID: -567262295, guid: 4a49baa040375d84a9433304dcfbb363, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -122,3 +123,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 03df3bbec2f6cfa40a7ec5e397969ec5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &-1806853770302849483
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1527128465969541140}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1816de2897b183141815370f3a14961d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  deathParticles: {fileID: 5835558953764078619, guid: 5f06c99e0484315409f01298c10fe948, type: 3}
