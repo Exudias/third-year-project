@@ -25,8 +25,10 @@ public class PlayerVisualsManager : MonoBehaviour
 
     private SpriteRenderer spriteRenderer;
     private Animator animator;
+    private TrailRenderer trailRenderer;
 
     private const float MIN_VERT_VELOCITY_FOR_MOVEMENT = 10f;
+    private const float TRAIL_MAX_WIDTH = 0.5f;
 
     private void OnEnable()
     {
@@ -73,6 +75,7 @@ public class PlayerVisualsManager : MonoBehaviour
     {
         spriteRenderer = GetComponent<SpriteRenderer>();
         animator = GetComponent<Animator>();
+        trailRenderer = GetComponent<TrailRenderer>();
     }
 
     private void UpdateSpriteOffset()
@@ -89,6 +92,8 @@ public class PlayerVisualsManager : MonoBehaviour
             transform.localPosition = bulbSpriteOffset;
         }
     }
+
+    private const float TRAIL_MIN_WIDTH = 0.1f;
 
     private void Update()
     {
@@ -114,6 +119,7 @@ public class PlayerVisualsManager : MonoBehaviour
         if (form == PlayerFormSwitcher.PlayerForm.Spirit)
         {
             transform.right = controller.GetLastDesiredVelocity().normalized;
+            trailRenderer.widthMultiplier = Mathf.Clamp(TRAIL_MAX_WIDTH * energyManager.GetEnergyPercent(), TRAIL_MIN_WIDTH, 1);
         }
         else if (form == PlayerFormSwitcher.PlayerForm.Bulb)
         {
@@ -213,6 +219,7 @@ public class PlayerVisualsManager : MonoBehaviour
         spriteRenderer.material = bulbMaterial;
         transform.rotation = Quaternion.identity;
         animator.Play(bulbIdleForward.name);
+        trailRenderer.emitting = false;
         UpdateSpriteOffset();
     }
 
@@ -221,6 +228,7 @@ public class PlayerVisualsManager : MonoBehaviour
         spriteRenderer.material = spiritMaterial;
         MakeXScalePositive();
         animator.Play(spiritMove.name);
+        trailRenderer.emitting = true;
         UpdateSpriteOffset();
     }
 
