@@ -31,7 +31,8 @@ public class MusicManager : MonoBehaviour
         float timeScale = Time.timeScale;
         if (timeScale != 0)
         {
-            audioSource.pitch = Mathf.Clamp(timeScale, minPitch, maxPitch);
+            float targetPitch = Mathf.Clamp(timeScale, minPitch, maxPitch);
+            audioSource.pitch = Mathf.MoveTowards(audioSource.pitch, targetPitch, 0.1f);
         }
     }
 
