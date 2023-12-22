@@ -250,7 +250,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   factoryTrack: {fileID: 8300000, guid: 9e1ef3a870503814eaed4925774de29c, type: 3}
   maxPitch: 2
-  minPitch: 0.5
+  minPitch: 0.8
 --- !u!82 &869185343
 AudioSource:
   m_ObjectHideFlags: 0
