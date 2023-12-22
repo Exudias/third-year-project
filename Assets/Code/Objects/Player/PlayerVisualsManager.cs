@@ -27,7 +27,6 @@ public class PlayerVisualsManager : MonoBehaviour
     private Animator animator;
     private TrailRenderer trailRenderer;
 
-    private const float MIN_VERT_VELOCITY_FOR_MOVEMENT = 10f;
     private const float TRAIL_MAX_WIDTH = 0.5f;
 
     private void OnEnable()
@@ -125,7 +124,7 @@ public class PlayerVisualsManager : MonoBehaviour
         {
             FlipBulbWhenAppropriate(lastDesiredVelocity);
 
-            if (Mathf.Abs(lastDesiredVelocity.y) / Time.deltaTime > MIN_VERT_VELOCITY_FOR_MOVEMENT || !grounded)
+            if (!grounded)
             {
                 if (lastDesiredVelocity.y > 0)
                 {
