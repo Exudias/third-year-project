@@ -517,12 +517,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cd75987cb7647014183e3b77853c075a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  jumpSound: {fileID: 0}
-  walkSound: {fileID: 0}
-  landSound: {fileID: 0}
+  jumpSound: {fileID: 8300000, guid: 39975b5fca17c02458d33f7565ee8a9c, type: 3}
+  walkSound: {fileID: 8300000, guid: 8cc84572130c7d54a8068f70340bb36f, type: 3}
+  landSound: {fileID: 8300000, guid: 0eb2eed053ba1724b88d82b3369e6430, type: 3}
   deathSound: {fileID: 0}
   becomeSpiritSound: {fileID: 0}
   becomeBulbSound: {fileID: 0}
+  minPitch: 0.8
+  maxPitch: 1.2
 --- !u!1 &7667418138490284168
 GameObject:
   m_ObjectHideFlags: 0

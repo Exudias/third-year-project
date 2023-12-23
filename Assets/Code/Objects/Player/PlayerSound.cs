@@ -11,6 +11,9 @@ public class PlayerSound : MonoBehaviour
     [SerializeField] private AudioClip deathSound;
     [SerializeField] private AudioClip becomeSpiritSound;
     [SerializeField] private AudioClip becomeBulbSound;
+    [Header("Parameters")]
+    [SerializeField] private float minPitch = 0.8f;
+    [SerializeField] private float maxPitch = 1.2f;
 
     private AudioSource audioSource;
 
@@ -41,14 +44,22 @@ public class PlayerSound : MonoBehaviour
         audioSource = GetComponent<AudioSource>();
     }
 
-    private void PlaySound(AudioClip clip)
+    private void PlaySound(AudioClip clip, float volume = 1, bool randomizePitch = false)
     {
-        audioSource.PlayOneShot(clip);
+        if (randomizePitch)
+        {
+            audioSource.pitch = Random.Range(minPitch, maxPitch);
+        }
+        else
+        {
+            audioSource.pitch = 1;
+        }
+        audioSource.PlayOneShot(clip, volume);
     }
 
     private void OnPlayerJump()
     {
-        PlaySound(jumpSound);
+        PlaySound(jumpSound, 0.5f, true);
     }
 
     private void OnPlayerWallJump()
@@ -58,7 +69,7 @@ public class PlayerSound : MonoBehaviour
 
     private void OnPlayerHitGround()
     {
-        PlaySound(landSound);
+        PlaySound(walkSound, 0.5f, true);
     }
 
     private void OnSwitchToSpirit()
@@ -78,6 +89,6 @@ public class PlayerSound : MonoBehaviour
 
     private void OnPlayerFootstep()
     {
-        PlaySound(walkSound);
+        PlaySound(walkSound, 0.1f, true);
     }
 }
