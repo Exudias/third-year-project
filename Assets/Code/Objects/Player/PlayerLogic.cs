@@ -11,6 +11,9 @@ public class PlayerLogic : MonoBehaviour
     private Controller2D controller;
     private EnergyManager energyManager;
 
+    public delegate void DeathEvent();
+    public static event DeathEvent OnPlayerDeath;
+
     private void Start()
     {
         formSwitcher = GetComponent<PlayerFormSwitcher>();
@@ -39,6 +42,7 @@ public class PlayerLogic : MonoBehaviour
 
     public void Die()
     {
+        OnPlayerDeath?.Invoke();
         if (formSwitcher.GetCurrentForm() == PlayerFormSwitcher.PlayerForm.Bulb)
         {
             GameObject deathObj = Instantiate(bulbDeathObject, transform.position, visualsManager.transform.rotation);

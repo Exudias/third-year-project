@@ -7,6 +7,7 @@ public class PlayerVisualsManager : MonoBehaviour
     [SerializeField] private PlayerFormSwitcher formSwitcher;
     [SerializeField] private Controller2D controller;
     [SerializeField] private EnergyManager energyManager;
+    [SerializeField] private PlayerSound sound;
 
     [SerializeField] private Vector2 bulbSpriteOffset = new Vector3(0f, -0.5f, 0f);
     [SerializeField] private Vector2 spiritSpriteOffset = new Vector3(0f, 0f, 0f);
@@ -28,6 +29,9 @@ public class PlayerVisualsManager : MonoBehaviour
     private TrailRenderer trailRenderer;
 
     private const float TRAIL_MAX_WIDTH = 0.5f;
+
+    public delegate void StepEvent();
+    public static event StepEvent OnPlayerFootstep;
 
     private void OnEnable()
     {
@@ -250,5 +254,10 @@ public class PlayerVisualsManager : MonoBehaviour
         float xScale = transform.localScale.x;
         xScale = Mathf.Abs(xScale);
         transform.localScale = new Vector3(xScale, transform.localScale.y, transform.localScale.z);
+    }
+
+    public void RegisterStep()
+    {
+        OnPlayerFootstep?.Invoke();
     }
 }

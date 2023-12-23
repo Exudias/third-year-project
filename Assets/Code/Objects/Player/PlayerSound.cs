@@ -14,6 +14,28 @@ public class PlayerSound : MonoBehaviour
 
     private AudioSource audioSource;
 
+    private void OnEnable()
+    {
+        BulbMovement.OnPlayerJump += OnPlayerJump;
+        BulbMovement.OnPlayerWallJump += OnPlayerWallJump;
+        BulbMovement.OnPlayerHitGround += OnPlayerHitGround;
+        PlayerFormSwitcher.OnSwitchToSpirit += OnSwitchToSpirit;
+        PlayerFormSwitcher.OnSwitchToBulb += OnSwitchToBulb;
+        PlayerLogic.OnPlayerDeath += OnPlayerDeath;
+        PlayerVisualsManager.OnPlayerFootstep += OnPlayerFootstep;
+    }
+
+    private void OnDisable()
+    {
+        BulbMovement.OnPlayerJump -= OnPlayerJump;
+        BulbMovement.OnPlayerWallJump -= OnPlayerWallJump;
+        BulbMovement.OnPlayerHitGround -= OnPlayerHitGround;
+        PlayerFormSwitcher.OnSwitchToSpirit -= OnSwitchToSpirit;
+        PlayerFormSwitcher.OnSwitchToBulb -= OnSwitchToBulb;
+        PlayerLogic.OnPlayerDeath -= OnPlayerDeath;
+        PlayerVisualsManager.OnPlayerFootstep -= OnPlayerFootstep;
+    }
+
     private void Start()
     {
         audioSource = GetComponent<AudioSource>();
@@ -24,33 +46,38 @@ public class PlayerSound : MonoBehaviour
         audioSource.PlayOneShot(clip);
     }
 
-    public void PlayJumpSound()
+    private void OnPlayerJump()
     {
         PlaySound(jumpSound);
     }
 
-    public void PlayWalkSound()
+    private void OnPlayerWallJump()
     {
-        PlaySound(walkSound);
+        PlaySound(jumpSound);
     }
 
-    public void PlayLandSound()
+    private void OnPlayerHitGround()
     {
         PlaySound(landSound);
     }
 
-    public void PlayDeathSound()
-    {
-        PlaySound(deathSound);
-    }
-
-    public void PlayBecomeSpiritSound()
+    private void OnSwitchToSpirit()
     {
         PlaySound(becomeSpiritSound);
     }
 
-    public void PlayBecomeBulbSound()
+    private void OnSwitchToBulb()
     {
         PlaySound(becomeBulbSound);
+    }
+
+    private void OnPlayerDeath()
+    {
+        PlaySound(deathSound);
+    }
+
+    private void OnPlayerFootstep()
+    {
+        PlaySound(walkSound);
     }
 }
