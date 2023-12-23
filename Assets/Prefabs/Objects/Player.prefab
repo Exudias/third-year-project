@@ -520,9 +520,9 @@ MonoBehaviour:
   jumpSound: {fileID: 8300000, guid: 39975b5fca17c02458d33f7565ee8a9c, type: 3}
   walkSound: {fileID: 8300000, guid: 8cc84572130c7d54a8068f70340bb36f, type: 3}
   landSound: {fileID: 8300000, guid: 0eb2eed053ba1724b88d82b3369e6430, type: 3}
-  deathSound: {fileID: 0}
-  becomeSpiritSound: {fileID: 0}
-  becomeBulbSound: {fileID: 0}
+  deathSound: {fileID: 8300000, guid: dbb5801e7718b774e89730672171b83d, type: 3}
+  becomeSpiritSound: {fileID: 8300000, guid: c07e3594dc22e2d45806b0d5481f0cfc, type: 3}
+  becomeBulbSound: {fileID: 8300000, guid: 1936faa60c0a6f94294a081a1394f9fa, type: 3}
   minPitch: 0.8
   maxPitch: 1.2
 --- !u!1 &7667418138490284168

@@ -6,6 +6,7 @@ public class GameManager : MonoBehaviour
     private static string gameplayPersistentSceneName = "GAMEPLAY_PERSIST";
 
     private static bool loadingScene;
+    private static bool playerDead;
 
     public static GameManager Instance;
 
@@ -59,6 +60,7 @@ public class GameManager : MonoBehaviour
         isFromPrevious = false;
         Application.targetFrameRate = 60;
         loadingScene = false;
+        playerDead = false;
         paused = false;
         timeScaleBeforePause = 1;
     }
@@ -163,6 +165,7 @@ public class GameManager : MonoBehaviour
         SceneManager.LoadScene(ID, LoadSceneMode.Additive);
 
         loadingScene = false;
+        playerDead = false;
     }
 
     public static void LoadSceneByAdditiveID(int addID, bool resetSpawn = true)
@@ -253,5 +256,12 @@ public class GameManager : MonoBehaviour
     public static bool IsGamePaused() => paused;
 
     public static bool IsLoadingScene() => loadingScene;
+
+    public static bool IsPlayerDead() => playerDead;
+
+    public static void SetPlayerDead(bool newState)
+    {
+        playerDead = newState;
+    }
 #endregion
 }

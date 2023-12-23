@@ -42,6 +42,8 @@ public class PlayerLogic : MonoBehaviour
 
     public void Die()
     {
+        if (GameManager.IsPlayerDead()) return;
+        GameManager.SetPlayerDead(true);
         OnPlayerDeath?.Invoke();
         if (formSwitcher.GetCurrentForm() == PlayerFormSwitcher.PlayerForm.Bulb)
         {
@@ -54,7 +56,9 @@ public class PlayerLogic : MonoBehaviour
             GameManager.MoveObjectToLevelScene(deathObj);
             deathObj.GetComponent<Animator>().Play(0, 0, 1 - energyManager.GetEnergyPercent());
         }
-        Destroy(gameObject);
+        //Destroy(gameObject);
+        visualsManager.GetComponent<SpriteRenderer>().enabled = false;
+        controller.enabled = false;
     }
 
     private void OnControllerDeathCollision(Controller2D source, Vector2 dir, bool isDirectionalDeath, GameObject killer)

@@ -102,7 +102,7 @@ public class BulbMovement : MonoBehaviour
 
     private void Update()
     {
-        if (GameManager.IsGamePaused()) return;
+        if (GameManager.IsGamePaused() || GameManager.IsPlayerDead()) return;
 
         coyoteTime += Time.deltaTime;
         timeSinceWallJump += Time.deltaTime;

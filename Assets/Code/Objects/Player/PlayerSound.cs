@@ -79,12 +79,12 @@ public class PlayerSound : MonoBehaviour
 
     private void OnSwitchToBulb()
     {
-        PlaySound(becomeBulbSound);
+        PlaySound(becomeBulbSound, 0.5f, true);
     }
 
     private void OnPlayerDeath()
     {
-        PlaySound(deathSound);
+        PlaySound(deathSound, 0.4f);
     }
 
     private void OnPlayerFootstep()
