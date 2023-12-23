@@ -123,6 +123,7 @@ public class PlayerVisualsManager : MonoBehaviour
         {
             transform.right = controller.GetLastDesiredVelocity().normalized;
             trailRenderer.widthMultiplier = Mathf.Clamp(TRAIL_MAX_WIDTH * energyManager.GetEnergyPercent(), TRAIL_MIN_WIDTH, 1);
+            trailRenderer.time = Time.timeScale;
         }
         else if (form == PlayerFormSwitcher.PlayerForm.Bulb)
         {
