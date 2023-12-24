@@ -43,12 +43,26 @@ public class MenuManager : MonoBehaviour
     private void Update()
     {
         if (activeContext == null) return;
-#if (UNITY_EDITOR || UNITY_STANDALONE)
-        // Both enters or space press selected button
-        if (input.IsDown(KeyCode.Return) || input.IsDown(KeyCode.Space) || input.IsDown(KeyCode.KeypadEnter))
+
+        if (hoveredButton.IsSliderButton())
         {
-            hoveredButton.Activate();
+            if (input.IsDown(KeyCode.LeftArrow) || input.IsDown(KeyCode.A))
+            {
+                hoveredButton.SlideDown();
+            }
+            else if (input.IsDown(KeyCode.RightArrow) || input.IsDown(KeyCode.D))
+            {
+                hoveredButton.SlideUp();
+            }
         }
+        else
+        {
+#if (UNITY_EDITOR || UNITY_STANDALONE)
+            // Both enters or space press selected button
+            if (input.IsDown(KeyCode.Return) || input.IsDown(KeyCode.Space) || input.IsDown(KeyCode.KeypadEnter))
+            {
+                hoveredButton.Activate();
+            }
 #elif (UNITY_WEBGL)
         // Only space to press selected button on WebGL
         if (input.IsDown(KeyCode.Space))
@@ -56,6 +70,7 @@ public class MenuManager : MonoBehaviour
             hoveredButton.Activate();
         }
 #endif
+        }
         if (input.IsDown(KeyCode.DownArrow) || input.IsDown(KeyCode.S))
         {
             activeButtonIndex++;
@@ -116,6 +131,7 @@ public class MenuManager : MonoBehaviour
         hoveredButton?.UnHover();
         activeContext = context;
         hoveredButton = context.GetButtons()[0];
+        activeButtonIndex = 0;
         hoveredButton.Hover();
     }
 
@@ -135,4 +151,6 @@ public class MenuManager : MonoBehaviour
     {
         ActivateContext(context);
     }
+
+    public MenuContext GetActiveContext() => activeContext;
 }

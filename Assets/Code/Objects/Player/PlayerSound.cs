@@ -26,6 +26,7 @@ public class PlayerSound : MonoBehaviour
         PlayerFormSwitcher.OnSwitchToBulb += OnSwitchToBulb;
         PlayerLogic.OnPlayerDeath += OnPlayerDeath;
         PlayerVisualsManager.OnPlayerFootstep += OnPlayerFootstep;
+        OptionsManager.OnSoundVolumeChanged += OnSoundVolumeChanged;
     }
 
     private void OnDisable()
@@ -37,11 +38,18 @@ public class PlayerSound : MonoBehaviour
         PlayerFormSwitcher.OnSwitchToBulb -= OnSwitchToBulb;
         PlayerLogic.OnPlayerDeath -= OnPlayerDeath;
         PlayerVisualsManager.OnPlayerFootstep -= OnPlayerFootstep;
+        OptionsManager.OnSoundVolumeChanged -= OnSoundVolumeChanged;
     }
 
     private void Start()
     {
         audioSource = GetComponent<AudioSource>();
+        audioSource.volume = PlayerPrefs.GetFloat("soundVolume", 1f);
+    }
+
+    private void OnSoundVolumeChanged(float newValue)
+    {
+        audioSource.volume = newValue;
     }
 
     private void PlaySound(AudioClip clip, float volume = 1, bool randomizePitch = false)

@@ -10,10 +10,28 @@ public class MusicManager : MonoBehaviour
 
     private AudioSource audioSource;
 
+    private float volume;
+
     private void Start()
     {
         InitVariables();
         PlaySong(factoryTrack);
+    }
+
+    private void OnEnable()
+    {
+        OptionsManager.OnMusicVolumeChanged += OnMusicVolumeChanged;
+    }
+
+    private void OnDisable()
+    {
+        OptionsManager.OnMusicVolumeChanged -= OnMusicVolumeChanged;
+    }
+
+    private void OnMusicVolumeChanged(float newValue)
+    {
+        volume = newValue;
+        audioSource.volume = volume;
     }
 
     private void Update()
@@ -24,6 +42,8 @@ public class MusicManager : MonoBehaviour
     private void InitVariables()
     {
         audioSource = GetComponent<AudioSource>();
+        volume = PlayerPrefs.GetFloat("musicVolume", 1f);
+        audioSource.volume = volume;
     }
 
     private void DoTimescaleEffects()

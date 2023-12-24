@@ -8,6 +8,10 @@ public class MenuButton : MonoBehaviour
     [SerializeField] private Sprite defaultSprite;
     [SerializeField] private Sprite hoverSprite;
     [SerializeField] private UnityEvent OnActivate;
+    [SerializeField] private bool isSlider = false;
+    [SerializeField] private UnityEvent OnSlideDown;
+    [SerializeField] private UnityEvent OnSlideUp;
+    [SerializeField] private string playerPrefsFloatName;
 
     public void Hover()
     {
@@ -25,4 +29,32 @@ public class MenuButton : MonoBehaviour
     {
         OnActivate.Invoke();
     }
+
+    public virtual void SlideDown()
+    {
+        OnSlideDown.Invoke();
+        UpdateSliderDisplay();
+    }
+
+    public virtual void SlideUp()
+    {
+        OnSlideUp.Invoke();
+        UpdateSliderDisplay();
+    }
+
+    private void Start()
+    {
+        if (isSlider)
+        {
+            UpdateSliderDisplay();
+        }
+    }
+
+    private void UpdateSliderDisplay()
+    {
+        float newValue = PlayerPrefs.GetFloat(playerPrefsFloatName, 1f);
+        GetComponent<SliderButton>().UpdateDisplayFloatAsPercentage(Mathf.Round(newValue * 100));
+    }
+
+    public bool IsSliderButton() => isSlider;
 }
