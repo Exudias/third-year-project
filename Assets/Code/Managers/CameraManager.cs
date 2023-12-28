@@ -15,6 +15,12 @@ public class CameraManager : MonoBehaviour
     private Vector2 baseBulbOffset;
     private Vector2 baseSpiritOffset;
 
+    private bool xLocked;
+    private bool yLocked;
+
+    private float xLockValue;
+    private float yLockValue;
+
     private void Start()
     {
         if (bulbCamera != null)
@@ -30,6 +36,28 @@ public class CameraManager : MonoBehaviour
         }
 
         StartCoroutine(ResetVcamConfines());
+    }
+
+    private void Update()
+    {
+        MoveTowardsLockedValues(bulbCamera);
+        MoveTowardsLockedValues(spiritCamera);
+    }
+
+    private const float MAX_LOCK_STEP_PER_SEC = 5;
+
+    private void MoveTowardsLockedValues(GameObject camera)
+    {
+        if (camera == null) return;
+
+        camera.GetComponent<LockCameraXY>().m_LockX = xLocked;
+        camera.GetComponent<LockCameraXY>().m_LockY = yLocked;
+
+        float xPos = camera.GetComponent<LockCameraXY>().m_XPosition;
+        float yPos = camera.GetComponent<LockCameraXY>().m_YPosition;
+
+        camera.GetComponent<LockCameraXY>().m_XPosition = Mathf.MoveTowards(xPos, xLockValue, MAX_LOCK_STEP_PER_SEC * Time.unscaledDeltaTime);
+        camera.GetComponent<LockCameraXY>().m_YPosition = Mathf.MoveTowards(yPos, yLockValue, MAX_LOCK_STEP_PER_SEC * Time.unscaledDeltaTime);
     }
 
     IEnumerator ResetVcamConfines()
@@ -79,20 +107,10 @@ public class CameraManager : MonoBehaviour
 
     public void SetForcedCameraPosition(Vector2 pos, bool forceX, bool forceY)
     {
-        if (bulbCamera != null)
-        {
-            bulbCamera.GetComponent<LockCameraXY>().m_LockX = forceX;
-            bulbCamera.GetComponent<LockCameraXY>().m_LockY = forceY;
-            bulbCamera.GetComponent<LockCameraXY>().m_XPosition = pos.x;
-            bulbCamera.GetComponent<LockCameraXY>().m_YPosition = pos.y;
-        }
-        if (spiritCamera != null)
-        {
-            spiritCamera.GetComponent<LockCameraXY>().m_LockX = forceX;
-            spiritCamera.GetComponent<LockCameraXY>().m_LockY = forceY;
-            spiritCamera.GetComponent<LockCameraXY>().m_XPosition = pos.x;
-            spiritCamera.GetComponent<LockCameraXY>().m_YPosition = pos.y;
-        }
+        xLocked = forceX;
+        yLocked = forceY;
+        xLockValue = pos.x;
+        yLockValue = pos.y;
     }
 
     public void DisableForcedCameraPosition()
