@@ -62,7 +62,7 @@ public class Trigger : MonoBehaviour
         inThisFrame.Remove(activator);
     }
 
-    private void OnDrawGizmos()
+    public virtual void OnDrawGizmos()
     {
         Bounds bounds = GetComponent<Collider2D>().bounds;
         Gizmos.color = new Color(1, 0.92f, 0.016f, 0.05f);

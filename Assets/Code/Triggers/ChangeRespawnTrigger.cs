@@ -20,4 +20,11 @@ public class ChangeRespawnTrigger : Trigger
     {
         GameManager.SetSpawn(newSpawnTransform.position);
     }
+
+    public override void OnDrawGizmos()
+    {
+        base.OnDrawGizmos();
+        Gizmos.color = Color.green;
+        Gizmos.DrawWireCube(newSpawnTransform.position + new Vector3(0, -0.03125f, 0), new Vector2(0.375f, 0.9375f));
+    }
 }
