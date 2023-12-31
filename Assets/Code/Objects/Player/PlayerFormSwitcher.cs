@@ -28,19 +28,22 @@ public class PlayerFormSwitcher : MonoBehaviour
     public static event FormSwitchEvent OnSwitchToBulb;
     public static event FormSwitchEvent OnSwitchToSpirit;
 
+    private bool canTransformToSpirit = true;
+
     private void Start()
     {
         bulbMovement = GetComponent<BulbMovement>();
         spiritMovement = GetComponent<SpiritMovement>();
         controller = GetComponent<Controller2D>();
         input = InputManager.instance;
+        canTransformToSpirit = true;
     }
 
     private void Update()
     {
         if (GameManager.IsPlayerDead()) return;
         // go spirit from bulb, but to return you must collide with a bulb, so no on-demand
-        if ((input.IsDown(KeyCode.LeftShift) || input.IsDown(KeyCode.RightShift)) && currentForm == PlayerForm.Bulb)
+        if ((input.IsDown(KeyCode.LeftShift) || input.IsDown(KeyCode.RightShift)) && currentForm == PlayerForm.Bulb && canTransformToSpirit)
         {
             ToggleForm();
         }
@@ -64,8 +67,8 @@ public class PlayerFormSwitcher : MonoBehaviour
 
     public void TurnIntoBulbAt(Vector2 bulbPosition)
     {
-        controller.MoveImmediate(bulbPosition);
         InitBulb();
+        controller.MoveImmediate(bulbPosition);
     }
 
     public PlayerForm GetCurrentForm()
@@ -116,5 +119,10 @@ public class PlayerFormSwitcher : MonoBehaviour
 
         Camera.main.GetComponent<CameraManager>().ActivateSpiritCamera();
         OnSwitchToSpirit?.Invoke();
+    }
+
+    public void SetCanTransform(bool newVal)
+    {
+        canTransformToSpirit = newVal;
     }
 }

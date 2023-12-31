@@ -18,6 +18,8 @@ public class ChangeRespawnTrigger : Trigger
 
     private void OnEntered(Collider2D activator)
     {
+        bool collisionIsPlayer = activator.gameObject.GetComponent<PlayerLogic>() != null;
+        if (!collisionIsPlayer) return;
         GameManager.SetSpawn(newSpawnTransform.position);
     }
 
