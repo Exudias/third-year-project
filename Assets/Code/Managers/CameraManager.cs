@@ -27,12 +27,14 @@ public class CameraManager : MonoBehaviour
         {
             virtualBulbCam = bulbCamera.GetComponent<CinemachineVirtualCamera>();
             baseBulbOffset = virtualBulbCam.GetCinemachineComponent<CinemachineFramingTransposer>().m_TrackedObjectOffset;
+            bulbTargetOffset = baseBulbOffset;
         }
         
         if (spiritCamera != null)
         {
             virtualSpiritCam = spiritCamera.GetComponent<CinemachineVirtualCamera>();
             baseSpiritOffset = virtualSpiritCam.GetCinemachineComponent<CinemachineFramingTransposer>().m_TrackedObjectOffset;
+            spiritTargetOffset = baseSpiritOffset;
         }
 
         StartCoroutine(ResetVcamConfines());
@@ -42,6 +44,7 @@ public class CameraManager : MonoBehaviour
     {
         MoveTowardsLockedValues(bulbCamera);
         MoveTowardsLockedValues(spiritCamera);
+        MoveTowardsOffsetValues();
     }
 
     private const float MAX_LOCK_STEP_PER_SEC = 5;
@@ -58,6 +61,16 @@ public class CameraManager : MonoBehaviour
 
         camera.GetComponent<LockCameraXY>().m_XPosition = Mathf.MoveTowards(xPos, xLockValue, MAX_LOCK_STEP_PER_SEC * Time.unscaledDeltaTime);
         camera.GetComponent<LockCameraXY>().m_YPosition = Mathf.MoveTowards(yPos, yLockValue, MAX_LOCK_STEP_PER_SEC * Time.unscaledDeltaTime);
+    }
+
+    private void MoveTowardsOffsetValues()
+    {
+        CinemachineVirtualCamera bulbVcam = bulbCamera.GetComponent<CinemachineVirtualCamera>();
+        CinemachineVirtualCamera spiritVcam = spiritCamera.GetComponent<CinemachineVirtualCamera>();
+        Vector2 currentBulbOffset = bulbVcam.GetCinemachineComponent<CinemachineFramingTransposer>().m_TrackedObjectOffset;
+        Vector2 currentSpiritOffset = spiritVcam.GetCinemachineComponent<CinemachineFramingTransposer>().m_TrackedObjectOffset;
+        bulbVcam.GetCinemachineComponent<CinemachineFramingTransposer>().m_TrackedObjectOffset = Vector2.MoveTowards(currentBulbOffset, bulbTargetOffset, MAX_LOCK_STEP_PER_SEC * Time.unscaledDeltaTime);
+        spiritVcam.GetCinemachineComponent<CinemachineFramingTransposer>().m_TrackedObjectOffset = Vector2.MoveTowards(currentSpiritOffset, spiritTargetOffset, MAX_LOCK_STEP_PER_SEC * Time.unscaledDeltaTime);
     }
 
     IEnumerator ResetVcamConfines()
@@ -91,6 +104,9 @@ public class CameraManager : MonoBehaviour
         spiritCamera.SetActive(true);
     }
 
+    private Vector2 bulbTargetOffset;
+    private Vector2 spiritTargetOffset;
+
     public void SetCurrentCameraOffset(Vector2 offset, bool bulb, bool spirit)
     {
         CinemachineVirtualCamera bulbVcam = bulbCamera.GetComponent<CinemachineVirtualCamera>();
@@ -98,10 +114,12 @@ public class CameraManager : MonoBehaviour
         if (bulb)
         {
             bulbVcam.GetCinemachineComponent<CinemachineFramingTransposer>().m_TrackedObjectOffset = offset;
+            bulbTargetOffset = offset;
         }
         if (spirit)
         {
             spiritVcam.GetCinemachineComponent<CinemachineFramingTransposer>().m_TrackedObjectOffset = offset;
+            spiritTargetOffset = offset;
         }
     }
 
