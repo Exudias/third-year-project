@@ -27,6 +27,7 @@ public class PlayerFormSwitcher : MonoBehaviour
     public delegate void FormSwitchEvent();
     public static event FormSwitchEvent OnSwitchToBulb;
     public static event FormSwitchEvent OnSwitchToSpirit;
+    public static event FormSwitchEvent OnFailedSwitchToSpirit;
 
     private bool canTransformToSpirit = true;
 
@@ -43,9 +44,20 @@ public class PlayerFormSwitcher : MonoBehaviour
     {
         if (GameManager.IsPlayerDead()) return;
         // go spirit from bulb, but to return you must collide with a bulb, so no on-demand
-        if ((input.IsDown(KeyCode.LeftShift) || input.IsDown(KeyCode.RightShift)) && currentForm == PlayerForm.Bulb && canTransformToSpirit)
+        bool pressedTransform = input.IsDown(KeyCode.LeftShift) || input.IsDown(KeyCode.RightShift);
+        if (canTransformToSpirit)
         {
-            ToggleForm();
+            if (pressedTransform && currentForm == PlayerForm.Bulb)
+            {
+                ToggleForm();
+            }
+        }
+        else
+        {
+            if (pressedTransform)
+            {
+                OnFailedSwitchToSpirit?.Invoke();
+            }
         }
     }
 
