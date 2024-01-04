@@ -28,6 +28,8 @@ public class PlayerFormSwitcher : MonoBehaviour
     public static event FormSwitchEvent OnSwitchToBulb;
     public static event FormSwitchEvent OnSwitchToSpirit;
     public static event FormSwitchEvent OnFailedSwitchToSpirit;
+    public static event FormSwitchEvent OnInitAsBulb;
+    public static event FormSwitchEvent OnInitAsSpirit;
 
     private bool canTransformToSpirit = true;
 
@@ -38,6 +40,14 @@ public class PlayerFormSwitcher : MonoBehaviour
         controller = GetComponent<Controller2D>();
         input = InputManager.instance;
         canTransformToSpirit = true;
+        if (currentForm == PlayerForm.Bulb)
+        {
+            OnInitAsBulb?.Invoke();
+        }
+        else if (currentForm == PlayerForm.Spirit)
+        {
+            OnInitAsSpirit?.Invoke();
+        }
     }
 
     private void Update()
