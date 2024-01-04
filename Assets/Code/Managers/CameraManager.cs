@@ -65,12 +65,18 @@ public class CameraManager : MonoBehaviour
 
     private void MoveTowardsOffsetValues()
     {
-        CinemachineVirtualCamera bulbVcam = bulbCamera.GetComponent<CinemachineVirtualCamera>();
-        CinemachineVirtualCamera spiritVcam = spiritCamera.GetComponent<CinemachineVirtualCamera>();
-        Vector2 currentBulbOffset = bulbVcam.GetCinemachineComponent<CinemachineFramingTransposer>().m_TrackedObjectOffset;
-        Vector2 currentSpiritOffset = spiritVcam.GetCinemachineComponent<CinemachineFramingTransposer>().m_TrackedObjectOffset;
-        bulbVcam.GetCinemachineComponent<CinemachineFramingTransposer>().m_TrackedObjectOffset = Vector2.MoveTowards(currentBulbOffset, bulbTargetOffset, MAX_LOCK_STEP_PER_SEC * Time.unscaledDeltaTime);
-        spiritVcam.GetCinemachineComponent<CinemachineFramingTransposer>().m_TrackedObjectOffset = Vector2.MoveTowards(currentSpiritOffset, spiritTargetOffset, MAX_LOCK_STEP_PER_SEC * Time.unscaledDeltaTime);
+        if (bulbCamera != null)
+        {
+            CinemachineVirtualCamera bulbVcam = bulbCamera.GetComponent<CinemachineVirtualCamera>();
+            Vector2 currentBulbOffset = bulbVcam.GetCinemachineComponent<CinemachineFramingTransposer>().m_TrackedObjectOffset;
+            bulbVcam.GetCinemachineComponent<CinemachineFramingTransposer>().m_TrackedObjectOffset = Vector2.MoveTowards(currentBulbOffset, bulbTargetOffset, MAX_LOCK_STEP_PER_SEC * Time.unscaledDeltaTime);
+        }
+        if (spiritCamera != null)
+        {
+            CinemachineVirtualCamera spiritVcam = spiritCamera.GetComponent<CinemachineVirtualCamera>();
+            Vector2 currentSpiritOffset = spiritVcam.GetCinemachineComponent<CinemachineFramingTransposer>().m_TrackedObjectOffset;
+            spiritVcam.GetCinemachineComponent<CinemachineFramingTransposer>().m_TrackedObjectOffset = Vector2.MoveTowards(currentSpiritOffset, spiritTargetOffset, MAX_LOCK_STEP_PER_SEC * Time.unscaledDeltaTime);
+        }
     }
 
     IEnumerator ResetVcamConfines()
@@ -123,12 +129,26 @@ public class CameraManager : MonoBehaviour
         }
     }
 
-    public void SetForcedCameraPosition(Vector2 pos, bool forceX, bool forceY)
+    public void SetForcedCameraPosition(Vector2 pos, bool forceX, bool forceY, bool instant)
     {
         xLocked = forceX;
         yLocked = forceY;
         xLockValue = pos.x;
         yLockValue = pos.y;
+
+        if (instant)
+        {
+            if (bulbCamera != null)
+            {
+                bulbCamera.GetComponent<LockCameraXY>().m_XPosition = xLockValue;
+                bulbCamera.GetComponent<LockCameraXY>().m_YPosition = yLockValue;
+            }
+            if (spiritCamera != null)
+            {
+                spiritCamera.GetComponent<LockCameraXY>().m_XPosition = xLockValue;
+                spiritCamera.GetComponent<LockCameraXY>().m_YPosition = yLockValue;
+            }
+        }
     }
 
     public void DisableForcedCameraPosition()

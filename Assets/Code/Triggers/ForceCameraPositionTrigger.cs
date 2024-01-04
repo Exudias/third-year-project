@@ -5,6 +5,7 @@ public class ForceCameraPositionTrigger : Trigger
     [SerializeField] private Vector2 forcedPosition;
     [SerializeField] private bool lockX;
     [SerializeField] private bool lockY;
+    [SerializeField] private bool instant = false;
 
     public override void OnEnable()
     {
@@ -30,7 +31,7 @@ public class ForceCameraPositionTrigger : Trigger
         bool collisionIsPlayer = activator.gameObject.GetComponent<PlayerLogic>() != null;
         if (collisionIsPlayer)
         {
-            Camera.main.GetComponent<CameraManager>().SetForcedCameraPosition(forcedPosition, lockX, lockY);
+            Camera.main.GetComponent<CameraManager>().SetForcedCameraPosition(forcedPosition, lockX, lockY, instant);
         }
     }
 

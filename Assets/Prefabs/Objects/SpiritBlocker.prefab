@@ -178,4 +178,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8ec183f25021d7f4daa732600f4e65e0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  dangerFlashTime: 0.2
+  dangerFlashColour: {r: 1, g: 0, b: 0, a: 1}
   sprite: {fileID: 4298740953958357727}
