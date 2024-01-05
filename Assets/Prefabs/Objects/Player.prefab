@@ -260,6 +260,7 @@ MonoBehaviour:
   fromPreviousSpawnPoint: {x: 0, y: 0}
   bulbDeathObject: {fileID: 1527128465969541140, guid: b6d2f3623bf21ce4ca124d16f59e6f03, type: 3}
   spiritDeathObject: {fileID: 1527128465969541140, guid: 5610ce016d8f678499bfd077d12f6ae3, type: 3}
+  spiritDeathParticles: {fileID: 5835558953764078619, guid: 5f06c99e0484315409f01298c10fe948, type: 3}
 --- !u!114 &584288346550627785
 MonoBehaviour:
   m_ObjectHideFlags: 0

@@ -6,6 +6,7 @@ public class PlayerLogic : MonoBehaviour
     [SerializeField] private Vector2 fromPreviousSpawnPoint;
     [SerializeField] private GameObject bulbDeathObject;
     [SerializeField] private GameObject spiritDeathObject;
+    [SerializeField] private GameObject spiritDeathParticles;
 
     private PlayerFormSwitcher formSwitcher;
     private Controller2D controller;
@@ -47,8 +48,12 @@ public class PlayerLogic : MonoBehaviour
         OnPlayerDeath?.Invoke();
         if (formSwitcher.GetCurrentForm() == PlayerFormSwitcher.PlayerForm.Bulb)
         {
+            // Body
             GameObject deathObj = Instantiate(bulbDeathObject, transform.position, visualsManager.transform.rotation);
             GameManager.MoveObjectToLevelScene(deathObj);
+            // Particles
+            GameObject deathParticlesObj = Instantiate(spiritDeathParticles, transform.position, Quaternion.identity);
+            GameManager.MoveObjectToLevelScene(deathParticlesObj);
         }
         else
         {
@@ -56,7 +61,6 @@ public class PlayerLogic : MonoBehaviour
             GameManager.MoveObjectToLevelScene(deathObj);
             deathObj.GetComponent<Animator>().Play(0, 0, 1 - energyManager.GetEnergyPercent());
         }
-        //Destroy(gameObject);
         visualsManager.GetComponent<SpriteRenderer>().enabled = false;
         controller.enabled = false;
     }
