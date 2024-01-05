@@ -8,7 +8,7 @@ public class PlayerCollisionManager : MonoBehaviour
     private PlayerFormSwitcher formSwitcher;
     private Controller2D controller;
 
-    private void Start()
+    private void Awake()
     {
         bulbMovement = GetComponent<BulbMovement>();
         spiritMovement = GetComponent<SpiritMovement>();
@@ -20,11 +20,31 @@ public class PlayerCollisionManager : MonoBehaviour
     private void OnEnable()
     {
         Controller2D.OnOtherCollision += OnControllerOtherCollision;
+        PlayerFormSwitcher.OnSwitchToSpirit += OnSpirit;
+        PlayerFormSwitcher.OnInitAsSpirit += OnSpirit;
+        PlayerFormSwitcher.OnSwitchToBulb += OnBulb;
+        PlayerFormSwitcher.OnInitAsBulb += OnBulb;
     }
 
     private void OnDisable()
     {
         Controller2D.OnOtherCollision -= OnControllerOtherCollision;
+        PlayerFormSwitcher.OnSwitchToSpirit -= OnSpirit;
+        PlayerFormSwitcher.OnInitAsSpirit -= OnSpirit;
+        PlayerFormSwitcher.OnSwitchToBulb -= OnBulb;
+        PlayerFormSwitcher.OnInitAsBulb -= OnBulb;
+    }
+
+    private void OnBulb()
+    {
+        controller.AddToSolidCollisions(LayerMask.GetMask("BulbSolid"));
+        controller.RemoveFromSolidCollisions(LayerMask.GetMask("SpiritSolid"));
+    }
+
+    private void OnSpirit()
+    {
+        controller.AddToSolidCollisions(LayerMask.GetMask("SpiritSolid"));
+        controller.RemoveFromSolidCollisions(LayerMask.GetMask("BulbSolid"));
     }
 
     private void OnControllerOtherCollision(Controller2D source, Vector2 dir, GameObject obj)

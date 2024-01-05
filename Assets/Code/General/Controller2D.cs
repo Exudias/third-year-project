@@ -172,6 +172,16 @@ public class Controller2D : MonoBehaviour
         return false;
     }
 
+    public void AddToSolidCollisions(LayerMask newCollisions)
+    {
+        collisionMask |= newCollisions;
+    }
+
+    public void RemoveFromSolidCollisions(LayerMask maskToRemove)
+    {
+        collisionMask &= ~maskToRemove;
+    }
+
     const float MIN_DISTANCE_TO_DIE = 0.0001f; // if death collision is more than that closer than normal, die
 
     private void HorizontalCollisions(ref Vector2 velocity)

@@ -16,8 +16,8 @@ TagManager:
   - Buff
   - PlayerInteract
   - Trigger
-  - 
-  - 
+  - BulbSolid
+  - SpiritSolid
   - 
   - 
   - 
