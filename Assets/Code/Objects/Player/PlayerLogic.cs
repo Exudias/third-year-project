@@ -58,6 +58,8 @@ public class PlayerLogic : MonoBehaviour
         }
         visualsManager.GetComponent<SpriteRenderer>().enabled = false;
         controller.enabled = false;
+        //Camera.main.GetComponent<CameraManager>().SetOrthoSize(1);
+        //Camera.main.GetComponent<CameraManager>().SetForcedCameraPosition(transform.position, true, true, true);
     }
 
     private void OnControllerDeathCollision(Controller2D source, Vector2 dir, bool isDirectionalDeath, GameObject killer)

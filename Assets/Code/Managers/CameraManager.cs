@@ -1,6 +1,7 @@
 using UnityEngine;
 using Cinemachine;
 using System.Collections;
+using UnityEngine.Rendering.Universal;
 
 public class CameraManager : MonoBehaviour
 {
@@ -42,9 +43,28 @@ public class CameraManager : MonoBehaviour
 
     private void Update()
     {
-        MoveTowardsLockedValues(bulbCamera);
-        MoveTowardsLockedValues(spiritCamera);
-        MoveTowardsOffsetValues();
+        if (!GameManager.IsPlayerDead())
+        {
+            MoveTowardsLockedValues(bulbCamera);
+            MoveTowardsLockedValues(spiritCamera);
+            MoveTowardsOffsetValues();
+        }
+        else
+        {
+            ApplyDeadPosition(bulbCamera);
+            ApplyDeadPosition(spiritCamera);
+        }
+    }
+
+    private void ApplyDeadPosition(GameObject camera)
+    {
+        if (camera == null) return;
+
+        camera.GetComponent<LockCameraXY>().m_LockX = true;
+        camera.GetComponent<LockCameraXY>().m_LockY = true;
+
+        camera.GetComponent<LockCameraXY>().m_XPosition = xLockValue;
+        camera.GetComponent<LockCameraXY>().m_YPosition = yLockValue;
     }
 
     private const float MAX_LOCK_STEP_PER_SEC = 5;
@@ -162,6 +182,21 @@ public class CameraManager : MonoBehaviour
         {
             spiritCamera.GetComponent<LockCameraXY>().m_LockX = false;
             spiritCamera.GetComponent<LockCameraXY>().m_LockY = false;
+        }
+    }
+
+    public void SetOrthoSize(float size)
+    {
+        float correctSize = GetComponent<PixelPerfectCamera>().CorrectCinemachineOrthoSize(size);
+        if (bulbCamera != null)
+        {
+            bulbCamera.GetComponent<CinemachineVirtualCamera>().m_Lens.OrthographicSize = correctSize;
+            bulbCamera.GetComponent<CinemachineConfiner2D>().InvalidateCache();
+        }
+        if (spiritCamera != null)
+        {
+            spiritCamera.GetComponent<CinemachineVirtualCamera>().m_Lens.OrthographicSize = correctSize;
+            spiritCamera.GetComponent<CinemachineConfiner2D>().InvalidateCache();
         }
     }
 
