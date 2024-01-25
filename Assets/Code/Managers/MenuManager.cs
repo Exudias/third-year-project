@@ -117,7 +117,7 @@ public class MenuManager : MonoBehaviour
     {
         if (pauseContext == null) return;
         SetDimmerActive(false);
-        pauseContext.Disable();
+        activeContext.Disable();
     }
 
     private void SetDimmerActive(bool active)
