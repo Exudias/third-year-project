@@ -43,17 +43,20 @@ public class CameraManager : MonoBehaviour
 
     private void Update()
     {
-        if (!GameManager.IsPlayerDead())
-        {
-            MoveTowardsLockedValues(bulbCamera);
-            MoveTowardsLockedValues(spiritCamera);
-            MoveTowardsOffsetValues();
-        }
-        else
-        {
-            ApplyDeadPosition(bulbCamera);
-            ApplyDeadPosition(spiritCamera);
-        }
+        //if (!GameManager.IsPlayerDead())
+        //{
+        //    MoveTowardsLockedValues(bulbCamera);
+        //    MoveTowardsLockedValues(spiritCamera);
+        //    MoveTowardsOffsetValues();
+        //}
+        //else
+        //{
+        //    ApplyDeadPosition(bulbCamera);
+        //    ApplyDeadPosition(spiritCamera);
+        //}
+        MoveTowardsLockedValues(bulbCamera);
+        MoveTowardsLockedValues(spiritCamera);
+        MoveTowardsOffsetValues();
     }
 
     private void ApplyDeadPosition(GameObject camera)
