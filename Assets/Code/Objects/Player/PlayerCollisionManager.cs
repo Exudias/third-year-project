@@ -81,6 +81,10 @@ public class PlayerCollisionManager : MonoBehaviour
                 }
             }
         }
+        if (obj.GetComponent<DoorKeyLogic>() != null)
+        {
+            obj.GetComponent<DoorKeyLogic>().Collect();
+        }
         if (obj.GetComponent<Trigger>() != null)
         {
             obj.GetComponent<Trigger>().Activate(controller.GetCurrentCollider());
