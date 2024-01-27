@@ -11,6 +11,7 @@ public class KeyDoorLogic : MonoBehaviour
     [SerializeField] private float closeTime;
     [SerializeField] private float openDistance;
     [SerializeField] private bool startOpen;
+    [SerializeField] private SpriteRenderer counterSprite;
 
     private bool active;
     private bool vertical;
@@ -26,6 +27,11 @@ public class KeyDoorLogic : MonoBehaviour
     private Vector2 door2OpenPosition;
 
     private int keys = 0;
+
+    private int maxKeys = -1;
+
+    private float currentVisualPercentage = 0;
+    private float targetVisualPercentage = 1;
 
     private void OnEnable()
     {
@@ -46,7 +52,12 @@ public class KeyDoorLogic : MonoBehaviour
 
     private void OnKeyPickup(DoorKeyLogic key)
     {
+        if (maxKeys < 0)
+        {
+            maxKeys = keys;
+        }
         keys--;
+        UpdateVisualsTarget();
         if (keys <= 0)
         {
             Activate();
@@ -76,12 +87,33 @@ public class KeyDoorLogic : MonoBehaviour
             door1OpenPosition = door1ClosedPosition + (vertical ? Vector2.up : Vector2.left) * openDistance;
             door2OpenPosition = door2ClosedPosition + (vertical ? Vector2.down : Vector2.right) * openDistance;
         }
+
+        UpdateVisualsTarget();
     }
 
     private void Update()
     {
         CalculateOpenPercent();
         ApplyOpen();
+        UpdateVisuals();
+    }
+
+    private const float FILL_ANIMATION_SPEED = 1f;
+
+    private void UpdateVisuals()
+    {
+        currentVisualPercentage = Mathf.MoveTowards(currentVisualPercentage, targetVisualPercentage, FILL_ANIMATION_SPEED * Time.unscaledDeltaTime);
+        counterSprite.material.SetFloat("_FillPercent", currentVisualPercentage);
+    }
+
+    private void UpdateVisualsTarget()
+    {
+        float progress = 1 - ((float)keys / maxKeys);
+        if (maxKeys == -1)
+        {
+            progress = 0;
+        }
+        targetVisualPercentage = progress;
     }
 
     private void ApplyOpen()
