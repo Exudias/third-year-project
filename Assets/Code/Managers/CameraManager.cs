@@ -43,31 +43,9 @@ public class CameraManager : MonoBehaviour
 
     private void Update()
     {
-        //if (!GameManager.IsPlayerDead())
-        //{
-        //    MoveTowardsLockedValues(bulbCamera);
-        //    MoveTowardsLockedValues(spiritCamera);
-        //    MoveTowardsOffsetValues();
-        //}
-        //else
-        //{
-        //    ApplyDeadPosition(bulbCamera);
-        //    ApplyDeadPosition(spiritCamera);
-        //}
         MoveTowardsLockedValues(bulbCamera);
         MoveTowardsLockedValues(spiritCamera);
         MoveTowardsOffsetValues();
-    }
-
-    private void ApplyDeadPosition(GameObject camera)
-    {
-        if (camera == null) return;
-
-        camera.GetComponent<LockCameraXY>().m_LockX = true;
-        camera.GetComponent<LockCameraXY>().m_LockY = true;
-
-        camera.GetComponent<LockCameraXY>().m_XPosition = xLockValue;
-        camera.GetComponent<LockCameraXY>().m_YPosition = yLockValue;
     }
 
     private const float MAX_LOCK_STEP_PER_SEC = 5;
