@@ -59,6 +59,7 @@ public class GameManager : MonoBehaviour
         setCustomSpawn = false;
         isFromPrevious = false;
         Application.targetFrameRate = 60;
+        Cursor.visible = false;
         loadingScene = false;
         playerDead = false;
         paused = false;
