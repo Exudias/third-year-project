@@ -107,7 +107,7 @@ public class MenuManager : MonoBehaviour
 
     public bool ShowPauseMenu()
     {
-        if (pauseContext == null) return false;
+        if (pauseContext == null || GameManager.IsLoadingScene()) return false;
         SetDimmerActive(true);
         pauseContext.Enable();
         return true;
