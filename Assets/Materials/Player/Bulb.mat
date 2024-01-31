@@ -74,7 +74,7 @@ Material:
     m_Colors:
     - _Color: {r: 1, g: 1, b: 1, a: 1}
     - _DimColor: {r: 0.22641507, g: 0.22641507, b: 0.22641507, a: 0}
-    - _LitColor: {r: 1.9204344, g: 2, b: 0, a: 0}
+    - _LitColor: {r: 5.7537723, g: 5.992157, b: 0, a: 0}
     - _RendererColor: {r: 1, g: 1, b: 1, a: 1}
   m_BuildTextureStacks: []
   m_AllowLocking: 1
