@@ -38,6 +38,9 @@ TagManager:
   - 
   - 
   m_SortingLayers:
+  - name: Styleground
+    uniqueID: 1478298075
+    locked: 0
   - name: BGTiles
     uniqueID: 2436784299
     locked: 0
