@@ -2,13 +2,23 @@ using UnityEngine;
 
 public class PreviousLevelTrigger : Trigger
 {
+    [SerializeField] private bool affectSpirit = false;
+
     public override void Activate(Collider2D activator)
     {
         base.Activate(activator);
         bool collisionIsPlayer = activator.gameObject.GetComponent<PlayerLogic>() != null;
-        if (collisionIsPlayer)
+
+        if (!collisionIsPlayer) return;
+
+        PlayerFormSwitcher formSwitcher = activator.GetComponent<PlayerFormSwitcher>();
+
+        if (!affectSpirit)
         {
-            GameManager.LoadPreviousScene();
+            if (formSwitcher == null) return;
+            if (formSwitcher.GetCurrentForm() == PlayerFormSwitcher.PlayerForm.Spirit) return;
         }
+
+        GameManager.LoadPreviousScene();
     }
 }
