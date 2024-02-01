@@ -6,6 +6,7 @@ public class ForceCameraPositionTrigger : Trigger
     [SerializeField] private bool lockX;
     [SerializeField] private bool lockY;
     [SerializeField] private bool instant = false;
+    [SerializeField] private bool instantOnlyOnce = true;
 
     public override void OnEnable()
     {
@@ -32,6 +33,10 @@ public class ForceCameraPositionTrigger : Trigger
         if (collisionIsPlayer)
         {
             Camera.main.GetComponent<CameraManager>().SetForcedCameraPosition(forcedPosition, lockX, lockY, instant);
+            if (instant && instantOnlyOnce)
+            {
+                instant = false;
+            }
         }
     }
 
