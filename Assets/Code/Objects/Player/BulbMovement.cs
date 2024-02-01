@@ -17,6 +17,7 @@ public class BulbMovement : MonoBehaviour
     [SerializeField] private float jumpBufferLeniency = 0.1f;
     [SerializeField] private float coyoteJumpLeniency = 0.1f;
     [SerializeField] private float terminalVelocity = 10f;
+    [SerializeField] private float terminalWallVelocity = 5f;
     [SerializeField] private float minVelocityToHitGround = 1f;
     [Header("Wall Jump")]
     [SerializeField] private float wallJumpLeniency = 0.125f;
@@ -175,7 +176,10 @@ public class BulbMovement : MonoBehaviour
         float wallGravityMultiplier = (huggingWall && velocity.y < 0) ? huggingWallGravityMultiplier : 1f;
 
         float gravityStep = gravity * wallGravityMultiplier * Time.deltaTime;
-        velocity.y = Mathf.Clamp(velocity.y + gravityStep, -terminalVelocity, Mathf.Infinity);
+
+        float terminalVelocityToUse = huggingWall ? -terminalWallVelocity : -terminalVelocity;
+
+        velocity.y = Mathf.Clamp(velocity.y + gravityStep, terminalVelocityToUse, Mathf.Infinity);
 
         controller.Move(velocity * Time.deltaTime);
     }
