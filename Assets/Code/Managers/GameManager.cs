@@ -16,6 +16,8 @@ public class GameManager : MonoBehaviour
 
     private InputManager input;
 
+    private static float currentSceneTime;
+
     private void Start()
     {
         if (Instance == null)
@@ -30,6 +32,8 @@ public class GameManager : MonoBehaviour
         }
     }
 
+    private const float PAUSE_LOCKOUT_TIME = 0.2f;
+
     private void Update()
     {
         KeyCode pauseKeyCode = KeyCode.Escape;
@@ -40,7 +44,7 @@ public class GameManager : MonoBehaviour
         pauseKeyCode = KeyCode.Return;
         secondaryPauseKeyCode = KeyCode.KeypadEnter;
 #endif
-        if (input.IsDown(pauseKeyCode) || input.IsDown(secondaryPauseKeyCode))
+        if (currentSceneTime > PAUSE_LOCKOUT_TIME && (input.IsDown(pauseKeyCode) || input.IsDown(secondaryPauseKeyCode)))
         {
             if (paused)
             {
@@ -51,6 +55,8 @@ public class GameManager : MonoBehaviour
                 PauseGame();
             }
         }
+
+        currentSceneTime += Time.unscaledDeltaTime;
     }
 
     private void InitGameState()
@@ -64,6 +70,7 @@ public class GameManager : MonoBehaviour
         playerDead = false;
         paused = false;
         timeScaleBeforePause = 1;
+        currentSceneTime = 0;
     }
 
     private void Awake()
@@ -167,6 +174,7 @@ public class GameManager : MonoBehaviour
 
         loadingScene = false;
         playerDead = false;
+        currentSceneTime = 0;
     }
 
     public static void LoadSceneByAdditiveID(int addID, bool resetSpawn = true)
