@@ -5,6 +5,7 @@ public class EmptyBulbLogic : MonoBehaviour
     [SerializeField] private bool hasCooldown = true;
     [SerializeField] private float cooldownLength = 0.5f;
     [SerializeField] private Controller2D controller;
+    [SerializeField] private GameObject destroyParticles;
 
     private float currentCooldown;
 
@@ -96,6 +97,7 @@ public class EmptyBulbLogic : MonoBehaviour
 
     public void DestroySelf()
     {
+        Instantiate(destroyParticles, transform.position, Quaternion.identity);
         Destroy(transform.parent.gameObject);
     }
 }
