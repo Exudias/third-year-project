@@ -34,7 +34,7 @@ public class ForceCameraPositionTrigger : Trigger
         if (collisionIsPlayer)
         {
             bool isInstant = GameManager.GetSceneTime() < TIME_FOR_INSTANT && instant;
-            Camera.main.GetComponent<CameraManager>().SetForcedCameraPosition(forcedPosition, lockX, lockY, isInstant);
+            Camera.main.GetComponent<CameraManager>().SetForcedCameraPosition(forcedPosition, lockX, lockY, isInstant, gameObject.GetInstanceID());
         }
     }
 
@@ -43,7 +43,7 @@ public class ForceCameraPositionTrigger : Trigger
         bool collisionIsPlayer = activator.gameObject.GetComponent<PlayerLogic>() != null;
         if (collisionIsPlayer)
         {
-            Camera.main.GetComponent<CameraManager>().DisableForcedCameraPosition();
+            Camera.main.GetComponent<CameraManager>().DisableForcedCameraPosition(gameObject.GetInstanceID());
         }
     }
 }

@@ -1,6 +1,7 @@
 using UnityEngine;
 using Cinemachine;
 using System.Collections;
+using System.Collections.Generic;
 using UnityEngine.Rendering.Universal;
 
 public class CameraManager : MonoBehaviour
@@ -130,8 +131,12 @@ public class CameraManager : MonoBehaviour
         }
     }
 
-    public void SetForcedCameraPosition(Vector2 pos, bool forceX, bool forceY, bool instant)
+    private List<int> forcers = new List<int>();
+
+    public void SetForcedCameraPosition(Vector2 pos, bool forceX, bool forceY, bool instant, int forcerID)
     {
+        forcers.Add(forcerID);
+
         xLocked = forceX;
         yLocked = forceY;
         xLockValue = pos.x;
@@ -150,21 +155,31 @@ public class CameraManager : MonoBehaviour
                 spiritCamera.GetComponent<LockCameraXY>().m_YPosition = yLockValue;
             }
         }
-
-        Debug.Log(instant);
     }
 
-    public void DisableForcedCameraPosition()
+    public void DisableForcedCameraPosition(int forcerID)
     {
-        if (bulbCamera != null)
+        for (int i = 0; i < forcers.Count; i++)
         {
-            bulbCamera.GetComponent<LockCameraXY>().m_LockX = false;
-            bulbCamera.GetComponent<LockCameraXY>().m_LockY = false;
+            if (forcers[i] == forcerID)
+            {
+                forcers.RemoveAt(i);
+                break;
+            }
         }
-        if (spiritCamera != null)
+
+        if (forcers.Count == 0)
         {
-            spiritCamera.GetComponent<LockCameraXY>().m_LockX = false;
-            spiritCamera.GetComponent<LockCameraXY>().m_LockY = false;
+            if (bulbCamera != null)
+            {
+                bulbCamera.GetComponent<LockCameraXY>().m_LockX = false;
+                bulbCamera.GetComponent<LockCameraXY>().m_LockY = false;
+            }
+            if (spiritCamera != null)
+            {
+                spiritCamera.GetComponent<LockCameraXY>().m_LockX = false;
+                spiritCamera.GetComponent<LockCameraXY>().m_LockY = false;
+            }
         }
     }
 
