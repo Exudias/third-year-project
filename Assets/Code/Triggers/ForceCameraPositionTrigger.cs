@@ -6,7 +6,6 @@ public class ForceCameraPositionTrigger : Trigger
     [SerializeField] private bool lockX;
     [SerializeField] private bool lockY;
     [SerializeField] private bool instant = false;
-    [SerializeField] private bool instantOnlyOnce = true;
 
     public override void OnEnable()
     {
@@ -27,16 +26,15 @@ public class ForceCameraPositionTrigger : Trigger
         base.Activate(activator);
     }
 
+    const float TIME_FOR_INSTANT = 0.1f;
+
     private void OnEntered(Collider2D activator)
     {
         bool collisionIsPlayer = activator.gameObject.GetComponent<PlayerLogic>() != null;
         if (collisionIsPlayer)
         {
-            Camera.main.GetComponent<CameraManager>().SetForcedCameraPosition(forcedPosition, lockX, lockY, instant);
-            if (instant && instantOnlyOnce)
-            {
-                instant = false;
-            }
+            bool isInstant = GameManager.GetSceneTime() < TIME_FOR_INSTANT && instant;
+            Camera.main.GetComponent<CameraManager>().SetForcedCameraPosition(forcedPosition, lockX, lockY, isInstant);
         }
     }
 

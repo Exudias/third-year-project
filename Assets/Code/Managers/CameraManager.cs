@@ -150,6 +150,8 @@ public class CameraManager : MonoBehaviour
                 spiritCamera.GetComponent<LockCameraXY>().m_YPosition = yLockValue;
             }
         }
+
+        Debug.Log(instant);
     }
 
     public void DisableForcedCameraPosition()

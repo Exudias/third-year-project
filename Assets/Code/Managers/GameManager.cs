@@ -44,7 +44,8 @@ public class GameManager : MonoBehaviour
         pauseKeyCode = KeyCode.Return;
         secondaryPauseKeyCode = KeyCode.KeypadEnter;
 #endif
-        if (currentSceneTime > PAUSE_LOCKOUT_TIME && (input.IsDown(pauseKeyCode) || input.IsDown(secondaryPauseKeyCode)))
+        bool pauseLocked = currentSceneTime < PAUSE_LOCKOUT_TIME || playerDead;
+        if (!pauseLocked && (input.IsDown(pauseKeyCode) || input.IsDown(secondaryPauseKeyCode)))
         {
             if (paused)
             {
@@ -272,5 +273,7 @@ public class GameManager : MonoBehaviour
     {
         playerDead = newState;
     }
+
+    public static float GetSceneTime() => currentSceneTime;
 #endregion
 }
