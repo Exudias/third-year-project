@@ -45,12 +45,20 @@ public class IntroTrigger : Trigger
         const float totalTravelTime = 0.5f;
         while (timeTravelled < totalTravelTime)
         {
-            particle.transform.position = Vector3.Lerp(particleStart, emptyBulb.transform.position, timeTravelled / totalTravelTime);
+            float t = timeTravelled / totalTravelTime;
+            float easedT = EaseInSine(t);
+            particle.transform.position = Vector3.Lerp(particleStart, emptyBulb.transform.position, easedT);
             timeTravelled += Time.deltaTime;
             yield return null;
         }
         particle.SetActive(false);
         emptyBulb.SetActive(false);
         player.SetActive(true);
+    }
+
+    // From easings.net
+    private float EaseInSine(float t)
+    {
+        return 1 - Mathf.Cos(t * Mathf.PI / 2);
     }
 }
