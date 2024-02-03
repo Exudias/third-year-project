@@ -17,6 +17,7 @@ public class GameManager : MonoBehaviour
     private InputManager input;
 
     private static float currentSceneTime;
+    private static float currentSceneFrames;
 
     private void Start()
     {
@@ -58,6 +59,7 @@ public class GameManager : MonoBehaviour
         }
 
         currentSceneTime += Time.unscaledDeltaTime;
+        currentSceneFrames++;
     }
 
     private void InitGameState()
@@ -72,6 +74,7 @@ public class GameManager : MonoBehaviour
         paused = false;
         timeScaleBeforePause = 1;
         currentSceneTime = 0;
+        currentSceneFrames = 0;
     }
 
     private void Awake()
@@ -146,6 +149,9 @@ public class GameManager : MonoBehaviour
         timeScaleBeforePause = 1;
         ResumeGame();
 
+        currentSceneTime = 0;
+        currentSceneFrames = 0;
+
         float transitionTime = MenuManager.instance.PlayTransitionOut();
 
         await Awaitable.WaitForSecondsAsync(transitionTime);
@@ -170,12 +176,15 @@ public class GameManager : MonoBehaviour
             throw new System.Exception("Trying to load invalid scene! (Persistent one!)");
         }
 
+        currentSceneTime = 0;
+        currentSceneFrames = 0;
         await SceneManager.UnloadSceneAsync(currentLevelBuildIndex);
         SceneManager.LoadScene(ID, LoadSceneMode.Additive);
+        currentSceneTime = 0;
+        currentSceneFrames = 0;
 
         loadingScene = false;
         playerDead = false;
-        currentSceneTime = 0;
     }
 
     public static void LoadSceneByAdditiveID(int addID, bool resetSpawn = true)
@@ -205,6 +214,8 @@ public class GameManager : MonoBehaviour
     public static void LoadMenu()
     {
         ResumeGame();
+        currentSceneTime = 0;
+        currentSceneFrames = 0;
         SceneManager.LoadScene(MAIN_MENU_SCENE_NAME);
     }
 
@@ -275,5 +286,6 @@ public class GameManager : MonoBehaviour
     }
 
     public static float GetSceneTime() => currentSceneTime;
+    public static float GetSceneFrames() => currentSceneFrames;
 #endregion
 }
