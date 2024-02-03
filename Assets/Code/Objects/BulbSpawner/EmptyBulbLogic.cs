@@ -7,6 +7,7 @@ public class EmptyBulbLogic : MonoBehaviour
     [SerializeField] private Controller2D controller;
     [SerializeField] private GameObject destroyParticles;
     [SerializeField] private Transform visualsTransform;
+    [SerializeField] private AudioClip breakSound;
 
     private float currentCooldown;
 
@@ -100,6 +101,7 @@ public class EmptyBulbLogic : MonoBehaviour
     {
         GameObject deathObj = Instantiate(destroyParticles, transform.position, Quaternion.identity);
         GameManager.MoveObjectToLevelScene(deathObj);
+        AudioSource.PlayClipAtPoint(breakSound, transform.position, PlayerPrefs.GetFloat("soundVolume", 1f));
         Destroy(transform.parent.gameObject);
     }
 

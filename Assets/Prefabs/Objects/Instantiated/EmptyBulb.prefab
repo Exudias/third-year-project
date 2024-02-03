@@ -202,6 +202,7 @@ MonoBehaviour:
   controller: {fileID: 4354734953445983104}
   destroyParticles: {fileID: 6958377216833562595, guid: b8d2ce6c561d6484ba8f4302c54c1547, type: 3}
   visualsTransform: {fileID: 7195336630831511731}
+  breakSound: {fileID: 8300000, guid: 86e702cbbb63763448e9c41772d28697, type: 3}
 --- !u!1 &8624609226617178530
 GameObject:
   m_ObjectHideFlags: 0
