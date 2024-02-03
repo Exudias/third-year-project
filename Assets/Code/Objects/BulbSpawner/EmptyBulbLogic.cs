@@ -97,7 +97,8 @@ public class EmptyBulbLogic : MonoBehaviour
 
     public void DestroySelf()
     {
-        Instantiate(destroyParticles, transform.position, Quaternion.identity);
+        GameObject deathObj = Instantiate(destroyParticles, transform.position, Quaternion.identity);
+        GameManager.MoveObjectToLevelScene(deathObj);
         Destroy(transform.parent.gameObject);
     }
 }
