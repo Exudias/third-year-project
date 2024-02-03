@@ -5,6 +5,7 @@ public class IntroTrigger : Trigger
 {
     [SerializeField] private GameObject emptyBulb;
     [SerializeField] private GameObject particle;
+    [SerializeField] private PlayerSound playerSound;
 
     public override void OnEnable()
     {
@@ -54,6 +55,7 @@ public class IntroTrigger : Trigger
         particle.SetActive(false);
         emptyBulb.SetActive(false);
         player.SetActive(true);
+        playerSound.PlayBulbSound();
     }
 
     // From easings.net

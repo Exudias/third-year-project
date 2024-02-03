@@ -99,4 +99,9 @@ public class PlayerSound : MonoBehaviour
     {
         PlaySound(walkSound, 0.1f, true);
     }
+
+    public void PlayBulbSound()
+    {
+        OnSwitchToBulb();
+    }
 }
