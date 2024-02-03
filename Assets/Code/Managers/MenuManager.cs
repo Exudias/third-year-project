@@ -8,12 +8,16 @@ public class MenuManager : MonoBehaviour
     [SerializeField] private GameObject dimmer;
     [SerializeField] private Animator screenTransition;
     [SerializeField] private MenuContext pauseContext;
+    [SerializeField] private AudioClip buttonClick;
+    [SerializeField] private AudioClip buttonMove;
+    [SerializeField] private AudioClip sliderMove;
 
     private MenuContext activeContext = null;
     private MenuButton hoveredButton = null;
     private int activeButtonIndex = 0;
 
     private InputManager input;
+    private AudioSource audioSource;
 
     private void OnEnable()
     {
@@ -38,6 +42,7 @@ public class MenuManager : MonoBehaviour
                 break;
             }
         }
+        audioSource = GetComponent<AudioSource>();
     }
 
     private void Update()
@@ -49,10 +54,12 @@ public class MenuManager : MonoBehaviour
             if (input.IsDown(KeyCode.LeftArrow) || input.IsDown(KeyCode.A))
             {
                 hoveredButton.SlideDown();
+                audioSource.PlayOneShot(sliderMove, PlayerPrefs.GetFloat("soundVolume", 1f));
             }
             else if (input.IsDown(KeyCode.RightArrow) || input.IsDown(KeyCode.D))
             {
                 hoveredButton.SlideUp();
+                audioSource.PlayOneShot(sliderMove, PlayerPrefs.GetFloat("soundVolume", 1f));
             }
         }
         else
@@ -62,12 +69,14 @@ public class MenuManager : MonoBehaviour
             if (input.IsDown(KeyCode.Return) || input.IsDown(KeyCode.Space) || input.IsDown(KeyCode.KeypadEnter))
             {
                 hoveredButton.Activate();
+                audioSource.PlayOneShot(buttonClick, PlayerPrefs.GetFloat("soundVolume", 1f));
             }
 #elif (UNITY_WEBGL)
         // Only space to press selected button on WebGL
         if (input.IsDown(KeyCode.Space))
         {
             hoveredButton.Activate();
+            audioSource.PlayOneShot(buttonClick, PlayerPrefs.GetFloat("soundVolume", 1f));
         }
 #endif
         }
@@ -83,6 +92,8 @@ public class MenuManager : MonoBehaviour
             }
             hoveredButton = activeContext.GetButtons()[activeButtonIndex];
             hoveredButton.Hover();
+            // Sounds
+            audioSource.PlayOneShot(buttonMove, PlayerPrefs.GetFloat("soundVolume", 1f));
         }
         if (input.IsDown(KeyCode.UpArrow) || input.IsDown(KeyCode.W))
         {
@@ -96,6 +107,8 @@ public class MenuManager : MonoBehaviour
             }
             hoveredButton = activeContext.GetButtons()[activeButtonIndex];
             hoveredButton.Hover();
+            // Sounds
+            audioSource.PlayOneShot(buttonMove, PlayerPrefs.GetFloat("soundVolume", 1f));
         }
     }
 
@@ -110,6 +123,7 @@ public class MenuManager : MonoBehaviour
         if (pauseContext == null || GameManager.IsLoadingScene()) return false;
         SetDimmerActive(true);
         pauseContext.Enable();
+        audioSource.PlayOneShot(buttonClick, PlayerPrefs.GetFloat("soundVolume", 1f));
         return true;
     }
 
@@ -117,6 +131,7 @@ public class MenuManager : MonoBehaviour
     {
         if (pauseContext == null) return;
         SetDimmerActive(false);
+        audioSource.PlayOneShot(buttonClick, PlayerPrefs.GetFloat("soundVolume", 1f));
         activeContext?.Disable();
     }
 
