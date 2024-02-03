@@ -115,17 +115,20 @@ public class PlayerFormSwitcher : MonoBehaviour
         OnSwitchToBulb?.Invoke();
     }
 
-    Vector3 EMPTY_BULB_SPAWN_OFFSET = new Vector2(0, 0.25f);
     private void InitSpirit()
     {
-        // offset only if off the ground, otherwise put on ground (mainly for super jump)
-        Vector3 offset = controller.collisions.bottom ? Vector3.zero : EMPTY_BULB_SPAWN_OFFSET;
-        EmptyBulbLogic emptyBulb = Instantiate(emptyBulbPrefab, transform.position + offset, Quaternion.identity).transform.GetChild(0).GetComponent<EmptyBulbLogic>();
+        EmptyBulbLogic emptyBulb = Instantiate(emptyBulbPrefab, transform.position, Quaternion.identity).transform.GetChild(0).GetComponent<EmptyBulbLogic>();
         emptyBulb.SetVelocity(controller.GetLastActualVelocity() / Time.deltaTime);
         emptyBulb.SetGravity(bulbMovement.GetGravity());
         emptyBulb.SetTerminalVelocity(bulbMovement.GetTerminalVelocity());
         emptyBulb.SetDeceleration(bulbMovement.GetDeceleration());
         emptyBulb.SetDestroyOnSolid(!controller.collisions.bottom);
+
+        // offset sprite only if off the ground, otherwise put on ground
+        Vector2 EMPTY_BULB_SPAWN_OFFSET = new Vector2(0, 0.25f);
+        Vector2 offset = controller.collisions.bottom ? Vector2.zero : EMPTY_BULB_SPAWN_OFFSET;
+        emptyBulb.SetSpriteOffset(offset);
+
         GameManager.MoveObjectToLevelScene(emptyBulb.transform.parent.gameObject);
 
         currentForm = PlayerForm.Spirit;

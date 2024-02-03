@@ -22,6 +22,7 @@ public class PlayerSound : MonoBehaviour
         BulbMovement.OnPlayerJump += OnPlayerJump;
         BulbMovement.OnPlayerWallJump += OnPlayerWallJump;
         BulbMovement.OnPlayerHitGround += OnPlayerHitGround;
+        SpiritMovement.OnSpiritHitSolid += OnSpiritHitSolid;
         PlayerFormSwitcher.OnSwitchToSpirit += OnSwitchToSpirit;
         PlayerFormSwitcher.OnSwitchToBulb += OnSwitchToBulb;
         PlayerLogic.OnPlayerDeath += OnPlayerDeath;
@@ -34,6 +35,7 @@ public class PlayerSound : MonoBehaviour
         BulbMovement.OnPlayerJump -= OnPlayerJump;
         BulbMovement.OnPlayerWallJump -= OnPlayerWallJump;
         BulbMovement.OnPlayerHitGround -= OnPlayerHitGround;
+        SpiritMovement.OnSpiritHitSolid -= OnSpiritHitSolid;
         PlayerFormSwitcher.OnSwitchToSpirit -= OnSwitchToSpirit;
         PlayerFormSwitcher.OnSwitchToBulb -= OnSwitchToBulb;
         PlayerLogic.OnPlayerDeath -= OnPlayerDeath;
@@ -41,10 +43,18 @@ public class PlayerSound : MonoBehaviour
         OptionsManager.OnSoundVolumeChanged -= OnSoundVolumeChanged;
     }
 
+    private const float TIME_BETWEEN_SPIRIT_BOUNCE = .2f;
+    private float timeSinceSpiritBounce = 0;
+
     private void Start()
     {
         audioSource = GetComponent<AudioSource>();
         audioSource.volume = PlayerPrefs.GetFloat("soundVolume", 1f);
+    }
+
+    private void Update()
+    {
+        timeSinceSpiritBounce += Time.unscaledDeltaTime;
     }
 
     private void OnSoundVolumeChanged(float newValue)
@@ -98,6 +108,15 @@ public class PlayerSound : MonoBehaviour
     private void OnPlayerFootstep()
     {
         PlaySound(walkSound, 0.1f, true);
+    }
+
+    private void OnSpiritHitSolid()
+    {
+        if (timeSinceSpiritBounce < TIME_BETWEEN_SPIRIT_BOUNCE) return;
+
+        timeSinceSpiritBounce = 0;
+
+        PlaySound(becomeSpiritSound, 0.5f, true);
     }
 
     public void PlayBulbSound()

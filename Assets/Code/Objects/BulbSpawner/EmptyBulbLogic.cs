@@ -6,6 +6,7 @@ public class EmptyBulbLogic : MonoBehaviour
     [SerializeField] private float cooldownLength = 0.5f;
     [SerializeField] private Controller2D controller;
     [SerializeField] private GameObject destroyParticles;
+    [SerializeField] private Transform visualsTransform;
 
     private float currentCooldown;
 
@@ -100,5 +101,10 @@ public class EmptyBulbLogic : MonoBehaviour
         GameObject deathObj = Instantiate(destroyParticles, transform.position, Quaternion.identity);
         GameManager.MoveObjectToLevelScene(deathObj);
         Destroy(transform.parent.gameObject);
+    }
+
+    public void SetSpriteOffset(Vector2 offset)
+    {
+        visualsTransform.localPosition = offset;
     }
 }

@@ -27,6 +27,9 @@ public class SpiritMovement : MonoBehaviour
     private PlayerLogic playerLogic;
     private InputManager input;
 
+    public delegate void SpiritEvent();
+    public static event SpiritEvent OnSpiritHitSolid;
+
     private void Start()
     {
         controller = GetComponent<Controller2D>();
@@ -98,12 +101,14 @@ public class SpiritMovement : MonoBehaviour
             directionOfMovement.y *= -1;
             timeSinceHitWall = 0;
             speedMultiplier = 0.5f;
+            OnSpiritHitSolid?.Invoke();
         }
         if (controller.collisions.left || controller.collisions.right)
         {
             directionOfMovement.x *= -1;
             timeSinceHitWall = 0;
             speedMultiplier = 0.5f;
+            OnSpiritHitSolid?.Invoke();
         }
 
         Vector2 velocity = directionOfMovement * topSpeed * speedMultiplier;
