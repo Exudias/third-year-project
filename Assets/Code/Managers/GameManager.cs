@@ -19,6 +19,9 @@ public class GameManager : MonoBehaviour
     private static float currentSceneTime;
     private static float currentSceneFrames;
 
+    public delegate void GameEvent();
+    public static event GameEvent OnGameStart;
+
     private void Start()
     {
         if (Instance == null)
@@ -195,6 +198,12 @@ public class GameManager : MonoBehaviour
             currentLevelBuildIndex = SceneManager.GetActiveScene().buildIndex;
         }
         LoadSceneByID(currentLevelBuildIndex + addID, resetSpawn);
+        // If starting from level 0, begin timer from start
+        // TODO: Check if starting from save (not yet implemented)
+        if (currentLevelBuildIndex == 0)
+        {
+            OnGameStart?.Invoke();
+        }
     }
 
     public static void LoadPreviousScene()
