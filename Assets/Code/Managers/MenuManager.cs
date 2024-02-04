@@ -127,11 +127,14 @@ public class MenuManager : MonoBehaviour
         return true;
     }
 
-    public void HidePauseMenu()
+    public void HidePauseMenu(bool playSound = false)
     {
         if (pauseContext == null) return;
         SetDimmerActive(false);
-        audioSource.PlayOneShot(buttonClick, PlayerPrefs.GetFloat("soundVolume", 1f));
+        if (playSound)
+        {
+            audioSource.PlayOneShot(buttonClick, PlayerPrefs.GetFloat("soundVolume", 1f));
+        }
         activeContext?.Disable();
     }
 

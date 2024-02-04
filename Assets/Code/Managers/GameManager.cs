@@ -50,7 +50,8 @@ public class GameManager : MonoBehaviour
         {
             if (paused)
             {
-                ResumeGame();
+                Debug.Log(Time.time);
+                ResumeGame(true);
             }
             else
             {
@@ -263,7 +264,7 @@ public class GameManager : MonoBehaviour
         paused = true;
     }
 
-    public static void ResumeGame()
+    public static void ResumeGame(bool playSound = false)
     {
         if (Camera.main != null)
         {
@@ -271,7 +272,7 @@ public class GameManager : MonoBehaviour
         }
         Time.timeScale = timeScaleBeforePause;
         paused = false;
-        MenuManager.instance.HidePauseMenu();
+        MenuManager.instance.HidePauseMenu(playSound);
     }
 
     public static bool IsGamePaused() => paused;
