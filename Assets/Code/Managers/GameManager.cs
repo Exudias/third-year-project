@@ -50,7 +50,6 @@ public class GameManager : MonoBehaviour
         {
             if (paused)
             {
-                Debug.Log(Time.time);
                 ResumeGame(true);
             }
             else
