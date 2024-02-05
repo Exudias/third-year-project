@@ -23,7 +23,8 @@ public class SpeedrunManager : MonoBehaviour
     {
         bool paused = GameManager.IsGamePaused();
         bool transitioning = GameManager.IsLoadingScene();
-        if (!paused && !transitioning)
+        bool inCutscene = GameManager.GetPlayingCutscene();
+        if (!paused && !transitioning && !inCutscene)
         {
             time += Time.unscaledDeltaTime;
         }

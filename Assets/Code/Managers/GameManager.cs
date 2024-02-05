@@ -7,6 +7,7 @@ public class GameManager : MonoBehaviour
 
     private static bool loadingScene;
     private static bool playerDead;
+    private static bool playingCutscene;
 
     public static GameManager Instance;
 
@@ -296,5 +297,11 @@ public class GameManager : MonoBehaviour
 
     public static float GetSceneTime() => currentSceneTime;
     public static float GetSceneFrames() => currentSceneFrames;
+
+    public static void SetCutscenePlaying(bool newState)
+    {
+        playingCutscene = newState;
+    }
+    public static bool GetPlayingCutscene() => playingCutscene;
 #endregion
 }

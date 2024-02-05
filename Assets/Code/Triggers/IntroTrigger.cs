@@ -30,13 +30,16 @@ public class IntroTrigger : Trigger
 
         if (!collisionIsPlayer) return;
 
-        if (GameManager.GetSceneFrames() > 60) return;
+        if (GameManager.GetSceneFrames() > 60) return; // for reentry from the right
+
+        if (SpeedrunManager.time > 0.1f) return; // for retry
 
         StartCoroutine(IntroCutscene(activator.gameObject));
     }
 
     private IEnumerator IntroCutscene(GameObject player)
     {
+        GameManager.SetCutscenePlaying(true);
         player.SetActive(false);
         emptyBulb.SetActive(true);
         yield return new WaitForSeconds(3f);
@@ -56,6 +59,7 @@ public class IntroTrigger : Trigger
         emptyBulb.SetActive(false);
         player.SetActive(true);
         playerSound.PlayBulbSound();
+        GameManager.SetCutscenePlaying(false);
     }
 
     // From easings.net

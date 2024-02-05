@@ -37,6 +37,7 @@ public class MusicManager : MonoBehaviour
     private void Update()
     {
         DoTimescaleEffects();
+        CheckForPauseSong();
     }
 
     private void InitVariables()
@@ -44,6 +45,19 @@ public class MusicManager : MonoBehaviour
         audioSource = GetComponent<AudioSource>();
         volume = PlayerPrefs.GetFloat("musicVolume", 1f);
         audioSource.volume = volume;
+    }
+
+    private void CheckForPauseSong()
+    {
+        bool isCutscenePlaying = GameManager.GetPlayingCutscene();
+        if (isCutscenePlaying && audioSource.isPlaying)
+        {
+            audioSource.Pause();
+        }
+        else if (!isCutscenePlaying && !audioSource.isPlaying)
+        {
+            audioSource.UnPause();
+        }
     }
 
     private void DoTimescaleEffects()
