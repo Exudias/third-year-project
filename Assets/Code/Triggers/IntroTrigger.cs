@@ -1,11 +1,13 @@
 using System.Collections;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class IntroTrigger : Trigger
 {
     [SerializeField] private GameObject emptyBulb;
     [SerializeField] private GameObject particle;
     [SerializeField] private PlayerSound playerSound;
+    [SerializeField] private Image flashImage;
 
     public override void OnEnable()
     {
@@ -39,14 +41,18 @@ public class IntroTrigger : Trigger
 
     private IEnumerator IntroCutscene(GameObject player)
     {
+        // Init, spawn dummy empty bulb, hide player
         GameManager.SetCutscenePlaying(true);
         player.SetActive(false);
         emptyBulb.SetActive(true);
+        // Wait 3 seconds
         yield return new WaitForSeconds(3f);
+        // Init particle
         Vector2 particleStart = particle.transform.position;
         particle.transform.right = emptyBulb.transform.position - (Vector3)particleStart;
         float timeTravelled = 0;
         const float totalTravelTime = 0.5f;
+        // Move particle towards empty bulb, with easing
         while (timeTravelled < totalTravelTime)
         {
             float t = timeTravelled / totalTravelTime;
@@ -55,10 +61,34 @@ public class IntroTrigger : Trigger
             timeTravelled += Time.deltaTime;
             yield return null;
         }
+        // When particle hits bulb, hide it, hide bulb, show player
         particle.SetActive(false);
         emptyBulb.SetActive(false);
         player.SetActive(true);
         playerSound.PlayBulbSound();
+        // Screen Flash
+        float flashTime = 0;
+        const float totalFlashTime = 0.25f;
+        float inTime = totalFlashTime / 8;
+        float outTime = totalFlashTime - inTime;
+        while (flashTime < totalFlashTime)
+        {
+            float flashAlpha;
+            if (flashTime <= inTime)
+            {
+                flashAlpha = Mathf.Lerp(0, 1, flashTime / inTime);
+            }
+            else
+            {
+                flashAlpha = Mathf.Lerp(1, 0, (flashTime - inTime) / outTime);
+            }
+            flashAlpha = EaseInSine(flashAlpha);
+            flashImage.color = new Color(flashImage.color.r, flashImage.color.g, flashImage.color.b, flashAlpha);
+            flashTime += Time.deltaTime;
+            yield return null;
+        }
+        flashImage.color = new Color(flashImage.color.r, flashImage.color.g, flashImage.color.b, 0);
+        // Update cutscene state
         GameManager.SetCutscenePlaying(false);
     }
 
