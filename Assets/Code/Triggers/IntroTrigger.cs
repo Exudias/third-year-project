@@ -1,6 +1,7 @@
 using System.Collections;
 using UnityEngine;
 using UnityEngine.UI;
+using TMPro;
 
 public class IntroTrigger : Trigger
 {
@@ -8,6 +9,8 @@ public class IntroTrigger : Trigger
     [SerializeField] private GameObject particle;
     [SerializeField] private PlayerSound playerSound;
     [SerializeField] private Image flashImage;
+    [SerializeField] private Image chapterTitleBG;
+    [SerializeField] private TextMeshProUGUI chapterTitleText;
 
     public override void OnEnable()
     {
@@ -90,6 +93,53 @@ public class IntroTrigger : Trigger
         flashImage.color = new Color(flashImage.color.r, flashImage.color.g, flashImage.color.b, 0);
         // Update cutscene state
         GameManager.SetCutscenePlaying(false);
+        // Show chapter title card
+        float titleTime = 0f;
+        const float titleMaxTime = 3f;
+        float titleInTime = titleMaxTime / 4;
+        float titleStayTime = titleMaxTime / 2;
+        float titleOutTime = titleMaxTime - titleInTime - titleStayTime;
+        while (titleTime < titleMaxTime)
+        {
+            Color bgc = chapterTitleBG.color;
+            Color tc = chapterTitleText.color;
+            if (titleTime <= titleInTime)
+            {
+                float t = titleTime / titleInTime;
+
+                bgc.a = t / 2;
+                chapterTitleBG.color = bgc;
+
+                tc.a = t;
+                chapterTitleText.color = tc;
+            }
+            else if (titleTime > titleInTime && titleTime <= titleInTime + titleStayTime)
+            {
+                bgc.a = 0.5f;
+                chapterTitleBG.color = bgc;
+
+                tc.a = 1;
+                chapterTitleText.color = tc;
+            }
+            else
+            {
+                float t = 1 - ((titleTime - titleInTime - titleStayTime) / titleOutTime);
+
+                bgc.a = t / 2;
+                chapterTitleBG.color = bgc;
+
+                tc.a = t;
+                chapterTitleText.color = tc;
+            }
+            titleTime += Time.deltaTime;
+            yield return null;
+        }
+        Color bg = chapterTitleBG.color;
+        Color text = chapterTitleText.color;
+        bg.a = 0;
+        text.a = 0;
+        chapterTitleBG.color = bg;
+        chapterTitleText.color = text;
     }
 
     // From easings.net
