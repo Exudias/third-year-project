@@ -8,6 +8,7 @@ public class DoorLogic : MonoBehaviour, IActivatable
     [SerializeField] private float openTime;
     [SerializeField] private float closeTime;
     [SerializeField] private float openDistance;
+    [SerializeField] private SpriteRenderer counterSprite;
 
     private bool active;
     private bool vertical;
@@ -41,6 +42,12 @@ public class DoorLogic : MonoBehaviour, IActivatable
     {
         CalculateOpenPercent();
         ApplyOpen();
+        UpdateVisuals();
+    }
+
+    private void UpdateVisuals()
+    {
+        counterSprite.material.SetFloat("_FillPercent", percentOpen);
     }
 
     private void ApplyOpen()
