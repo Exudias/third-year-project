@@ -563,6 +563,9 @@ MonoBehaviour:
   closeTime: 5
   openDistance: 1.9375
   counterSprite: {fileID: 5358290844390147478}
+  cableHolder: {fileID: 0}
+  cableOffColor: {r: 0, g: 0, b: 0, a: 1}
+  cableOnColor: {r: 1, g: 0.97242063, b: 0.33773577, a: 1}
 --- !u!1 &6820508984539872232
 GameObject:
   m_ObjectHideFlags: 0
