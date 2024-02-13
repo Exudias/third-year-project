@@ -1,10 +1,10 @@
 fileFormatVersion: 2
-guid: 1e466ef28d279bd449b7e7dc64248843
+guid: 0134798384757534d9a21b8711fa3ec3
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: 1052611141174894682
-    second: SliderArrow_0
+      213: -6464256177127296189
+    second: ButtonBlankOld_0
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -37,7 +37,7 @@ TextureImporter:
   maxTextureSize: 2048
   textureSettings:
     serializedVersion: 2
-    filterMode: 2
+    filterMode: 0
     aniso: 1
     mipBias: 0
     wrapU: 1
@@ -51,7 +51,7 @@ TextureImporter:
   spriteMeshType: 1
   alignment: 0
   spritePivot: {x: 0.5, y: 0.5}
-  spritePixelsToUnits: 512
+  spritePixelsToUnits: 16
   spriteBorder: {x: 0, y: 0, z: 0, w: 0}
   spriteGenerateFallbackPhysicsShape: 1
   alphaUsage: 1
@@ -126,7 +126,7 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: SliderArrow_0
+      name: ButtonBlankOld_0
       rect:
         serializedVersion: 2
         x: 0
@@ -140,8 +140,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: a5029548140ab9e00800000000000000
-      internalID: 1052611141174894682
+      spriteID: 343f33981495a46a0800000000000000
+      internalID: -6464256177127296189
       vertices: []
       indices: 
       edges: []
