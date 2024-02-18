@@ -174,8 +174,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   minTopSpeed: 8
   maxTopSpeed: 8
-  acceleration: 120
-  deceleration: 200
+  acceleration: 80
+  deceleration: 140
   airControlMult: 0.7
   maxJumpHeight: 3.25
   minJumpHeight: 0.5
@@ -183,6 +183,7 @@ MonoBehaviour:
   jumpBufferLeniency: 0.1
   coyoteJumpLeniency: 0.1
   terminalVelocity: 20
+  terminalWallVelocity: 5
   minVelocityToHitGround: 1
   wallJumpLeniency: 0.125
   wallJumpStrength: 16
@@ -260,7 +261,6 @@ MonoBehaviour:
   fromPreviousSpawnPoint: {x: 0, y: 0}
   bulbDeathObject: {fileID: 1527128465969541140, guid: b6d2f3623bf21ce4ca124d16f59e6f03, type: 3}
   spiritDeathObject: {fileID: 1527128465969541140, guid: 5610ce016d8f678499bfd077d12f6ae3, type: 3}
-  spiritDeathParticles: {fileID: 5835558953764078619, guid: 5f06c99e0484315409f01298c10fe948, type: 3}
 --- !u!114 &584288346550627785
 MonoBehaviour:
   m_ObjectHideFlags: 0
