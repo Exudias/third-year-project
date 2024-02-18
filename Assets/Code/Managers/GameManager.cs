@@ -284,6 +284,18 @@ public class GameManager : MonoBehaviour
         MenuManager.instance.HidePauseMenu(playSound);
     }
 
+    void OnApplicationFocus(bool hasFocus)
+    {
+        if (hasFocus) return;
+
+        bool pauseLocked = currentSceneTime < PAUSE_LOCKOUT_TIME || playerDead;
+        if (pauseLocked) return;
+
+        if (paused) return;
+
+        PauseGame();
+    }
+
     public static bool IsGamePaused() => paused;
 
     public static bool IsLoadingScene() => loadingScene;
