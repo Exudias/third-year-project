@@ -8,6 +8,6 @@ public class SliderButton : MonoBehaviour
 
     public void UpdateDisplayFloatAsPercentage(float toDisplay)
     {
-        text.text = variableDisplayName + ":\n" + toDisplay + "%";
+        text.text = variableDisplayName + "\n" + toDisplay + "%";
     }
 }

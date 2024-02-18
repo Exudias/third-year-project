@@ -174,8 +174,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   minTopSpeed: 8
   maxTopSpeed: 8
-  acceleration: 80
-  deceleration: 140
+  acceleration: 120
+  deceleration: 200
   airControlMult: 0.7
   maxJumpHeight: 3.25
   minJumpHeight: 0.5
