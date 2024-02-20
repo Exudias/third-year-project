@@ -8,6 +8,7 @@ public class EmptyBulbLogic : MonoBehaviour
     [SerializeField] private GameObject destroyParticles;
     [SerializeField] private Transform visualsTransform;
     [SerializeField] private AudioClip breakSound;
+    [SerializeField] private SoundEmitterLogic soundEmitter;
 
     private float currentCooldown;
 
@@ -99,9 +100,14 @@ public class EmptyBulbLogic : MonoBehaviour
 
     public void DestroySelf()
     {
+        // Visuals
         GameObject deathObj = Instantiate(destroyParticles, transform.position, Quaternion.identity);
         GameManager.MoveObjectToLevelScene(deathObj);
-        AudioSource.PlayClipAtPoint(breakSound, transform.position, PlayerPrefs.GetFloat("soundVolume", 1f));
+        // Sound
+        SoundEmitterLogic emitterObj = Instantiate(soundEmitter, transform.position, Quaternion.identity);
+        emitterObj.PlaySound(breakSound, 1f);
+        GameManager.MoveObjectToLevelScene(emitterObj.gameObject);
+        // Destroy actual bulb
         Destroy(transform.parent.gameObject);
     }
 
