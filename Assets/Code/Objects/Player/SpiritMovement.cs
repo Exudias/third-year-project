@@ -26,6 +26,7 @@ public class SpiritMovement : MonoBehaviour
     private EnergyManager energyManager;
     private PlayerLogic playerLogic;
     private InputManager input;
+    private PlayerFormSwitcher switcher;
 
     public delegate void SpiritEvent();
     public static event SpiritEvent OnSpiritHitSolid;
@@ -35,6 +36,7 @@ public class SpiritMovement : MonoBehaviour
         controller = GetComponent<Controller2D>();
         energyManager = GetComponent<EnergyManager>();
         playerLogic = GetComponent<PlayerLogic>();
+        switcher = GetComponent<PlayerFormSwitcher>();
         input = InputManager.instance;
 
         if (directionOfMovement == Vector2.zero)
@@ -42,7 +44,10 @@ public class SpiritMovement : MonoBehaviour
             directionOfMovement = Vector2.right;
         }
 
-        lastDirection = Vector2.right;
+        if (lastDirection == Vector2.zero)
+        {
+            lastDirection = Vector2.right;
+        }
         timeSinceHitWall = Mathf.Infinity;
 
         speedNormalizationStep = 1 / speedNormalizationTime;
@@ -55,7 +60,12 @@ public class SpiritMovement : MonoBehaviour
         float verticalInput = input.GetVerticalRaw();
 
         Vector2 desiredDirection = new Vector2(horizontalInput, verticalInput).normalized;
-            
+        if (desiredDirection == Vector2.zero)
+        {
+            if (switcher == null) switcher = GetComponent<PlayerFormSwitcher>();
+            desiredDirection = switcher.GetLastHorizontalVelocity();
+        }
+
         directionOfMovement = desiredDirection;
         lastDirection = directionOfMovement;
 

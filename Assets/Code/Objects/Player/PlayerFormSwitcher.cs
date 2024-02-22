@@ -50,9 +50,22 @@ public class PlayerFormSwitcher : MonoBehaviour
         }
     }
 
+    private Vector2 lastHorizontalDirection = Vector2.right;
+
     private void Update()
     {
         if (GameManager.IsPlayerDead()) return;
+
+        // Update last dir
+        float horizontalInput = input.GetHorizontalRaw();
+        float verticalInput = input.GetVerticalRaw();
+
+        Vector2 desiredDirection = new Vector2(horizontalInput, verticalInput).normalized;
+        if (desiredDirection.x != 0)
+        {
+            lastHorizontalDirection = Vector2.right * desiredDirection.x;
+        }
+
         // go spirit from bulb, but to return you must collide with a bulb, so no on-demand
         bool pressedTransform = input.IsDown(KeyCode.LeftShift) || input.IsDown(KeyCode.RightShift);
         if (canTransformToSpirit)
@@ -145,6 +158,8 @@ public class PlayerFormSwitcher : MonoBehaviour
         Camera.main.GetComponent<CameraManager>().ActivateSpiritCamera();
         OnSwitchToSpirit?.Invoke();
     }
+
+    public Vector2 GetLastHorizontalVelocity() => lastHorizontalDirection;
 
     public void SetCanTransform(bool newVal)
     {
