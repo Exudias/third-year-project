@@ -21,11 +21,22 @@ public class EmptyBulbLogic : MonoBehaviour
     private void OnEnable()
     {
         Controller2D.OnCollision += OnControllerCollide;
+        Controller2D.OnOtherCollision += OnControllerCollideOther;
     }
 
     private void OnDisable()
     {
         Controller2D.OnCollision -= OnControllerCollide;
+        Controller2D.OnOtherCollision -= OnControllerCollideOther;
+    }
+
+    private void OnControllerCollideOther(Controller2D source, Vector2 dir, GameObject other)
+    {
+        if (source != controller) return;
+        if (other.GetComponent<ButtonTrigger>() != null)
+        {
+            other.GetComponent<ButtonTrigger>().Activate(transform.parent.GetComponent<Collider2D>());
+        }
     }
 
     private void OnControllerCollide(Controller2D source, Vector2 dir)

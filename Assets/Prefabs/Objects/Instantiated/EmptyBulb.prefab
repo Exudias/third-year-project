@@ -103,7 +103,7 @@ MonoBehaviour:
     m_Bits: 0
   otherMask:
     serializedVersion: 2
-    m_Bits: 0
+    m_Bits: 1024
   collisionLeniencyStep: 0.0625
   collisionLeniencyIterations: 2
 --- !u!1 &4977868977471088345

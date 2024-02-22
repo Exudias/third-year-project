@@ -5,6 +5,9 @@ public class ButtonTrigger : Trigger
     [SerializeField] private ButtonVisualsManager buttonVisuals;
     [SerializeField] private ButtonLogic buttonLogic;
 
+    private int pressing = 0;
+    private int lastPressing = 0;
+
     public override void OnEnable()
     {
         base.OnEnable();
@@ -26,13 +29,30 @@ public class ButtonTrigger : Trigger
 
     private void OnButtonPressed(Collider2D activator)
     {
-        buttonVisuals.OnButtonPressed();
-        buttonLogic.OnButtonPressed();
+        pressing++;
     }
 
     private void OnButtonUnpressed(Collider2D activator)
     {
-        buttonVisuals.OnButtonUnpressed();
-        buttonLogic.OnButtonUnpressed();
+        pressing--;
+    }
+
+    private void Update()
+    {
+        if (lastPressing != pressing)
+        {
+            if (lastPressing == 0)
+            {
+                buttonVisuals.OnButtonPressed();
+                buttonLogic.OnButtonPressed();
+            }
+            else if (pressing == 0)
+            {
+                buttonVisuals.OnButtonUnpressed();
+                buttonLogic.OnButtonUnpressed();
+            }
+            lastPressing = pressing;
+        }
+        //Debug.Log(lastPressing + "<- Last | Current ->" + pressing);
     }
 }

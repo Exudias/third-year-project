@@ -41,6 +41,24 @@ public class Trigger : MonoBehaviour
     {
         Collider2D activator = controller.GetCurrentCollider();
         if (activator == null) return;
+
+        // CLEAN MISSING THINGS
+        List<Collider2D> staticInLastFrame = new List<Collider2D>();
+
+        inLastFrame.ForEach((item) =>
+        {
+            staticInLastFrame.Add(item);
+        });
+
+        foreach (Collider2D coll in staticInLastFrame)
+        {
+            if (coll == null)
+            {
+                OnTriggerExit?.Invoke(coll);
+                inLastFrame.Remove(coll);
+            }
+        }
+
         if (!inLastFrame.Contains(activator) && inThisFrame.Contains(activator))
         {
             OnTriggerEnter?.Invoke(activator);
