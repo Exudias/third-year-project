@@ -122,7 +122,7 @@ public class GameManager : MonoBehaviour
         return -1;
     }
 
-    private static Scene GetCurrentLevel()
+    public static Scene GetCurrentLevel()
     {
         for (int i = 0; i < SceneManager.sceneCount; i++)
         {
