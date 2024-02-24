@@ -48,7 +48,7 @@ public class LevelNameLogic : MonoBehaviour
         string[] parts = sceneName.Split("_");
 
         string stage = parts[1];
-        string level = parts[2];
+        string level = int.Parse(parts[2]).ToString();
 
         return stage + " - " + level;
     }
