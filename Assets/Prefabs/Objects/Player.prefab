@@ -535,9 +535,9 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1524126410840315839}
+  - component: {fileID: 2487319561339568246}
   - component: {fileID: 1553633064910203611}
   - component: {fileID: 3598630173020043650}
-  - component: {fileID: 2487319561339568246}
   - component: {fileID: 3317444485050460958}
   m_Layer: 0
   m_Name: PlayerVisuals
@@ -561,6 +561,37 @@ Transform:
   m_Children: []
   m_Father: {fileID: 9154736288115353201}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &2487319561339568246
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7667418138490284168}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bb9a01377f4c5cb439d4147618654a29, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  formSwitcher: {fileID: 1105467402819965738}
+  controller: {fileID: 4046459696820276540}
+  energyManager: {fileID: 7328808871941551571}
+  sound: {fileID: 3555957205967308142}
+  bulbSpriteOffset: {x: 0, y: -0.5}
+  spiritSpriteOffset: {x: 0, y: 0}
+  bulbMaterial: {fileID: 2100000, guid: 4a3ebc4f01e6a924e83fb1e97f3dbe45, type: 2}
+  spiritMaterial: {fileID: 2100000, guid: 9769f203c379cca43a6ca21d4cd71f99, type: 2}
+  bulbIdleForward: {fileID: 7400000, guid: f352edc67ebdb4d45a175ff01e367386, type: 2}
+  bulbWalk: {fileID: 7400000, guid: 349a73b67351db842a51e7bfe5efd57c, type: 2}
+  bulbJumpForward: {fileID: 7400000, guid: f1ff4dfb7fac9934daf4d27f8fb4bd8e, type: 2}
+  bulbFallForward: {fileID: 7400000, guid: 0ff47e0bc640e734886df854d27a896c, type: 2}
+  bulbJumpSide: {fileID: 7400000, guid: 933db060bc6c9c94d940536629544528, type: 2}
+  bulbFallSide: {fileID: 7400000, guid: ab03894c4032b9546a09df71ff4d0717, type: 2}
+  bulbWallCling: {fileID: 7400000, guid: 4e3eaf1098d7a8f4ebef942a65160af9, type: 2}
+  spiritMove: {fileID: 7400000, guid: 423f6384845c5f04fb3165c8b457bfd2, type: 2}
+  landParticles: {fileID: 1001292467031290362, guid: 1e6046e808c0f2048b31be47cf7d5163, type: 3}
+  jumpParticles: {fileID: 1412736590407067221, guid: c8a8f4b46dd13f640ac35dc598cd5903, type: 3}
+  scaleResetTime: 1.75
 --- !u!212 &1553633064910203611
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -637,35 +668,6 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
---- !u!114 &2487319561339568246
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7667418138490284168}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: bb9a01377f4c5cb439d4147618654a29, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  formSwitcher: {fileID: 1105467402819965738}
-  controller: {fileID: 4046459696820276540}
-  energyManager: {fileID: 7328808871941551571}
-  sound: {fileID: 3555957205967308142}
-  bulbSpriteOffset: {x: 0, y: -0.5}
-  spiritSpriteOffset: {x: 0, y: 0}
-  bulbMaterial: {fileID: 2100000, guid: 4a3ebc4f01e6a924e83fb1e97f3dbe45, type: 2}
-  spiritMaterial: {fileID: 2100000, guid: 9769f203c379cca43a6ca21d4cd71f99, type: 2}
-  bulbIdleForward: {fileID: 7400000, guid: f352edc67ebdb4d45a175ff01e367386, type: 2}
-  bulbWalk: {fileID: 7400000, guid: 349a73b67351db842a51e7bfe5efd57c, type: 2}
-  bulbJumpForward: {fileID: 7400000, guid: f1ff4dfb7fac9934daf4d27f8fb4bd8e, type: 2}
-  bulbFallForward: {fileID: 7400000, guid: 0ff47e0bc640e734886df854d27a896c, type: 2}
-  bulbJumpSide: {fileID: 7400000, guid: 933db060bc6c9c94d940536629544528, type: 2}
-  bulbFallSide: {fileID: 7400000, guid: ab03894c4032b9546a09df71ff4d0717, type: 2}
-  bulbWallCling: {fileID: 7400000, guid: 4e3eaf1098d7a8f4ebef942a65160af9, type: 2}
-  spiritMove: {fileID: 7400000, guid: 423f6384845c5f04fb3165c8b457bfd2, type: 2}
-  scaleResetTime: 1.75
 --- !u!96 &3317444485050460958
 TrailRenderer:
   serializedVersion: 3

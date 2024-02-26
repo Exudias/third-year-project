@@ -4,17 +4,18 @@ using UnityEngine;
 [RequireComponent(typeof(Animator))]
 public class PlayerVisualsManager : MonoBehaviour
 {
+    [Header("References")]
     [SerializeField] private PlayerFormSwitcher formSwitcher;
     [SerializeField] private Controller2D controller;
     [SerializeField] private EnergyManager energyManager;
     [SerializeField] private PlayerSound sound;
-
+    [Header("Sprite Offsets")]
     [SerializeField] private Vector2 bulbSpriteOffset = new Vector3(0f, -0.5f, 0f);
     [SerializeField] private Vector2 spiritSpriteOffset = new Vector3(0f, 0f, 0f);
-
+    [Header("Materials")]
     [SerializeField] private Material bulbMaterial;
     [SerializeField] private Material spiritMaterial;
-
+    [Header("Animations")]
     [SerializeField] private AnimationClip bulbIdleForward;
     [SerializeField] private AnimationClip bulbWalk;
     [SerializeField] private AnimationClip bulbJumpForward;
@@ -23,6 +24,9 @@ public class PlayerVisualsManager : MonoBehaviour
     [SerializeField] private AnimationClip bulbFallSide;
     [SerializeField] private AnimationClip bulbWallCling;
     [SerializeField] private AnimationClip spiritMove;
+    [Header("Particles")]
+    [SerializeField] private ParticleSystem landParticles;
+    [SerializeField] private ParticleSystem jumpParticles;
 
     private SpriteRenderer spriteRenderer;
     private Animator animator;
@@ -54,11 +58,13 @@ public class PlayerVisualsManager : MonoBehaviour
     private void OnPlayerJump()
     {
         transform.localScale = new Vector3(X_STRETCH_AFTER_JUMP, Y_STRETCH_AFTER_JUMP, transform.localScale.z);
+        Instantiate(jumpParticles, transform.position, Quaternion.identity);
     }
 
     private void OnPlayerWallJump()
     {
         transform.localScale = new Vector3(X_STRETCH_AFTER_JUMP, Y_STRETCH_AFTER_JUMP, transform.localScale.z);
+        Instantiate(jumpParticles, transform.position, Quaternion.Euler(0, 0, 90));
     }
 
     const float SCALE_AFTER_SPIRIT = 0.2f;
@@ -72,6 +78,7 @@ public class PlayerVisualsManager : MonoBehaviour
     private void OnPlayerHitGround()
     {
         transform.localScale = new Vector3(X_STRETCH_AFTER_FALL, Y_STRETCH_AFTER_FALL, transform.localScale.z);
+        Instantiate(landParticles, transform.position, Quaternion.identity);
     }
 
     private void Start()
@@ -176,6 +183,7 @@ public class PlayerVisualsManager : MonoBehaviour
         }
     }
 
+    [Header("Misc. Parameters")]
     [SerializeField] private float scaleResetTime = 1.75f;
 
     private void NormalizeScale()
