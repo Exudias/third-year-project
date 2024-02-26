@@ -44,6 +44,7 @@ public class PlayerVisualsManager : MonoBehaviour
         BulbMovement.OnPlayerJump += OnPlayerJump;
         BulbMovement.OnPlayerWallJump += OnPlayerWallJump;
         BulbMovement.OnPlayerHitGround += OnPlayerHitGround;
+        SpiritMovement.OnSpiritHitSolid += OnSpiritHitSolid;
         PlayerFormSwitcher.OnSwitchToSpirit += OnSwitchToSpirit;
         PlayerFormSwitcher.OnSwitchToBulb += OnSwitchToBulb;
     }
@@ -53,6 +54,7 @@ public class PlayerVisualsManager : MonoBehaviour
         BulbMovement.OnPlayerJump -= OnPlayerJump;
         BulbMovement.OnPlayerWallJump -= OnPlayerWallJump;
         BulbMovement.OnPlayerHitGround -= OnPlayerHitGround;
+        SpiritMovement.OnSpiritHitSolid -= OnSpiritHitSolid;
         PlayerFormSwitcher.OnSwitchToSpirit -= OnSwitchToSpirit;
         PlayerFormSwitcher.OnSwitchToBulb -= OnSwitchToBulb;
     }
@@ -90,6 +92,12 @@ public class PlayerVisualsManager : MonoBehaviour
     {
         transform.localScale = new Vector3(X_STRETCH_AFTER_FALL, Y_STRETCH_AFTER_FALL, transform.localScale.z);
         Instantiate(landParticles, transform.position, Quaternion.identity);
+    }
+
+    const float SPIRIT_STRETCH_ON_HIT = 0.6f;
+    private void OnSpiritHitSolid()
+    {
+        transform.localScale = new Vector3(SPIRIT_STRETCH_ON_HIT, SPIRIT_STRETCH_ON_HIT, transform.localScale.z);
     }
 
     private void Start()
