@@ -221,9 +221,13 @@ public class GameManager : MonoBehaviour
 
     const string MAIN_MENU_SCENE_NAME = "MAIN_MENU";
 
-    public static void LoadMenu()
+    public async static void LoadMenu()
     {
         ResumeGame();
+
+        float transitionTime = MenuManager.instance.PlayTransitionOut();
+        await Awaitable.WaitForSecondsAsync(transitionTime);
+
         currentSceneTime = 0;
         currentSceneFrames = 0;
         SceneManager.LoadScene(MAIN_MENU_SCENE_NAME);

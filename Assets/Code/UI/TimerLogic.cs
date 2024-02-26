@@ -41,7 +41,7 @@ public class TimerLogic : MonoBehaviour
         rectTransform.anchoredPosition = new Vector3(timerDisplacementX, -timerDisplacementY, 0);
     }
 
-    private string TimeToString(float time)
+    public static string TimeToString(float time)
     {
         int minutes = Mathf.FloorToInt(time / 60);
         int seconds = Mathf.FloorToInt(time - minutes * 60);
