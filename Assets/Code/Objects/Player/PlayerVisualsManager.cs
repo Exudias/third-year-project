@@ -24,6 +24,8 @@ public class PlayerVisualsManager : MonoBehaviour
     [SerializeField] private AnimationClip bulbFallSide;
     [SerializeField] private AnimationClip bulbWallCling;
     [SerializeField] private AnimationClip spiritMove;
+    [Header("Active Particles")]
+    [SerializeField] private ParticleSystem spiritTrailParticles;
     [Header("Particles")]
     [SerializeField] private ParticleSystem landParticles;
     [SerializeField] private ParticleSystem jumpParticles;
@@ -45,8 +47,14 @@ public class PlayerVisualsManager : MonoBehaviour
         BulbMovement.OnPlayerWallJump += OnPlayerWallJump;
         BulbMovement.OnPlayerHitGround += OnPlayerHitGround;
         SpiritMovement.OnSpiritHitSolid += OnSpiritHitSolid;
+
         PlayerFormSwitcher.OnSwitchToSpirit += OnSwitchToSpirit;
         PlayerFormSwitcher.OnSwitchToBulb += OnSwitchToBulb;
+
+        PlayerFormSwitcher.OnInitAsBulb += OnActivateBulb;
+        PlayerFormSwitcher.OnSwitchToBulb += OnActivateBulb;
+        PlayerFormSwitcher.OnInitAsSpirit += OnActivateSpirit;
+        PlayerFormSwitcher.OnSwitchToSpirit += OnActivateSpirit;
     }
 
     private void OnDisable()
@@ -55,8 +63,24 @@ public class PlayerVisualsManager : MonoBehaviour
         BulbMovement.OnPlayerWallJump -= OnPlayerWallJump;
         BulbMovement.OnPlayerHitGround -= OnPlayerHitGround;
         SpiritMovement.OnSpiritHitSolid -= OnSpiritHitSolid;
+
         PlayerFormSwitcher.OnSwitchToSpirit -= OnSwitchToSpirit;
         PlayerFormSwitcher.OnSwitchToBulb -= OnSwitchToBulb;
+
+        PlayerFormSwitcher.OnInitAsBulb -= OnActivateBulb;
+        PlayerFormSwitcher.OnSwitchToBulb -= OnActivateBulb;
+        PlayerFormSwitcher.OnInitAsSpirit -= OnActivateSpirit;
+        PlayerFormSwitcher.OnSwitchToSpirit -= OnActivateSpirit;
+    }
+
+    private void OnActivateBulb()
+    {
+        spiritTrailParticles.Stop();   
+    }
+
+    private void OnActivateSpirit()
+    {
+        spiritTrailParticles.Play();
     }
 
     const float X_STRETCH_AFTER_JUMP = 0.6f;
