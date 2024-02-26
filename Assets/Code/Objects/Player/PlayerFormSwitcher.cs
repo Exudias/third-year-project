@@ -104,6 +104,7 @@ public class PlayerFormSwitcher : MonoBehaviour
     {
         InitBulb();
         controller.MoveImmediate(bulbPosition);
+        OnSwitchToBulb?.Invoke();
     }
 
     public PlayerForm GetCurrentForm()
@@ -125,7 +126,6 @@ public class PlayerFormSwitcher : MonoBehaviour
         controller.UpdateCollider();
 
         Camera.main.GetComponent<CameraManager>().ActivateBulbCamera();
-        OnSwitchToBulb?.Invoke();
     }
 
     private void InitSpirit()

@@ -27,6 +27,8 @@ public class PlayerVisualsManager : MonoBehaviour
     [Header("Particles")]
     [SerializeField] private ParticleSystem landParticles;
     [SerializeField] private ParticleSystem jumpParticles;
+    [SerializeField] private ParticleSystem spiritStartParticles;
+    [SerializeField] private ParticleSystem bulbStartParticles;
 
     private SpriteRenderer spriteRenderer;
     private Animator animator;
@@ -43,6 +45,7 @@ public class PlayerVisualsManager : MonoBehaviour
         BulbMovement.OnPlayerWallJump += OnPlayerWallJump;
         BulbMovement.OnPlayerHitGround += OnPlayerHitGround;
         PlayerFormSwitcher.OnSwitchToSpirit += OnSwitchToSpirit;
+        PlayerFormSwitcher.OnSwitchToBulb += OnSwitchToBulb;
     }
 
     private void OnDisable()
@@ -51,6 +54,7 @@ public class PlayerVisualsManager : MonoBehaviour
         BulbMovement.OnPlayerWallJump -= OnPlayerWallJump;
         BulbMovement.OnPlayerHitGround -= OnPlayerHitGround;
         PlayerFormSwitcher.OnSwitchToSpirit -= OnSwitchToSpirit;
+        PlayerFormSwitcher.OnSwitchToBulb -= OnSwitchToBulb;
     }
 
     const float X_STRETCH_AFTER_JUMP = 0.6f;
@@ -71,6 +75,13 @@ public class PlayerVisualsManager : MonoBehaviour
     private void OnSwitchToSpirit()
     {
         transform.localScale = new Vector3(SCALE_AFTER_SPIRIT, SCALE_AFTER_SPIRIT, transform.localScale.z);
+        Instantiate(spiritStartParticles, transform.position, Quaternion.identity);
+    }
+
+    Vector3 BULB_START_OFFSET = new Vector2(0, 0.5f);
+    private void OnSwitchToBulb()
+    {
+        Instantiate(bulbStartParticles, transform.position + BULB_START_OFFSET, Quaternion.identity);
     }
 
     const float X_STRETCH_AFTER_FALL = 1.4f;

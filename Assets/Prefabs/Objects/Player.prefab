@@ -591,6 +591,8 @@ MonoBehaviour:
   spiritMove: {fileID: 7400000, guid: 423f6384845c5f04fb3165c8b457bfd2, type: 2}
   landParticles: {fileID: 1001292467031290362, guid: 1e6046e808c0f2048b31be47cf7d5163, type: 3}
   jumpParticles: {fileID: 1412736590407067221, guid: c8a8f4b46dd13f640ac35dc598cd5903, type: 3}
+  spiritStartParticles: {fileID: 72001493581009879, guid: 2aac68351ebe55e49be9ce57a8b3d982, type: 3}
+  bulbStartParticles: {fileID: 745092737483783535, guid: 9e9d4b78886da244f967c7bee965fb8d, type: 3}
   scaleResetTime: 1.75
 --- !u!212 &1553633064910203611
 SpriteRenderer:
