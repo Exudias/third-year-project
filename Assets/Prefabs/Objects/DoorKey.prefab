@@ -97,6 +97,7 @@ GameObject:
   - component: {fileID: 159159947274626502}
   - component: {fileID: 2591861905114604508}
   - component: {fileID: 593605062615503996}
+  - component: {fileID: 1293824159444291802}
   m_Layer: 9
   m_Name: DoorKey
   m_TagString: Untagged
@@ -179,3 +180,25 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   visuals: {fileID: 3183390079739645427}
+--- !u!95 &1293824159444291802
+Animator:
+  serializedVersion: 7
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6575806725922816072}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 2f2406d3ef9ed10419c3a436fef5348d, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 2
+  m_ApplyRootMotion: 1
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_AnimatePhysics: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0
