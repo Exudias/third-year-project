@@ -38,6 +38,9 @@ public class BulbMovement : MonoBehaviour
     private float timeSinceWallJump;
     private float timeSinceSuperJumpTransformation;
 
+    private Vector2 externalVelocity;
+    private bool externalUpdatedThisFrame;
+
     private Controller2D controller;
     private EnergyManager energyManager;
     private InputManager input;
@@ -68,6 +71,8 @@ public class BulbMovement : MonoBehaviour
         timeSinceSuperJumpTransformation = Mathf.Infinity;
 
         velocity = Vector2.zero;
+        externalVelocity = Vector2.zero;
+        externalUpdatedThisFrame = false;
 
         if (controller != null)
         {
@@ -170,6 +175,11 @@ public class BulbMovement : MonoBehaviour
         }
 
         velocity.x = Mathf.MoveTowards(velocity.x, targetVelocityX, accelToUse * Time.deltaTime);
+        if (!externalUpdatedThisFrame)
+        {
+            externalVelocity.x = Mathf.MoveTowards(externalVelocity.x, 0, deceleration * Time.deltaTime / 3);
+            externalVelocity.y = Mathf.MoveTowards(externalVelocity.y, 0, deceleration * Time.deltaTime / 3);
+        }
 
         bool huggingWall = controller.collisions.left || controller.collisions.right;
 
@@ -181,7 +191,15 @@ public class BulbMovement : MonoBehaviour
 
         velocity.y = Mathf.Clamp(velocity.y + gravityStep, terminalVelocityToUse, Mathf.Infinity);
 
-        controller.Move(velocity * Time.deltaTime);
+        controller.Move((velocity + externalVelocity) * Time.deltaTime);
+
+        externalUpdatedThisFrame = false;
+    }
+
+    public void SetExternalVelocity(Vector2 newValue)
+    {
+        externalVelocity = newValue;
+        externalUpdatedThisFrame = true;
     }
 
     private void Jump()

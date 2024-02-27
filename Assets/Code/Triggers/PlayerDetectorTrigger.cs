@@ -28,11 +28,15 @@ public class PlayerDetectorTrigger : Trigger
 
     private void OnEnter(Collider2D activator)
     {
+        bool collisionIsPlayer = activator.gameObject.GetComponent<PlayerLogic>() != null;
+        if (!collisionIsPlayer) return;
         playerInside = true;
     }
 
     private void OnExit(Collider2D activator)
     {
+        bool collisionIsPlayer = activator.gameObject.GetComponent<PlayerLogic>() != null;
+        if (!collisionIsPlayer) return;
         playerInside = false;
     }
 }
