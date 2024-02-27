@@ -83,10 +83,8 @@ public class PlayerLogic : MonoBehaviour
         else
         {
             DirectionalKiller directionalKiller = killer.GetComponent<DirectionalKiller>();
-            Debug.Log(dir);
             if (directionalKiller.ShouldKill(dir))
             {
-                Debug.Log("MYEAH");
                 if (killer.GetComponent<FormKiller>() != null)
                 {
                     bool shouldKillForm = formSwitcher != null && formSwitcher.GetCurrentForm() == killer.GetComponent<FormKiller>().GetForm();

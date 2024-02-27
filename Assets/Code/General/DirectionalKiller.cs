@@ -12,6 +12,11 @@ public class DirectionalKiller : MonoBehaviour
 
     public bool ShouldKill(Vector2 collisionDirection)
     {
+        if (collisionDirection == Vector2.zero)
+        {
+            return false;
+        }
+
         float dangerRotation = transform.rotation.eulerAngles.z;
 
         // Yes it could be smaller, but would it be readable?

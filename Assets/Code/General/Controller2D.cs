@@ -140,11 +140,8 @@ public class Controller2D : MonoBehaviour
     {
         Bounds bounds = GetStaticCheckBounds();
 
-        const float STATIC_SKIN_INSET = 0.1f;
-        Vector3 minPoint = bounds.min + Vector3.one * STATIC_SKIN_INSET;
-        Vector3 maxPoint = bounds.max - Vector3.one * STATIC_SKIN_INSET;
-        Collider2D[] deathColls = Physics2D.OverlapAreaAll(minPoint, maxPoint, deathMask);
-        Collider2D[] otherColls = Physics2D.OverlapAreaAll(minPoint, maxPoint, otherMask);
+        Collider2D[] deathColls = Physics2D.OverlapAreaAll(bounds.min, bounds.max, deathMask);
+        Collider2D[] otherColls = Physics2D.OverlapAreaAll(bounds.min, bounds.max, otherMask);
 
         foreach(Collider2D deathColl in deathColls)
         {
