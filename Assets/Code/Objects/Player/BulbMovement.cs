@@ -39,8 +39,7 @@ public class BulbMovement : MonoBehaviour
     private float timeSinceSuperJumpTransformation;
 
     private Vector2 spiritLastDirection;
-    private Vector2 externalVelocity;
-    private bool externalUpdatedThisFrame;
+    private float externalHorizontalVelocity;
 
     private Controller2D controller;
     private EnergyManager energyManager;
@@ -80,8 +79,7 @@ public class BulbMovement : MonoBehaviour
         timeSinceSuperJumpTransformation = Mathf.Infinity;
 
         velocity = Vector2.zero;
-        externalVelocity = Vector2.zero;
-        externalUpdatedThisFrame = false;
+        externalHorizontalVelocity = 0;
 
         if (controller != null)
         {
@@ -183,12 +181,28 @@ public class BulbMovement : MonoBehaviour
             accelToUse = 0;
         }
 
-        velocity.x = Mathf.MoveTowards(velocity.x, targetVelocityX, accelToUse * Time.deltaTime);
-        if (!externalUpdatedThisFrame)
+        float xMax = targetVelocityX + externalHorizontalVelocity;
+        bool hasExternalForce = externalHorizontalVelocity != 0;
+        bool externalWithUs = targetVelocityX * externalHorizontalVelocity > 0;
+        if (hasExternalForce && externalWithUs)
         {
-            externalVelocity.x = Mathf.MoveTowards(externalVelocity.x, 0, deceleration * Time.deltaTime / 3);
-            externalVelocity.y = Mathf.MoveTowards(externalVelocity.y, 0, deceleration * Time.deltaTime / 3);
+            accelToUse *= xMax / targetVelocityX;
         }
+        bool fasterThanCap = Mathf.Abs(velocity.x) > Mathf.Abs(targetVelocityX);
+        bool movingWithCap = velocity.x * targetVelocityX > 0;
+        if (!hasExternalForce && fasterThanCap)
+        {
+            if (movingWithCap)
+            {
+                accelToUse *= .2f;
+            }
+            else
+            {
+                accelToUse *= 5f;
+            }
+        }
+
+        velocity.x = Mathf.MoveTowards(velocity.x, xMax, accelToUse * Time.deltaTime);
 
         bool huggingWall = controller.collisions.left || controller.collisions.right;
 
@@ -200,15 +214,12 @@ public class BulbMovement : MonoBehaviour
 
         velocity.y = Mathf.Clamp(velocity.y + gravityStep, terminalVelocityToUse, Mathf.Infinity);
 
-        controller.Move((velocity + externalVelocity) * Time.deltaTime);
-
-        externalUpdatedThisFrame = false;
+        controller.Move(velocity * Time.deltaTime);
     }
 
-    public void SetExternalVelocity(Vector2 newValue)
+    public void SetExternalVelocity(float newValue)
     {
-        externalVelocity = newValue;
-        externalUpdatedThisFrame = true;
+        externalHorizontalVelocity = newValue;
     }
 
     private void Jump()
