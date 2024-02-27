@@ -127,4 +127,6 @@ public class SpiritMovement : MonoBehaviour
 
         lastDirection = directionOfMovement;
     }
+
+    public Vector2 GetMovementDir() => directionOfMovement;
 }

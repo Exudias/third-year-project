@@ -38,12 +38,14 @@ public class BulbMovement : MonoBehaviour
     private float timeSinceWallJump;
     private float timeSinceSuperJumpTransformation;
 
+    private Vector2 spiritLastDirection;
     private Vector2 externalVelocity;
     private bool externalUpdatedThisFrame;
 
     private Controller2D controller;
     private EnergyManager energyManager;
     private InputManager input;
+    private SpiritMovement spiritMovement;
 
     public delegate void JumpEvent();
     public delegate void FallEvent();
@@ -66,6 +68,13 @@ public class BulbMovement : MonoBehaviour
     // Used when switching from spirit to reset to initial state
     private void ResetForFreshBulb()
     {
+        if (spiritMovement == null)
+        {
+            spiritMovement = GetComponent<SpiritMovement>();
+        }
+
+        spiritLastDirection = spiritMovement.GetMovementDir();
+
         coyoteTime = Mathf.Infinity;
         timeSinceWallJump = Mathf.Infinity;
         timeSinceSuperJumpTransformation = Mathf.Infinity;
@@ -214,7 +223,9 @@ public class BulbMovement : MonoBehaviour
 
         if (jumpShouldBeSuper)
         {
-            velocity.x = Mathf.Sign(velocity.x) * horizontalSuperJumpBoost;
+            // Jump in direction of input at time of jump, or if no input - direction of last spirit's velocity
+            float superDirection = input.GetHorizontalRaw() == 0 ? Mathf.Sign(spiritLastDirection.x) : Mathf.Sign(input.GetHorizontalRaw());
+            velocity.x = superDirection * horizontalSuperJumpBoost;
         }
     }
 
