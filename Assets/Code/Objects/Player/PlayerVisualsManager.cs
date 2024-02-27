@@ -24,6 +24,8 @@ public class PlayerVisualsManager : MonoBehaviour
     [SerializeField] private AnimationClip bulbFallSide;
     [SerializeField] private AnimationClip bulbWallCling;
     [SerializeField] private AnimationClip spiritMove;
+    [Header("Effects")]
+    [SerializeField] private GameObject spiritEffects;
     [Header("Particles")]
     [SerializeField] private ParticleSystem landParticles;
     [SerializeField] private ParticleSystem jumpParticles;
@@ -80,12 +82,14 @@ public class PlayerVisualsManager : MonoBehaviour
     {
         transform.localScale = new Vector3(SCALE_AFTER_SPIRIT, SCALE_AFTER_SPIRIT, transform.localScale.z);
         Instantiate(spiritStartParticles, transform.position, Quaternion.identity);
+        spiritEffects.SetActive(true);
     }
 
     Vector3 BULB_START_OFFSET = new Vector2(0, 0.5f);
     private void OnSwitchToBulb()
     {
         Instantiate(bulbStartParticles, transform.position + BULB_START_OFFSET, Quaternion.identity);
+        spiritEffects.SetActive(false);
     }
 
     const float X_STRETCH_AFTER_FALL = 1.4f;

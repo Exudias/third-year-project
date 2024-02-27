@@ -558,7 +558,8 @@ Transform:
   m_LocalPosition: {x: 0, y: -0.5, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
-  m_Children: []
+  m_Children:
+  - {fileID: 3247056336069366751}
   m_Father: {fileID: 9154736288115353201}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &2487319561339568246
@@ -589,7 +590,7 @@ MonoBehaviour:
   bulbFallSide: {fileID: 7400000, guid: ab03894c4032b9546a09df71ff4d0717, type: 2}
   bulbWallCling: {fileID: 7400000, guid: 4e3eaf1098d7a8f4ebef942a65160af9, type: 2}
   spiritMove: {fileID: 7400000, guid: 423f6384845c5f04fb3165c8b457bfd2, type: 2}
-  spiritTrailParticles: {fileID: 0}
+  spiritEffects: {fileID: 4026996642317565355}
   landParticles: {fileID: 1001292467031290362, guid: 1e6046e808c0f2048b31be47cf7d5163, type: 3}
   jumpParticles: {fileID: 1412736590407067221, guid: c8a8f4b46dd13f640ac35dc598cd5903, type: 3}
   spiritStartParticles: {fileID: 72001493581009879, guid: 2aac68351ebe55e49be9ce57a8b3d982, type: 3}
@@ -795,3 +796,74 @@ TrailRenderer:
   m_Autodestruct: 0
   m_Emitting: 0
   m_ApplyActiveColorSpace: 1
+--- !u!1001 &7356789310527834714
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 1524126410840315839}
+    m_Modifications:
+    - target: {fileID: 5410877516137077125, guid: 3c1dffd1629526748b1fa531db3ab003, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5410877516137077125, guid: 3c1dffd1629526748b1fa531db3ab003, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5410877516137077125, guid: 3c1dffd1629526748b1fa531db3ab003, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5410877516137077125, guid: 3c1dffd1629526748b1fa531db3ab003, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5410877516137077125, guid: 3c1dffd1629526748b1fa531db3ab003, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5410877516137077125, guid: 3c1dffd1629526748b1fa531db3ab003, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5410877516137077125, guid: 3c1dffd1629526748b1fa531db3ab003, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5410877516137077125, guid: 3c1dffd1629526748b1fa531db3ab003, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5410877516137077125, guid: 3c1dffd1629526748b1fa531db3ab003, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5410877516137077125, guid: 3c1dffd1629526748b1fa531db3ab003, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5907127295518210033, guid: 3c1dffd1629526748b1fa531db3ab003, type: 3}
+      propertyPath: m_Name
+      value: SpiritLights
+      objectReference: {fileID: 0}
+    - target: {fileID: 5907127295518210033, guid: 3c1dffd1629526748b1fa531db3ab003, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 3c1dffd1629526748b1fa531db3ab003, type: 3}
+--- !u!4 &3247056336069366751 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 5410877516137077125, guid: 3c1dffd1629526748b1fa531db3ab003, type: 3}
+  m_PrefabInstance: {fileID: 7356789310527834714}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &4026996642317565355 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 5907127295518210033, guid: 3c1dffd1629526748b1fa531db3ab003, type: 3}
+  m_PrefabInstance: {fileID: 7356789310527834714}
+  m_PrefabAsset: {fileID: 0}
