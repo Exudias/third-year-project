@@ -98,7 +98,7 @@ public class KeyDoorLogic : MonoBehaviour
         UpdateVisuals();
     }
 
-    private const float FILL_ANIMATION_SPEED = 1f;
+    private const float FILL_ANIMATION_SPEED = 10f;
 
     private void UpdateVisuals()
     {

@@ -35,7 +35,7 @@ public class DoorLogic : MonoBehaviour, IActivatable
     private void Start()
     {
         active = false;
-        vertical = door1.position.y - door2.position.y != 0;
+        vertical = Mathf.Abs(door1.position.y - door2.position.y) > Mathf.Abs(door1.position.x - door2.position.x);
         percentOpen = 0;
 
         openProgressPerSecond = 1 / openTime;

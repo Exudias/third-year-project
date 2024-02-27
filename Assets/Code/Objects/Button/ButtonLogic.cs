@@ -2,7 +2,7 @@ using UnityEngine;
 
 public class ButtonLogic : MonoBehaviour
 {
-    [SerializeField] private GameObject activateable;
+    [SerializeField] private GameObject[] activateables;
     [SerializeField] private AudioClip pressSound;
     [SerializeField] private AudioClip unpressSound;
 
@@ -10,13 +10,20 @@ public class ButtonLogic : MonoBehaviour
 
     public void OnButtonPressed()
     {
-        activateable.GetComponent<IActivatable>().Activate();
+        foreach (GameObject a in activateables)
+        {
+            a.GetComponent<IActivatable>().Activate();
+        }
+        
         AudioSource.PlayClipAtPoint(pressSound, transform.position, PlayerPrefs.GetFloat("soundVolume", 1f) * SOUND_VOLUME);
     }
 
     public void OnButtonUnpressed()
     {
-        activateable.GetComponent<IActivatable>().Deactivate();
+        foreach (GameObject a in activateables)
+        {
+            a.GetComponent<IActivatable>().Deactivate();
+        }
         AudioSource.PlayClipAtPoint(unpressSound, transform.position, PlayerPrefs.GetFloat("soundVolume", 1f) * SOUND_VOLUME);
     }
 }
