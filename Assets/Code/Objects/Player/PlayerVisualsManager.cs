@@ -50,6 +50,8 @@ public class PlayerVisualsManager : MonoBehaviour
 
         PlayerFormSwitcher.OnSwitchToSpirit += OnSwitchToSpirit;
         PlayerFormSwitcher.OnSwitchToBulb += OnSwitchToBulb;
+
+        PlayerLogic.OnPlayerDeath += OnDeath;
     }
 
     private void OnDisable()
@@ -61,6 +63,8 @@ public class PlayerVisualsManager : MonoBehaviour
 
         PlayerFormSwitcher.OnSwitchToSpirit -= OnSwitchToSpirit;
         PlayerFormSwitcher.OnSwitchToBulb -= OnSwitchToBulb;
+
+        PlayerLogic.OnPlayerDeath -= OnDeath;
     }
 
     const float X_STRETCH_AFTER_JUMP = 0.6f;
@@ -104,6 +108,13 @@ public class PlayerVisualsManager : MonoBehaviour
     private void OnSpiritHitSolid()
     {
         transform.localScale = new Vector3(SPIRIT_STRETCH_ON_HIT, SPIRIT_STRETCH_ON_HIT, transform.localScale.z);
+    }
+
+    private void OnDeath()
+    {
+        if (!spiritEffects.activeInHierarchy) return;
+
+        spiritEffects.GetComponent<Animator>().SetTrigger("Die");
     }
 
     private void Start()
