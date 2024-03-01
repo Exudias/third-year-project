@@ -198,7 +198,9 @@ public class BulbMovement : MonoBehaviour
             }
             else
             {
-                accelToUse *= 5f;
+                float t = timeSinceWallJump / 1.5f;
+                float accelMult = Mathf.Lerp(1, 5, t);
+                accelToUse *= accelMult;
             }
         }
 
