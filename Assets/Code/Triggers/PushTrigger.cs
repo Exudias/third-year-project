@@ -39,4 +39,6 @@ public class PushTrigger : Trigger
             bulbMovement.SetExternalVelocity(0);
         }
     }
+
+    public Vector2 GetVelocity() => velocityToApply;
 }
