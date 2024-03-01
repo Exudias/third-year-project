@@ -44,7 +44,7 @@ public class EmptyBulbLogic : MonoBehaviour
         if (source != controller) return;
         if (destroyOnSolid && dir == Vector2.down)
         {
-            DestroySelf();
+            SetSpriteOffset(Vector2.zero);
         }
     }
 
