@@ -5455,7 +5455,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 191428301659303318, guid: 854472f808d794a45a52cbaf5e306851, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 5.6711836
+      value: 5.0035124
       objectReference: {fileID: 0}
     - target: {fileID: 191428301659303318, guid: 854472f808d794a45a52cbaf5e306851, type: 3}
       propertyPath: m_LocalPosition.y
@@ -5511,7 +5511,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6904169580368490572, guid: 854472f808d794a45a52cbaf5e306851, type: 3}
       propertyPath: m_NormalizedViewPortRect.height
-      value: 1.0003519
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

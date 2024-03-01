@@ -6,6 +6,8 @@ using UnityEngine;
 [ExecuteInEditMode]
 public class ScaleSpriteToParentScale : MonoBehaviour
 {
+    [SerializeField] private int xSlices = 3;
+    [SerializeField] private int ySlices = 3;
     private SpriteRenderer sprite;
     private Transform parent;
 
@@ -22,6 +24,6 @@ public class ScaleSpriteToParentScale : MonoBehaviour
         float xSize = sprite.sprite.bounds.max.x - sprite.sprite.bounds.min.x;
         float ySize = sprite.sprite.bounds.max.y - sprite.sprite.bounds.min.y;
 
-        sprite.size = new Vector3(parent.localScale.x * xSize, parent.localScale.y * ySize, 1);
+        sprite.size = new Vector3(parent.localScale.x * xSize / xSlices, parent.localScale.y * ySize / ySlices, 1);
     }
 }
