@@ -9,6 +9,8 @@ public class EmptyBulbLogic : MonoBehaviour
     [SerializeField] private Transform visualsTransform;
     [SerializeField] private AudioClip breakSound;
     [SerializeField] private SoundEmitterLogic soundEmitter;
+    [SerializeField] private AudioClip landSound;
+    [SerializeField] private GameObject landParticles;
 
     private float currentCooldown;
 
@@ -42,10 +44,22 @@ public class EmptyBulbLogic : MonoBehaviour
     private void OnControllerCollide(Controller2D source, Vector2 dir)
     {
         if (source != controller) return;
+
         if (destroyOnSolid && dir == Vector2.down)
         {
             SetSpriteOffset(Vector2.zero);
         }
+    }
+
+    private void OnHitGround()
+    {
+        // Particles
+        Vector3 offset = new Vector2(0, -0.5f);
+        Instantiate(landParticles, transform.position + offset, Quaternion.identity);
+        // Sound
+        SoundEmitterLogic emitterObj = Instantiate(soundEmitter, transform.position, Quaternion.identity);
+        emitterObj.PlaySound(landSound, 0.5f);
+        GameManager.MoveObjectToLevelScene(emitterObj.gameObject);
     }
 
     private void Start()
@@ -66,6 +80,15 @@ public class EmptyBulbLogic : MonoBehaviour
         {
             float gravityStep = gravity * Time.deltaTime;
             velocity.y = Mathf.Clamp(velocity.y + gravityStep, -terminalVelocity, Mathf.Infinity);
+        }
+        else
+        {
+            float lastYVelocity = controller.GetLastActualVelocity().y / Time.deltaTime;
+            const float MIN_VEL_HIT_GROUND = 1f;
+            if (Time.deltaTime != 0 && Mathf.Abs(lastYVelocity) > MIN_VEL_HIT_GROUND && !GameManager.IsLoadingScene())
+            {
+                OnHitGround();
+            }
         }
         const float AIR_CONTROL_MULT = 0.2f;
 

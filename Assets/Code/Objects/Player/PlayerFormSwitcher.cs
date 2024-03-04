@@ -131,7 +131,7 @@ public class PlayerFormSwitcher : MonoBehaviour
     private void InitSpirit()
     {
         EmptyBulbLogic emptyBulb = Instantiate(emptyBulbPrefab, transform.position, Quaternion.identity).transform.GetChild(0).GetComponent<EmptyBulbLogic>();
-        emptyBulb.SetVelocity(controller.GetLastActualVelocity() / Time.deltaTime);
+        emptyBulb.SetVelocity(controller.GetLastActualVelocity() / Time.unscaledDeltaTime);
         emptyBulb.SetGravity(bulbMovement.GetGravity());
         emptyBulb.SetTerminalVelocity(bulbMovement.GetTerminalVelocity());
         emptyBulb.SetDeceleration(bulbMovement.GetDeceleration());

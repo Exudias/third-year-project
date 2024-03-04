@@ -204,6 +204,8 @@ MonoBehaviour:
   visualsTransform: {fileID: 7195336630831511731}
   breakSound: {fileID: 8300000, guid: 86e702cbbb63763448e9c41772d28697, type: 3}
   soundEmitter: {fileID: 1390740283959033687, guid: 066aed633ae8ffb49bd9f41cf31adb38, type: 3}
+  landSound: {fileID: 8300000, guid: 0eb2eed053ba1724b88d82b3369e6430, type: 3}
+  landParticles: {fileID: 5957355078513852360, guid: 1e6046e808c0f2048b31be47cf7d5163, type: 3}
 --- !u!1 &8624609226617178530
 GameObject:
   m_ObjectHideFlags: 0
