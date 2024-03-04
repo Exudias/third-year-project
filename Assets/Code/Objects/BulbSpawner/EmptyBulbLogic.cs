@@ -39,6 +39,10 @@ public class EmptyBulbLogic : MonoBehaviour
         {
             other.GetComponent<ButtonTrigger>().Activate(transform.parent.GetComponent<Collider2D>());
         }
+        else if (other.GetComponent<PushTrigger>() != null)
+        {
+            other.GetComponent<PushTrigger>().Activate(transform.parent.GetComponent<Collider2D>());
+        }
     }
 
     private void OnControllerCollide(Controller2D source, Vector2 dir)
@@ -92,9 +96,15 @@ public class EmptyBulbLogic : MonoBehaviour
         }
         const float AIR_CONTROL_MULT = 0.2f;
 
-        velocity.x = Mathf.MoveTowards(velocity.x, 0, deceleration * (controller.collisions.bottom ? 1 : AIR_CONTROL_MULT) * Time.deltaTime);
+        velocity.x = Mathf.MoveTowards(velocity.x, pushSpeed, deceleration * (controller.collisions.bottom ? 1 : AIR_CONTROL_MULT) * Time.deltaTime);
 
         controller.Move(velocity * Time.deltaTime);
+    }
+
+    private float pushSpeed = 0;
+    public void SetPushSpeed(float speed)
+    {
+        pushSpeed = speed;
     }
 
     public void SetDestroyOnSolid(bool newSetting)

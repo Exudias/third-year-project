@@ -53,6 +53,5 @@ public class ButtonTrigger : Trigger
             }
             lastPressing = pressing;
         }
-        //Debug.Log(lastPressing + "<- Last | Current ->" + pressing);
     }
 }

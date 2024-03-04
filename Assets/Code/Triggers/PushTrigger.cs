@@ -18,6 +18,11 @@ public class PushTrigger : Trigger
         OnTriggerExit -= OnActorExit;
     }
 
+    public override void Activate(Collider2D activator)
+    {
+        base.Activate(activator);
+    }
+
     private void OnActorEnter(Collider2D activator)
     {
         bool collisionIsPlayer = activator.gameObject.GetComponent<PlayerLogic>() != null;
@@ -26,6 +31,11 @@ public class PushTrigger : Trigger
             if (activator.GetComponent<PlayerFormSwitcher>().GetCurrentForm() == PlayerFormSwitcher.PlayerForm.Spirit) return;
             BulbMovement bulbMovement = activator.GetComponent<BulbMovement>();
             bulbMovement.SetExternalVelocity(velocityToApply.x);
+        }
+        EmptyBulbLogic bulb = activator.transform.GetComponentInChildren<EmptyBulbLogic>();
+        if (bulb != null)
+        {
+            bulb.SetPushSpeed(velocityToApply.x);
         }
     }
 
@@ -37,6 +47,11 @@ public class PushTrigger : Trigger
             if (activator.GetComponent<PlayerFormSwitcher>().GetCurrentForm() == PlayerFormSwitcher.PlayerForm.Spirit) return;
             BulbMovement bulbMovement = activator.GetComponent<BulbMovement>();
             bulbMovement.SetExternalVelocity(0);
+        }
+        EmptyBulbLogic bulb = activator.transform.GetComponentInChildren<EmptyBulbLogic>();
+        if (bulb != null)
+        {
+            bulb.SetPushSpeed(0);
         }
     }
 
