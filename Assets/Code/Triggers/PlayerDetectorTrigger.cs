@@ -4,6 +4,8 @@ public class PlayerDetectorTrigger : Trigger
 {
     private bool playerInside;
 
+    private bool insideLastFrame;
+
     public override void Start()
     {
         base.Start();
@@ -15,6 +17,7 @@ public class PlayerDetectorTrigger : Trigger
         base.OnEnable();
         OnTriggerEnter += OnEnter;
         OnTriggerExit += OnExit;
+        OnTriggerStay += OnStay;
     }
 
     public override void OnDisable()
@@ -22,6 +25,7 @@ public class PlayerDetectorTrigger : Trigger
         base.OnDisable();
         OnTriggerEnter -= OnEnter;
         OnTriggerExit -= OnExit;
+        OnTriggerStay -= OnStay;
     }
 
     public bool IsPlayerInside() => playerInside;
@@ -38,5 +42,20 @@ public class PlayerDetectorTrigger : Trigger
         bool collisionIsPlayer = activator.gameObject.GetComponent<PlayerLogic>() != null;
         if (!collisionIsPlayer) return;
         playerInside = false;
+        insideLastFrame = false;
+    }
+
+    private void OnStay(Collider2D activator)
+    {
+        bool collisionIsPlayer = activator.gameObject.GetComponent<PlayerLogic>() != null;
+        if (!collisionIsPlayer) return;
+
+        // Disgusting hack to prevent changing form from affecting insideness
+        // Would do better but there are 10 days left and I have priorities!
+        if (insideLastFrame)
+        {
+            playerInside = true;
+        }
+        insideLastFrame = true;
     }
 }
