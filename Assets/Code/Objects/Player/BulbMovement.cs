@@ -194,7 +194,7 @@ public class BulbMovement : MonoBehaviour
         {
             if (movingWithCap)
             {
-                accelToUse *= .2f;
+                accelToUse *= .5f;
             }
             else
             {
