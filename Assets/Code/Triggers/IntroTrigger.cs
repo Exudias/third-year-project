@@ -40,7 +40,7 @@ public class IntroTrigger : Trigger
         if (activated) return;
 
         activated = true;
-
+    
         StartCoroutine(IntroCutscene(activator.gameObject));
     }
 
