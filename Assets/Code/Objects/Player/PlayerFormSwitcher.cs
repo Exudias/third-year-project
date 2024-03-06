@@ -23,6 +23,7 @@ public class PlayerFormSwitcher : MonoBehaviour
     private SpiritMovement spiritMovement;
     private Controller2D controller;
     private InputManager input;
+    private EnergyManager energyManager;
 
     public delegate void FormSwitchEvent();
     public static event FormSwitchEvent OnSwitchToBulb;
@@ -38,6 +39,7 @@ public class PlayerFormSwitcher : MonoBehaviour
         bulbMovement = GetComponent<BulbMovement>();
         spiritMovement = GetComponent<SpiritMovement>();
         controller = GetComponent<Controller2D>();
+        energyManager = GetComponent<EnergyManager>();
         input = InputManager.instance;
         canTransformToSpirit = true;
         if (currentForm == PlayerForm.Bulb)
@@ -124,6 +126,8 @@ public class PlayerFormSwitcher : MonoBehaviour
         visualsManager.InitBulb();
 
         controller.UpdateCollider();
+
+        energyManager?.ResetEnergy();
 
         Camera.main.GetComponent<CameraManager>().ActivateBulbCamera();
     }
