@@ -12,6 +12,8 @@ public class IntroTrigger : Trigger
     [SerializeField] private Image chapterTitleBG;
     [SerializeField] private TextMeshProUGUI chapterTitleText;
 
+    private bool activated = false;
+
     public override void OnEnable()
     {
         base.OnEnable();
@@ -35,9 +37,9 @@ public class IntroTrigger : Trigger
 
         if (!collisionIsPlayer) return;
 
-        if (GameManager.GetSceneFrames() > 60) return; // for reentry from the right
+        if (activated) return;
 
-        if (SpeedrunManager.time > 0.1f) return; // for retry
+        activated = true;
 
         StartCoroutine(IntroCutscene(activator.gameObject));
     }
@@ -140,6 +142,7 @@ public class IntroTrigger : Trigger
         text.a = 0;
         chapterTitleBG.color = bg;
         chapterTitleText.color = text;
+        Destroy(gameObject); // remove self after completion
     }
 
     // From easings.net
