@@ -50,6 +50,6 @@ public class LevelNameLogic : MonoBehaviour
         string stage = parts[1];
         string level = int.Parse(parts[2]).ToString();
 
-        return stage + " - " + level;
+        return stage + "-" + level;
     }
 }
