@@ -210,7 +210,7 @@ MonoBehaviour:
   maxTurnDegsPerSec: 400
   wallHitTurnPenaltyTime: 0.2
   wallHitTurnPenaltyMultiplier: 0.2
-  energyDissipationPerSec: 10
+  energyDissipationPerSec: 0
   speedNormalizationTime: 0.3
 --- !u!114 &1105467402819965738
 MonoBehaviour:
