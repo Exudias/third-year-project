@@ -41,6 +41,7 @@ public class PushTrigger : Trigger
 
     private void OnActorExit(Collider2D activator)
     {
+        if (activator == null) return;
         bool collisionIsPlayer = activator.gameObject.GetComponent<PlayerLogic>() != null;
         if (collisionIsPlayer)
         {

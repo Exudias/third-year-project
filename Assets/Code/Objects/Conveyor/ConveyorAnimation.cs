@@ -22,6 +22,6 @@ public class ConveyorAnimation : MonoBehaviour
 
         sprite.flipX = pushVelocity.x < 0;
 
-        anim.speed = pushVelocity.x / baseSpeed;
+        anim.speed = Mathf.Abs(pushVelocity.x) / baseSpeed;
     }
 }
