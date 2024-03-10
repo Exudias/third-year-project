@@ -186,7 +186,7 @@ public class BulbMovement : MonoBehaviour
         bool externalWithUs = targetVelocityX * externalHorizontalVelocity > 0;
         if (hasExternalForce && externalWithUs)
         {
-            accelToUse *= xMax / targetVelocityX;
+            accelToUse *= Mathf.Abs(xMax / targetVelocityX);
         }
         bool fasterThanCap = Mathf.Abs(velocity.x) > Mathf.Abs(targetVelocityX);
         bool movingWithCap = velocity.x * targetVelocityX > 0;
