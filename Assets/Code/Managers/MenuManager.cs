@@ -49,6 +49,9 @@ public class MenuManager : MonoBehaviour
     {
         if (activeContext == null) return;
 
+        bool transOut = screenTransition.GetCurrentAnimatorClipInfo(0)[0].clip.name == "TransitionOut";
+        if (transOut) return;
+
         if (hoveredButton.IsSliderButton())
         {
             if (input.IsDown(KeyCode.LeftArrow) || input.IsDown(KeyCode.A))
@@ -120,7 +123,8 @@ public class MenuManager : MonoBehaviour
 
     public bool ShowPauseMenu()
     {
-        if (pauseContext == null || GameManager.IsLoadingScene()) return false;
+        bool transOut = screenTransition.GetCurrentAnimatorClipInfo(0)[0].clip.name == "TransitionOut";
+        if (pauseContext == null || GameManager.IsLoadingScene() || transOut) return false;
         SetDimmerActive(true);
         pauseContext.Enable();
         audioSource.PlayOneShot(buttonClick, PlayerPrefs.GetFloat("soundVolume", 1f));
