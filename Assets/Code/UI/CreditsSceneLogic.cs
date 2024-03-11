@@ -2,6 +2,7 @@ using UnityEngine;
 
 public class CreditsSceneLogic : MonoBehaviour
 {
+    private bool exiting = false;
 
     private void Start()
     {
@@ -10,6 +11,7 @@ public class CreditsSceneLogic : MonoBehaviour
 
     public void LoadMenu()
     {
+        exiting = true;
         GameManager.SetCreditsPlaying(false);
         Time.timeScale = 1;
         GameManager.LoadMenu();
@@ -17,6 +19,7 @@ public class CreditsSceneLogic : MonoBehaviour
 
     private void Update()
     {
+        if (exiting) return;
         HandleEscape();
         if (Input.anyKey)
         {

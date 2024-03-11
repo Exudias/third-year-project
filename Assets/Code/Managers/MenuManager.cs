@@ -117,6 +117,7 @@ public class MenuManager : MonoBehaviour
 
     public float PlayTransitionOut()
     {
+        if (screenTransition == null) return 0;
         screenTransition.SetTrigger("Out");
         return screenTransition.GetCurrentAnimatorStateInfo(0).length;
     }

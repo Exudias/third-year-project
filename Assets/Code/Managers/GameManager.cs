@@ -235,6 +235,21 @@ public class GameManager : MonoBehaviour
         SceneManager.LoadScene(MAIN_MENU_SCENE_NAME);
     }
 
+    const string CREDITS_SCENE_NAME = "CREDITS";
+
+    public async static void LoadCredits()
+    {
+        ResumeGame();
+
+        float? timeMaybe = MenuManager.instance?.PlayTransitionOut();
+        float transitionTime = timeMaybe != null ? (float)timeMaybe : 0;
+        await Awaitable.WaitForSecondsAsync(transitionTime);
+
+        currentSceneTime = 0;
+        currentSceneFrames = 0;
+        SceneManager.LoadScene(CREDITS_SCENE_NAME);
+    }
+
 #endregion
 
 #region Level Data
