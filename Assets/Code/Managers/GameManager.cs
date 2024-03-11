@@ -225,7 +225,8 @@ public class GameManager : MonoBehaviour
     {
         ResumeGame();
 
-        float transitionTime = MenuManager.instance.PlayTransitionOut();
+        float? timeMaybe = MenuManager.instance?.PlayTransitionOut();
+        float transitionTime = timeMaybe != null ? (float)timeMaybe : 0;
         await Awaitable.WaitForSecondsAsync(transitionTime);
 
         currentSceneTime = 0;
@@ -285,7 +286,7 @@ public class GameManager : MonoBehaviour
         }
         Time.timeScale = timeScaleBeforePause;
         paused = false;
-        MenuManager.instance.HidePauseMenu(playSound);
+        MenuManager.instance?.HidePauseMenu(playSound);
     }
 
     void OnApplicationFocus(bool hasFocus)
