@@ -8,6 +8,7 @@ public class GameManager : MonoBehaviour
     private static bool loadingScene;
     private static bool playerDead;
     private static bool playingCutscene;
+    private static bool playingCredits;
 
     public static GameManager Instance;
 
@@ -268,7 +269,9 @@ public class GameManager : MonoBehaviour
 
     public void PauseGame()
     {
+        if (MenuManager.instance == null) return;
         if (!MenuManager.instance.ShowPauseMenu()) return; // if can't pause, don't try
+        if (playingCredits) return;
         if (Camera.main != null)
         {
             Camera.main.GetComponent<CameraManager>().SetIgnoreTimeScale(false);
@@ -320,5 +323,12 @@ public class GameManager : MonoBehaviour
         playingCutscene = newState;
     }
     public static bool GetPlayingCutscene() => playingCutscene;
+
+    public static void SetCreditsPlaying(bool newState)
+    {
+        playingCredits = newState;
+    }
+
+    public static bool GetCreditsPlaying() => playingCredits;
 #endregion
 }

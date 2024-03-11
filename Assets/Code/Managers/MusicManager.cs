@@ -36,7 +36,10 @@ public class MusicManager : MonoBehaviour
 
     private void Update()
     {
-        DoTimescaleEffects();
+        if (!GameManager.GetCreditsPlaying())
+        {
+            DoTimescaleEffects();
+        }
         CheckForPauseSong();
     }
 
