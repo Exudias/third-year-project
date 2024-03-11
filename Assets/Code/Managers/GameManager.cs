@@ -232,6 +232,7 @@ public class GameManager : MonoBehaviour
 
         currentSceneTime = 0;
         currentSceneFrames = 0;
+        Time.timeScale = 1;
         SceneManager.LoadScene(MAIN_MENU_SCENE_NAME);
     }
 
