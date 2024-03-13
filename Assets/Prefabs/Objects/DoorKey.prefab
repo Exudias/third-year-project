@@ -180,6 +180,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   visuals: {fileID: 3183390079739645427}
+  getSound: {fileID: 8300000, guid: 2d0599419d087ac48998faae844225b8, type: 3}
+  soundEmitter: {fileID: 1390740283959033687, guid: 066aed633ae8ffb49bd9f41cf31adb38, type: 3}
 --- !u!95 &1293824159444291802
 Animator:
   serializedVersion: 7

@@ -524,6 +524,7 @@ MonoBehaviour:
   deathSound: {fileID: 8300000, guid: 2f0e530f19997374faa9faf79ccd769c, type: 3}
   becomeSpiritSound: {fileID: 8300000, guid: c07e3594dc22e2d45806b0d5481f0cfc, type: 3}
   becomeBulbSound: {fileID: 8300000, guid: 1936faa60c0a6f94294a081a1394f9fa, type: 3}
+  keySound: {fileID: 8300000, guid: 2d0599419d087ac48998faae844225b8, type: 3}
   minPitch: 0.8
   maxPitch: 1.2
 --- !u!1 &7667418138490284168

@@ -11,6 +11,7 @@ public class PlayerSound : MonoBehaviour
     [SerializeField] private AudioClip deathSound;
     [SerializeField] private AudioClip becomeSpiritSound;
     [SerializeField] private AudioClip becomeBulbSound;
+    [SerializeField] private AudioClip keySound;
     [Header("Parameters")]
     [SerializeField] private float minPitch = 0.8f;
     [SerializeField] private float maxPitch = 1.2f;
@@ -27,6 +28,7 @@ public class PlayerSound : MonoBehaviour
         PlayerFormSwitcher.OnSwitchToBulb += OnSwitchToBulb;
         PlayerLogic.OnPlayerDeath += OnPlayerDeath;
         PlayerVisualsManager.OnPlayerFootstep += OnPlayerFootstep;
+        DoorKeyLogic.OnKeyCollected += OnKeyCollected;
         OptionsManager.OnSoundVolumeChanged += OnSoundVolumeChanged;
     }
 
@@ -40,6 +42,7 @@ public class PlayerSound : MonoBehaviour
         PlayerFormSwitcher.OnSwitchToBulb -= OnSwitchToBulb;
         PlayerLogic.OnPlayerDeath -= OnPlayerDeath;
         PlayerVisualsManager.OnPlayerFootstep -= OnPlayerFootstep;
+        DoorKeyLogic.OnKeyCollected -= OnKeyCollected;
         OptionsManager.OnSoundVolumeChanged -= OnSoundVolumeChanged;
     }
 
@@ -122,5 +125,10 @@ public class PlayerSound : MonoBehaviour
     public void PlayBulbSound()
     {
         OnSwitchToBulb();
+    }
+
+    public void OnKeyCollected(DoorKeyLogic key)
+    {
+        PlaySound(keySound, 0.5f, false);
     }
 }
