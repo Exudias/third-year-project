@@ -4,6 +4,7 @@ public class MusicManager : MonoBehaviour
 {
     [Header("Tracks")]
     [SerializeField] private AudioClip factoryTrack;
+    [SerializeField] private AudioClip menuTrack;
     [Header("Parameters")]
     [SerializeField] private float maxPitch = 2f;
     [SerializeField] private float minPitch = 0.2f;
@@ -15,7 +16,14 @@ public class MusicManager : MonoBehaviour
     private void Start()
     {
         InitVariables();
-        PlaySong(factoryTrack);
+        if (GameManager.IsInMenu())
+        {
+            PlaySong(menuTrack);
+        }
+        else
+        {
+            PlaySong(factoryTrack);
+        }
     }
 
     private void OnEnable()
@@ -39,6 +47,10 @@ public class MusicManager : MonoBehaviour
         if (!GameManager.GetCreditsPlaying())
         {
             DoTimescaleEffects();
+        }
+        else
+        {
+            audioSource.pitch = 1.5f;
         }
         CheckForPauseSong();
     }

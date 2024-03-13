@@ -251,6 +251,18 @@ public class GameManager : MonoBehaviour
         SceneManager.LoadScene(CREDITS_SCENE_NAME);
     }
 
+    public static bool IsInMenu()
+    {
+        for (int i = 0; i < SceneManager.sceneCount; i++)
+        {
+            if (SceneManager.GetSceneAt(i).name == MAIN_MENU_SCENE_NAME)
+            {
+                return true;
+            }
+        }
+        return false;
+    }
+
 #endregion
 
 #region Level Data
