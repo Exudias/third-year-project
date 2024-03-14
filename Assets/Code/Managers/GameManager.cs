@@ -224,6 +224,11 @@ public class GameManager : MonoBehaviour
 
     public async static void LoadMenu()
     {
+        if (loadingScene) return;
+
+        loadingScene = true;
+
+        timeScaleBeforePause = 1;
         ResumeGame();
 
         float? timeMaybe = MenuManager.instance?.PlayTransitionOut();
@@ -233,6 +238,7 @@ public class GameManager : MonoBehaviour
         currentSceneTime = 0;
         currentSceneFrames = 0;
         Time.timeScale = 1;
+        loadingScene = false;
         SceneManager.LoadScene(MAIN_MENU_SCENE_NAME);
     }
 

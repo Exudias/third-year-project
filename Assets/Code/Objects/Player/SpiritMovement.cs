@@ -74,7 +74,7 @@ public class SpiritMovement : MonoBehaviour
 
     private void Update()
     {
-        if (GameManager.IsGamePaused() || GameManager.IsPlayerDead()) return;
+        if (GameManager.IsGamePaused() || GameManager.IsPlayerDead() || GameManager.IsLoadingScene()) return;
 
         timeSinceHitWall += Time.unscaledDeltaTime;
         speedMultiplier = Mathf.MoveTowards(speedMultiplier, 1, speedNormalizationStep * Time.unscaledDeltaTime);

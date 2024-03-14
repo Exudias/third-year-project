@@ -42,7 +42,7 @@ public class PlayerLogic : MonoBehaviour
 
     public void Die()
     {
-        if (GameManager.IsPlayerDead()) return;
+        if (GameManager.IsPlayerDead() || GameManager.IsLoadingScene()) return;
         GameManager.SetPlayerDead(true);
         OnPlayerDeath?.Invoke();
         if (formSwitcher.GetCurrentForm() == PlayerFormSwitcher.PlayerForm.Bulb)
