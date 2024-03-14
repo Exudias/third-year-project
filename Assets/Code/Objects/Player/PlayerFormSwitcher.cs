@@ -70,9 +70,10 @@ public class PlayerFormSwitcher : MonoBehaviour
 
         // go spirit from bulb, but to return you must collide with a bulb, so no on-demand
         bool pressedTransform = input.IsDown(KeyCode.LeftShift) || input.IsDown(KeyCode.RightShift);
+        bool stateIsGood = !GameManager.IsLoadingScene() && !GameManager.IsGamePaused() && !GameManager.IsPlayerDead();
         if (canTransformToSpirit)
         {
-            if (pressedTransform && currentForm == PlayerForm.Bulb)
+            if (pressedTransform && currentForm == PlayerForm.Bulb && stateIsGood)
             {
                 ToggleForm();
             }

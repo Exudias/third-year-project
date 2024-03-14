@@ -76,7 +76,7 @@ public class EmptyBulbLogic : MonoBehaviour
 
     private void Update()
     {
-        if (currentCooldown >= 0)
+        if (currentCooldown >= 0 && !GameManager.IsGamePaused())
         {
             currentCooldown -= Time.unscaledDeltaTime;
         }
