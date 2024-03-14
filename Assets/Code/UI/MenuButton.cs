@@ -52,7 +52,7 @@ public class MenuButton : MonoBehaviour
 
     private void UpdateSliderDisplay()
     {
-        float newValue = PlayerPrefs.GetFloat(playerPrefsFloatName, 1f);
+        float newValue = PlayerPrefs.GetFloat(playerPrefsFloatName, 0.5f);
         GetComponent<SliderButton>().UpdateDisplayFloatAsPercentage(Mathf.Round(newValue * 100));
     }
 

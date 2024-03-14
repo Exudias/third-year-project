@@ -23,7 +23,7 @@ public class SoundEmitterLogic : MonoBehaviour
 
     public void PlaySound(AudioClip sound, float volume)
     {
-        source.PlayOneShot(sound, volume * PlayerPrefs.GetFloat("soundVolume", 1f));
+        source.PlayOneShot(sound, volume * PlayerPrefs.GetFloat("soundVolume", 0.5f));
         playedSound = true;
     }
 }

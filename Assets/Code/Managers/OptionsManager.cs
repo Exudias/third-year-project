@@ -11,8 +11,8 @@ public class OptionsManager : MonoBehaviour
 
     private void Start()
     {
-        soundVolume = PlayerPrefs.GetFloat("soundVolume", 1f);
-        musicVolume = PlayerPrefs.GetFloat("musicVolume", 1f);
+        soundVolume = PlayerPrefs.GetFloat("soundVolume", 0.5f);
+        musicVolume = PlayerPrefs.GetFloat("musicVolume", 0.5f);
     }
 
     public void AddMusicVolume(float amount)

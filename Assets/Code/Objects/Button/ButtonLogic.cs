@@ -15,7 +15,7 @@ public class ButtonLogic : MonoBehaviour
             a.GetComponent<IActivatable>().Activate();
         }
         
-        AudioSource.PlayClipAtPoint(pressSound, transform.position, PlayerPrefs.GetFloat("soundVolume", 1f) * SOUND_VOLUME);
+        AudioSource.PlayClipAtPoint(pressSound, transform.position, PlayerPrefs.GetFloat("soundVolume", 0.5f) * SOUND_VOLUME);
     }
 
     public void OnButtonUnpressed()
@@ -24,6 +24,6 @@ public class ButtonLogic : MonoBehaviour
         {
             a.GetComponent<IActivatable>().Deactivate();
         }
-        AudioSource.PlayClipAtPoint(unpressSound, transform.position, PlayerPrefs.GetFloat("soundVolume", 1f) * SOUND_VOLUME);
+        AudioSource.PlayClipAtPoint(unpressSound, transform.position, PlayerPrefs.GetFloat("soundVolume", 0.5f) * SOUND_VOLUME);
     }
 }

@@ -52,7 +52,7 @@ public class PlayerSound : MonoBehaviour
     private void Start()
     {
         audioSource = GetComponent<AudioSource>();
-        audioSource.volume = PlayerPrefs.GetFloat("soundVolume", 1f);
+        audioSource.volume = PlayerPrefs.GetFloat("soundVolume", 0.5f);
     }
 
     private void Update()
