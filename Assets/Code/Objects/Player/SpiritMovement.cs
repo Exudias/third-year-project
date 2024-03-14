@@ -31,6 +31,8 @@ public class SpiritMovement : MonoBehaviour
     public delegate void SpiritEvent();
     public static event SpiritEvent OnSpiritHitSolid;
 
+    private float timeInForm = 0;
+
     private void Start()
     {
         controller = GetComponent<Controller2D>();
@@ -70,7 +72,11 @@ public class SpiritMovement : MonoBehaviour
         lastDirection = directionOfMovement;
 
         speedMultiplier = 0;
+
+        timeInForm = 0;
     }
+
+    [SerializeField] private float bufferFullMoveTime = 0.1f;
 
     private void Update()
     {
@@ -80,7 +86,7 @@ public class SpiritMovement : MonoBehaviour
         speedMultiplier = Mathf.MoveTowards(speedMultiplier, 1, speedNormalizationStep * Time.unscaledDeltaTime);
 
         float topSpeed = Mathf.Lerp(minTopSpeed, maxTopSpeed, energyManager.GetEnergyPercent());
-        float turnDegsPerSec = Mathf.Lerp(minTurnDegsPerSec, maxTurnDegsPerSec, energyManager.GetEnergyPercent());
+        float turnDegsPerSec = Mathf.Lerp(minTurnDegsPerSec, maxTurnDegsPerSec, energyManager.GetEnergyPercent()); ;
 
         energyManager.AddEnergy(-energyDissipationPerSec * Time.unscaledDeltaTime);
         if (energyManager.GetEnergy() == 0)
@@ -100,9 +106,17 @@ public class SpiritMovement : MonoBehaviour
         float desiredAngle = Mathf.Atan2(desiredDirection.y, desiredDirection.x) * Mathf.Rad2Deg;
         float currentAngle = Mathf.Atan2(directionOfMovement.y, directionOfMovement.x) * Mathf.Rad2Deg;
 
-        float hitWallMult = timeSinceHitWall < wallHitTurnPenaltyTime ? wallHitTurnPenaltyMultiplier : 1f; 
+        float hitWallMult = timeSinceHitWall < wallHitTurnPenaltyTime ? wallHitTurnPenaltyMultiplier : 1f;
 
-        currentAngle = Mathf.MoveTowardsAngle(currentAngle, desiredAngle, turnDegsPerSec * hitWallMult * Time.unscaledDeltaTime);
+        // If within buffer, instantly change direction
+        if (timeInForm < bufferFullMoveTime)
+        {
+            currentAngle = desiredAngle;
+        }
+        else
+        {
+            currentAngle = Mathf.MoveTowardsAngle(currentAngle, desiredAngle, turnDegsPerSec * hitWallMult * Time.unscaledDeltaTime);
+        }
 
         directionOfMovement = new Vector2(Mathf.Cos(currentAngle * Mathf.Deg2Rad), Mathf.Sin(currentAngle * Mathf.Deg2Rad));
 
@@ -126,6 +140,8 @@ public class SpiritMovement : MonoBehaviour
         controller.Move(velocity * Time.unscaledDeltaTime);
 
         lastDirection = directionOfMovement;
+
+        timeInForm += Time.unscaledDeltaTime;
     }
 
     public Vector2 GetMovementDir() => directionOfMovement;

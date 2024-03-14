@@ -213,6 +213,7 @@ MonoBehaviour:
   wallHitTurnPenaltyMultiplier: 0.2
   energyDissipationPerSec: 0
   speedNormalizationTime: 0.3
+  bufferFullMoveTime: 0.1
 --- !u!114 &1105467402819965738
 MonoBehaviour:
   m_ObjectHideFlags: 0
