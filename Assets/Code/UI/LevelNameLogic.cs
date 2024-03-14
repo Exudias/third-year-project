@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
@@ -9,6 +10,23 @@ public class LevelNameLogic : MonoBehaviour
 
     private Camera mainCam;
     private RectTransform parentRect;
+
+    private Dictionary<string, string> levelToName = new Dictionary<string, string>
+    {
+        { "1-0", "Beginnings" },
+        { "1-1", "Luigi" },
+        { "1-2", "The Word" },
+        { "1-3", "Zig" },
+        { "1-4", "Zag" },
+        { "1-5", "The Nile" },
+        { "1-6", "Se7en" },
+        { "1-7", "Uriel" },
+        { "1-8", "G-Dawg" },
+        { "1-9", "So Below" },
+        { "1-10", "The Ladder" },
+        { "1-11", "Lúcio" },
+        { "1-12", "Yoshi" }
+    };
 
     private void Start()
     {
@@ -50,6 +68,9 @@ public class LevelNameLogic : MonoBehaviour
         string stage = parts[1];
         string level = int.Parse(parts[2]).ToString();
 
-        return stage + "-" + level;
+        string number = stage + "-" + level;
+        string levelName = number + " " + levelToName[number];
+
+        return levelName;
     }
 }
